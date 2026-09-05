@@ -1,6 +1,6 @@
 # NOIRÉ — Chocolate, Unhurried.
 
-A cinematic single-page e-commerce experience for a luxury artisan chocolate atelier, built with **Next.js 14 (App Router)**, **React 18**, **Tailwind CSS**, **Lenis** smooth scrolling, and **react-three-fiber / Three.js**.
+A cinematic single-page experience for a luxury artisan chocolate atelier, built with **Next.js 14 (App Router)**, **React 18**, **Tailwind CSS**, **Lenis** smooth scrolling, and **react-three-fiber / Three.js**.
 
 The page tells the story in eight "acts" — from wild cacao canopy to hand-tempered bar — driven by a frame-by-frame cinematic canvas that scrubs with scroll progress, plus a 3D product viewer and a full front-end cart flow.
 
