@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --cacao-black: #080604;
+    --dark-cocoa: #1A100B;
+    --roasted-cacao: #342015;
+    --warm-ivory: #F3E8D3;
+    --muted-copper: #9B6742;
+
+    /* NOTE: --font-serif and --font-sans are intentionally NOT defined here.
+       They are owned by next/font (Cormorant Garamond / Inter) via the
+       variable classes injected on <html> in app/layout.tsx. Redefining them
+       here would shadow the self-hosted font families with unresolvable
+       system names and break the intended typography. */
+  }
+
+  html {
+    background-color: var(--cacao-black);
+    color: var(--warm-ivory);
+    font-family: var(--font-sans);
+    scroll-behavior: auto; /* Lenis handles smooth scrolling */
+  }
+
+  body {
+    background-color: var(--cacao-black);
+    color: var(--warm-ivory);
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: #9B6742;
+    color: #F3E8D3;
+  }
+}
+
+/* Restrained, elegant typography classes */
+.font-display {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+}
+
+.font-editorial {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.tracking-cinematic {
+  letter-spacing: 0.28em;
+}
+
+.tracking-widest-editorial {
+  letter-spacing: 0.18em;
+}
+
+/* Subtle luxury grain overlay */
+.grain-overlay {
+  background-image: radial-gradient(rgba(243, 232, 211, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #080604;
+}
+::-webkit-scrollbar-thumb {
+  background: #342015;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9B6742;
+}
