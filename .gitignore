@@ -43,3 +43,5 @@ graft/
 
 # Vercel
 .vercel
+# Scroll-probe diagnostic artifacts
+probe-artifacts/
