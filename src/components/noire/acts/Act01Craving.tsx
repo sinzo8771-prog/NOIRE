@@ -21,7 +21,7 @@ export function Act01Craving({ onExploreCollection }: Act01CravingProps) {
     >
       <div className="space-y-3">
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-          Act I &bull; The Craving
+          Act I &bull; The Craving <span className="opacity-60">&middot; 01 / 08</span>
         </span>
         <p className="text-xs uppercase tracking-widest text-[#F3E8D3]/50">
           Before chocolate becomes chocolate...
@@ -51,7 +51,7 @@ export function Act01Craving({ onExploreCollection }: Act01CravingProps) {
       {/* Scroll down prompt */}
       <div className="flex items-center justify-between pt-8 border-t border-[#342015]/40 text-xs text-[#F3E8D3]/40 uppercase tracking-widest">
         <span>01 / 08</span>
-        <div className="flex items-center space-x-2 animate-bounce">
+        <div className="flex items-center space-x-2 animate-drift">
           <span>Scroll to begin film journey</span>
           <ArrowDown className="w-3.5 h-3.5 text-[#9B6742]" />
         </div>

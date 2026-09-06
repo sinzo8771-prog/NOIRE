@@ -6,7 +6,7 @@ import Lenis from "lenis";
 import { NoireNavigation } from "@/components/noire/NoireNavigation";
 import { StoryProgress } from "@/components/noire/StoryProgress";
 import { NoireCursor } from "@/components/noire/NoireCursor";
-import { ChocolateRoomModal } from "@/components/noire/ChocolateRoomModal";
+import { ScrollProgressHairline } from "@/components/noire/ScrollProgressHairline";import { ChocolateRoomModal } from "@/components/noire/ChocolateRoomModal";
 import { NoireFooter } from "@/components/noire/NoireFooter";
 import { CinematicScrollCanvas } from "@/components/noire/CinematicScrollCanvas";
 import { Act01Craving } from "@/components/noire/acts/Act01Craving";
@@ -196,6 +196,9 @@ export default function Home() {
 
       {/* Story Chapter Navigation Bar */}
       <StoryProgress activeAct={activeAct} onSelectAct={scrollToAct} />
+
+      {/* Slim progress hairline for viewports below xl (rail is xl-only) */}
+      <ScrollProgressHairline />
 
       {/* The Chocolate Room Reservation Modal */}
       <ChocolateRoomModal

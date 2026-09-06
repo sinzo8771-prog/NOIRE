@@ -20,7 +20,7 @@ export function Act05Break({ onPlaySnap }: Act05BreakProps) {
     >
       <div className="max-w-2xl space-y-6">
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-          Act V &bull; The Break
+          Act V &bull; The Break <span className="opacity-60">&middot; 05 / 08</span>
         </span>
         <h2 className="font-display text-4xl sm:text-6xl font-normal text-[#F3E8D3] leading-tight">
           A snap you feel in your fingertips.

@@ -2,16 +2,20 @@
 
 import { Separator } from "@/components/ui/separator";
 import { Mail, Phone, MessageCircle } from "lucide-react";
-import { PRODUCTS, CONC_PROCESS } from "@/data/products";
+import { PRODUCTS } from "@/data/products";
+import { ACTS, actNumeral } from "@/data/acts";
+import { CopyEmailButton, CONCIERGE_REPLY_PROMISE } from "./ConciergeContact";
 import {
   mailtoLink,
+  CONCIERGE_EMAIL,
+  ATELIER_PHONE_CONFIGURED,
   ATELIER_PHONE_DISPLAY,
   ATELIER_PHONE_E164,
 } from "@/lib/site";
 
 export function NoireFooter() {
   const tastingMailto = mailtoLink(
-    "Tasting Appointment — NOIRÉ Atelier",
+    "Tasting request — NOIRÉ Atelier",
     "Hello NOIRÉ concierge,\n\nI would like to book a tasting visit at the Fort atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
   );
 
@@ -32,32 +36,25 @@ export function NoireFooter() {
             </p>
           </div>
 
-          {/* Navigation Links */}
+          {/* Navigation Links — the same eight chapters as the rail */}
           <div className="md:col-span-3 space-y-4">
             <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#9B6742]">
-              Atelier & Salon
+              Story Chapters
             </h4>
             <ul className="space-y-2.5 text-xs text-[#F3E8D3]/70">
-              <li>
-                <a href="#act-1" className="hover:text-[#F3E8D3] transition-colors">
-                  The Story
-                </a>
-              </li>
-              <li>
-                <a href="#act-2" className="hover:text-[#F3E8D3] transition-colors">
-                  Origin & Terroir
-                </a>
-              </li>
-              <li>
-                <a href="#act-3" className="hover:text-[#F3E8D3] transition-colors">
-                  {CONC_PROCESS.FOOTER_LABEL}
-                </a>
-              </li>
-              <li>
-                <a href="#act-7" className="hover:text-[#F3E8D3] transition-colors">
-                  Reserve Editions
-                </a>
-              </li>
+              {ACTS.map((act) => (
+                <li key={act.id}>
+                  <a
+                    href={`#${act.target}`}
+                    data-noire-event="navigation_click"
+                    data-noire-label={`footer ${act.label.toLowerCase()}`}
+                    data-noire-target={`#${act.target}`}
+                    className="hover:text-[#F3E8D3] transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+                  >
+                    {actNumeral(act.id)} — {act.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -80,36 +77,47 @@ export function NoireFooter() {
                   className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
                 >
                   <Mail className="w-3.5 h-3.5 text-[#9B6742]" />
-                  <span>concierge@noire-chocolate.com</span>
-                </a>
-              </li>
-              {/* TODO(owner): replace the placeholder atelier line in
-                  src/lib/site.ts with the real number before launch. */}
-              <li>
-                <a
-                  href={`tel:${ATELIER_PHONE_E164}`}
-                  data-noire-event="phone_click"
-                  className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
-                >
-                  <Phone className="w-3.5 h-3.5 text-[#9B6742]" />
-                  <span>{ATELIER_PHONE_DISPLAY}</span>
+                  <span>{CONCIERGE_EMAIL}</span>
                 </a>
               </li>
               <li>
-                <a
-                  href={`https://wa.me/${ATELIER_PHONE_E164.replace("+", "")}?text=${encodeURIComponent(
-                    "Hello NOIRÉ — I'd like to arrange a tasting visit."
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-noire-event="whatsapp_click"
-                  className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
-                >
-                  <MessageCircle className="w-3.5 h-3.5 text-[#9B6742]" />
-                  <span>WhatsApp the atelier</span>
-                </a>
+                <CopyEmailButton label="footer concierge email" />
               </li>
+              {/* Phone and WhatsApp stay hidden until the real atelier line
+                  is configured (ATELIER_PHONE_CONFIGURED in src/lib/site.ts)
+                  — no live links to a placeholder number. */}
+              {ATELIER_PHONE_CONFIGURED && (
+                <li>
+                  <a
+                    href={`tel:${ATELIER_PHONE_E164}`}
+                    data-noire-event="phone_click"
+                    className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-[#9B6742]" />
+                    <span>{ATELIER_PHONE_DISPLAY}</span>
+                  </a>
+                </li>
+              )}
+              {ATELIER_PHONE_CONFIGURED && (
+                <li>
+                  <a
+                    href={`https://wa.me/${ATELIER_PHONE_E164.replace("+", "")}?text=${encodeURIComponent(
+                      "Hello NOIRÉ — I'd like to arrange a tasting visit."
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-noire-event="whatsapp_click"
+                    className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 text-[#9B6742]" />
+                    <span>WhatsApp the atelier</span>
+                  </a>
+                </li>
+              )}
             </ul>
+            <p className="text-[10px] uppercase tracking-widest text-[#9B6742]/90">
+              {CONCIERGE_REPLY_PROMISE}
+            </p>
             <a
               href={tastingMailto}
               data-noire-event="request_tasting_click"

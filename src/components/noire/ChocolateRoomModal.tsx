@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Calendar, Clock, MapPin, CheckCircle2 } from "lucide-react";
-import { mailtoLink } from "@/lib/site";
+import { mailtoLink, CONCIERGE_EMAIL } from "@/lib/site";
 import { CONC_PROCESS } from "@/data/products";
+import { CopyEmailButton, CONCIERGE_REPLY_PROMISE } from "./ConciergeContact";
 
 interface ChocolateRoomModalProps {
   isOpen: boolean;
@@ -47,14 +48,17 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
   const handleBook = () => {
     // Real booking handoff (Phase 4): open the visitor's email client with a
     // pre-filled reservation request for the selected flight, instead of
-    // simulating a confirmation.
+    // simulating a confirmation. The follow-up screen never claims the
+    // client opened — it offers the direct-write fallback instead.
     const flight = flights.find((f) => f.id === selectedFlight);
     window.location.href = mailtoLink(
       `Tasting Reservation — ${flight?.name ?? "Private Tasting"}`,
-      "Hello NOIRÉ concierge,\n\nI would like to reserve the tasting flight above.\n\nPreferred dates:\nParty size:\nContact number:\n\nThank you."
+      `Hello NOIRÉ concierge,\n\nI would like to reserve the ${flight?.name ?? "private tasting"} (${flight?.duration ?? ""}) at the atelier.\n\nPreferred dates:\nParty size:\nContact number:\n\nThank you.`
     );
     setConfirmed(true);
   };
+
+  const confirmedFlight = flights.find((f) => f.id === selectedFlight);
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -73,13 +77,34 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
         </DialogHeader>
 
         {confirmed ? (
-          <div className="py-12 text-center space-y-4 animate-in fade-in-50">
+          <div className="py-10 text-center space-y-4 animate-in fade-in-50">
             <CheckCircle2 className="w-10 h-10 text-[#9B6742] mx-auto" />
             <h3 className="font-display text-2xl text-[#F3E8D3]">
-              Request Prepared
+              Request Ready
             </h3>
             <p className="text-xs text-[#F3E8D3]/70 max-w-sm mx-auto leading-relaxed">
-              Your email client has opened with a pre-filled reservation request. Press send and the concierge will confirm your table by reply — reservations are confirmed personally, never automatically.
+              Your reservation request
+              {confirmedFlight
+                ? ` for the ${confirmedFlight.name} (${confirmedFlight.duration})`
+                : ""}
+              {" "}is prepared. If your email app opened, press send — if
+              nothing happened, write to us directly:
+            </p>
+            <p className="text-sm text-[#F3E8D3]">
+              <a
+                href={`mailto:${CONCIERGE_EMAIL}`}
+                data-noire-event="contact_click"
+                data-noire-label="chocolate room fallback address"
+                className="underline underline-offset-4 decoration-[#9B6742]/60 hover:text-[#F3E8D3]/80 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              >
+                {CONCIERGE_EMAIL}
+              </a>
+              <span aria-hidden="true"> · </span>
+              <CopyEmailButton label="chocolate room reservation" />
+            </p>
+            <p className="text-[10px] uppercase tracking-widest text-[#9B6742]/90">
+              {CONCIERGE_REPLY_PROMISE} Reservations are confirmed personally,
+              never automatically.
             </p>
           </div>
         ) : (
@@ -126,7 +151,11 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-end gap-3 pt-4 border-t border-[#342015]">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#342015]">
+              <p className="text-[10px] uppercase tracking-widest text-[#9B6742]/90">
+                {CONCIERGE_REPLY_PROMISE}
+              </p>
+              <div className="flex flex-wrap justify-end gap-3">
               <Button
                 variant="outline"
                 onClick={onClose}
@@ -142,6 +171,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
               >
                 Reserve Tasting
               </Button>
+              </div>
             </div>
           </div>
         )}

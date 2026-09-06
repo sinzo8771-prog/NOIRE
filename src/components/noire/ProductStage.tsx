@@ -8,6 +8,7 @@ import { TastingNotes } from "./TastingNotes";
 import { Button } from "@/components/ui/button";
 import { Mail, Sparkles } from "lucide-react";
 import { mailtoLink } from "@/lib/site";
+import { ConciergeFallback } from "./ConciergeContact";
 import { useDeviceCapability } from "@/hooks/useDeviceCapability";
 
 // The 3D viewer (three.js + drei + GLB loader) is a separate async chunk that
@@ -134,6 +135,7 @@ export function ProductStage({
                 href={inquiryHref}
                 data-noire-event="request_bar_click"
                 data-noire-product={selectedProduct.id}
+                title="Request this bar — replies within one day, personally"
                 className="h-12 px-8 text-xs uppercase tracking-widest-editorial flex items-center justify-center space-x-2 bg-[#F3E8D3] hover:bg-[#DEC3A9] text-[#080604]"
               >
                 <Mail className="w-4 h-4" />
@@ -141,6 +143,9 @@ export function ProductStage({
               </a>
             </Button>
           </div>
+
+          {/* P1 handoff fallback: open address + copy + reply promise */}
+          <ConciergeFallback label={`request ${selectedProduct.id}`} />
         </div>
       </div>
     </div>

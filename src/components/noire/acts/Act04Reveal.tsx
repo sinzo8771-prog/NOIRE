@@ -21,7 +21,7 @@ export function Act04Reveal() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 space-y-6">
           <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-            Act IV &bull; The Reveal
+            Act IV &bull; The Reveal <span className="opacity-60">&middot; 04 / 08</span>
           </span>
           <h2 className="font-display text-5xl sm:text-7xl font-normal text-[#F3E8D3] leading-[0.95]">
             {flagship.cacaoPercentage}% CACAO.

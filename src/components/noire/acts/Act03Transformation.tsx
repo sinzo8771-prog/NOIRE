@@ -5,11 +5,9 @@ import { CONC_PROCESS } from "@/data/products";
 /**
  * Act III — Transformation (process strip).
  *
- * NOTE (P0.3 pending): the conche duration strings are now centralised in
- * CONC_PROCESS (src/data/products.ts) so a reconciling edit touches one
- * constant, not four files. The product data ("Low-temperature 48h conche")
- * vs. the headline ("72 hours") contradiction remains pending owner
- * confirmation — do NOT change the numbers independently.
+ * Conche duration is centralised in CONC_PROCESS (src/data/products.ts).
+ * Resolved 2026-09-06 (owner ruling): 72 hours — headline and product
+ * data match; do NOT change the numbers independently.
  */
 export function Act03Transformation() {
   return (
@@ -19,7 +17,7 @@ export function Act03Transformation() {
     >
       <div className="max-w-3xl space-y-8">
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-          Act III &bull; Transformation
+          Act III &bull; Transformation <span className="opacity-60">&middot; 03 / 08</span>
         </span>
         <h2 className="font-display text-4xl sm:text-6xl font-normal text-[#F3E8D3] leading-tight">
                     The {CONC_PROCESS.HEADLINE}.

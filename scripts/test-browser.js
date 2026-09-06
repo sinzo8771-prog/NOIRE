@@ -244,7 +244,7 @@ async function horizontalOffenders(page, scopeSel = "body *") {
   check(
     "Nav 'Request a Tasting' opens the concierge mailto",
     tastingHref.startsWith("mailto:concierge@noire-chocolate.com") &&
-      decodedTasting.includes("Request a Tasting — NOIRÉ Atelier"),
+      decodedTasting.includes("Tasting request — NOIRÉ Atelier"),
     tastingHref.slice(0, 120)
   );
 // ── Test 4: Product switcher ──────────────────────────────────────────
@@ -399,23 +399,27 @@ async function horizontalOffenders(page, scopeSel = "body *") {
       mailtoEvent: mailto?.getAttribute("data-noire-event") ?? "",
     };
   });
+  // P1 gate: phone/WhatsApp rows render ONLY when ATELIER_PHONE_CONFIGURED
+  // is true in src/lib/site.ts. While the placeholder is unconfigured they
+  // must be ABSENT (no live links to a fake number); flip these assertions
+  // back to presence checks the day the real line goes live.
   check(
-    "tel: link uses E.164",
-    /^tel:\+\d{8,15}$/.test(contactLinks.telHref),
-    contactLinks.telHref || "(missing)"
+    "tel: correctly absent while placeholder unconfigured",
+    contactLinks.telHref === "",
+    contactLinks.telHref.slice(0, 40) || "(absent as intended)"
   );
   check(
-    "WhatsApp link uses wa.me + E.164",
-    /^https:\/\/wa\.me\/\d{8,15}\?text=/.test(contactLinks.waHref),
-    contactLinks.waHref.slice(0, 90) || "(missing)"
+    "WhatsApp correctly absent while placeholder unconfigured",
+    contactLinks.waHref === "",
+    contactLinks.waHref.slice(0, 90) || "(absent as intended)"
   );
   check(
     "Footer concierge mailto present",
     contactLinks.mailtoHref.startsWith("mailto:concierge@noire-chocolate.com"),
     contactLinks.mailtoHref.slice(0, 70) || "(missing)"
   );
-  check("phone_click analytics wired", contactLinks.telEvent === "phone_click");
-  check("whatsapp_click analytics wired", contactLinks.waEvent === "whatsapp_click");
+  check("phone_click analytics unwired while absent", contactLinks.telEvent === "");
+  check("whatsapp_click analytics unwired while absent", contactLinks.waEvent === "");
   check("contact_click analytics wired", contactLinks.mailtoEvent === "contact_click");
 
   // ── Test 6: Chocolate Room modal ──────────────────────────────────────
@@ -542,8 +546,8 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     await wait(400);
     check(`${tag} — menu opens`, menuTrigger);
     const menuVisible = await page.evaluate(() =>
-      Array.from(document.querySelectorAll("button")).some((b) =>
-        b.textContent.includes("Reserve Collection")
+      Array.from(document.querySelectorAll("#noire-mobile-menu button")).some((b) =>
+        b.textContent.includes("The Craving")
       )
     );
     check(`${tag} — menu contents visible`, menuVisible);
@@ -554,10 +558,11 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     );
     check(`${tag} — menu toggle aria-expanded=true`, expanded === "true", expanded ?? "(missing)");
 
-    // Menu navigates + auto-closes
+    // Menu navigates + auto-closes (P1 nav-unification: all eight canonical
+    // chapters; target via data attribute, not positional index)
     await page.evaluate(() => {
-      const btn = Array.from(document.querySelectorAll("button")).find((b) =>
-        b.textContent.includes("Sensory Notes")
+      const btn = document.querySelector(
+        '#noire-mobile-menu button[data-noire-target="#act-6"]'
       );
       if (btn) btn.click();
     });
@@ -703,7 +708,8 @@ async function horizontalOffenders(page, scopeSel = "body *") {
   );
 
   const cssMotion = await page.evaluate(() => {
-    const el = document.querySelector(".animate-bounce");
+    // Probe the Act I scroll cue (animate-drift; legacy animate-bounce).
+    const el = document.querySelector(".animate-drift, .animate-bounce");
     if (!el) return "no-element";
     return getComputedStyle(el).animationDuration;
   });

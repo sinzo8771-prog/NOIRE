@@ -41,7 +41,7 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
     >
       <div className="space-y-10">
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-          Act VI &bull; Sensory Progression
+          Act VI &bull; Sensory Progression <span className="opacity-60">&middot; 06 / 08</span>
         </span>
 
         <ol className="border-t border-[#342015]">

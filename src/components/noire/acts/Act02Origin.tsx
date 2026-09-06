@@ -12,7 +12,7 @@ export function Act02Origin() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-6 space-y-8">
           <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-            Act II &bull; Origin & Canopy
+            Act II &bull; Origin & Canopy <span className="opacity-60">&middot; 02 / 08</span>
           </span>
           <h2 className="font-display text-4xl sm:text-6xl font-normal text-[#F3E8D3] leading-tight">
             Where the wild pod awakens.

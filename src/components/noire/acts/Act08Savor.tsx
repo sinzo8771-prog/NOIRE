@@ -18,7 +18,7 @@ export function Act08Savor({ onOpenRoom }: Act08SavorProps) {
     >
       <div className="space-y-8 p-8 sm:p-12 bg-[#080604]/80 border border-[#342015] backdrop-blur-md rounded-[2px]">
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-          Act VIII &bull; Epilogue
+          Act VIII &bull; Epilogue <span className="opacity-60">&middot; 08 / 08</span>
         </span>
         <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal text-[#F3E8D3] leading-tight">
           Some things deserve

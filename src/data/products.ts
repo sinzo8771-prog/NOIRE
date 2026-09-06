@@ -13,13 +13,11 @@ export interface TastingMetric {
  * The brand advertises a long, unhurried stone-conche process across Act III
  * (headline + process strip), the footer nav link, and the Chocolate Room
  * flight name. Each of those strings previously duplicated the same numbers
- * independently, creating a risk of P0.3-style contradiction: the product data
- * ("Low-temperature 48h conche") vs. the headline ("72 hours").
+ * independently; they are centralised here so a reconciling edit touches
+ * exactly one constant instead of four files.
  *
- * Until the owner confirms the exact model, these strings are centralised here
- * so a reconciling edit touches exactly one constant instead of four files.
- * When P0.3 is resolved, update CONC_DURATION_HOURS and CONC_LINE and every
- * consumer follows automatically.
+ * Resolved 2026-09-06 (owner ruling): 72 hours wins. The per-product
+ * roastProfile below matches the headline.
  */
 export const CONC_PROCESS = {
   /** Headline claim — used in Act III <h2> and Chocolate Room flight name. */
@@ -60,7 +58,7 @@ export const PRODUCTS: Product[] = [
     weight: "80g",
     origin: "Tumaco, Colombia",
     harvest: "Winter 2025 Micro-Lot",
-    roastProfile: "Low-temperature 48h conche",
+    roastProfile: "Low-temperature 72-hour conche",
     description:
       "A resolute, pure bar born from deep Colombian rainforest canopy. Characterized by earthen tobacco warmth, dried figs, and an unhurried, satin melt.",
     tastingNotes: ["Black Currant", "Leather & Oak", "Dried Plum", "Dark Molasses"],

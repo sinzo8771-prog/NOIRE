@@ -20,6 +20,7 @@ export type NoireEventName =
   | "product_selected"
   | "chocolate_room_open"
   | "contact_click"
+  | "concierge_copy_click"
   | "whatsapp_click"
   | "phone_click";
 

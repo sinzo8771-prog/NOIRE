@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Volume2, VolumeX, Mail, Menu, X, Accessibility } from "lucide-react";
-import { mailtoLink } from "@/lib/site";
+import { mailtoLink, CONCIERGE_EMAIL } from "@/lib/site";
+import { ACTS, actNumeral } from "@/data/acts";
+import { CopyEmailButton, CONCIERGE_REPLY_PROMISE } from "./ConciergeContact";
 import {
   useReducedMotion,
   MOTION_PREF_KEY,
@@ -10,17 +12,21 @@ import {
 } from "@/hooks/useReducedMotion";
 
 const CONCIERGE_MAILTO = mailtoLink(
-  "Request a Tasting — NOIRÉ Atelier",
-  "Hello NOIRÉ concierge,\\n\\nI would like to request a private tasting at the atelier.\\n\\nPreferred dates:\\nParty size:\\n\\nThank you."
+  "Tasting request — NOIRÉ Atelier",
+  "Hello NOIRÉ concierge,\n\nI would like to request a private tasting at the atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
 );
 
 const MOBILE_MENU_ID = "noire-mobile-menu";
 
+// P1 nav-unification: the header keeps four grouped anchors for space, but
+// each one names the chapters it covers (title tooltip) and its active range
+// spans exactly those chapters — all eight acts stay lit somewhere, including
+// Savor. Mobile overlay, footer, and rail list all eight canonical chapters.
 const NAV_ITEMS = [
-  { label: "Origin", target: "act-2" },
-  { label: "Craft", target: "act-4" },
-  { label: "Sensory", target: "act-6" },
-  { label: "Collection", target: "act-7" },
+  { label: "Origin", target: "act-2", acts: "Chapters 02–03 · Origin & Transformation", min: 2, max: 3 },
+  { label: "Craft", target: "act-4", acts: "Chapters 04–05 · The Chocolate & The Break", min: 4, max: 5 },
+  { label: "Sensory", target: "act-6", acts: "Chapter 06 · Sensory", min: 6, max: 6 },
+  { label: "Collection", target: "act-7", acts: "Chapters 07–08 · Collection & Savor", min: 7, max: 8 },
 ];
 
 interface NoireNavigationProps {
@@ -62,18 +68,9 @@ export function NoireNavigation({
   }, []);
 
   const isActiveFor = (target: string): boolean => {
-    switch (target) {
-      case "act-2":
-        return activeAct >= 1 && activeAct <= 3;
-      case "act-4":
-        return activeAct === 4 || activeAct === 5;
-      case "act-6":
-        return activeAct === 6;
-      case "act-7":
-        return activeAct === 7;
-      default:
-        return false;
-    }
+    const item = NAV_ITEMS.find((i) => i.target === target);
+    if (!item) return false;
+    return activeAct >= item.min && activeAct <= item.max;
   };
 
   const scrollToSection = (id: string) => {
@@ -168,10 +165,11 @@ return (
                 key={item.label}
                 type="button"
                 onClick={() => scrollToSection(item.target)}
+                title={item.acts}
                 data-noire-event="navigation_click"
                 data-noire-label={`nav ${item.label.toLowerCase()}`}
                 data-noire-target={`#${item.target}`}
-                className={`transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] ${
+                className={`py-2 transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] ${
                   isActiveFor(item.target) ? "text-[#F3E8D3] font-medium" : ""
                 }`}
               >
@@ -230,6 +228,7 @@ return (
               href={CONCIERGE_MAILTO}
               data-noire-event="request_tasting_click"
               data-noire-label="nav request a tasting"
+              title={`Request a tasting — ${CONCIERGE_REPLY_PROMISE}`}
               className="relative flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-[#F3E8D3] bg-[#1A100B] hover:bg-[#261710] border border-[#342015] hover:border-[#9B6742] px-3.5 py-1.5 rounded-[2px] transition-all duration-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
               aria-label="Request a tasting with the NOIRÉ concierge by email"
             >
@@ -237,6 +236,13 @@ return (
               <span className="tracking-wider hidden sm:inline">Request a Tasting</span>
               <span className="tracking-wider sm:hidden">Request</span>
             </a>
+
+            {/* P1 handoff fallback: copy the address when no mail app exists.
+                Tucked beside the CTA on larger screens; the mobile menu and
+                footer carry the full fallback block. */}
+            <span className="hidden lg:inline-flex">
+              <CopyEmailButton label="nav request a tasting" />
+            </span>
 
             {/* Mobile Menu Toggle */}
             <button
@@ -261,64 +267,43 @@ return (
           id={MOBILE_MENU_ID}
           className="fixed inset-0 z-30 bg-[#080604]/98 flex flex-col justify-center px-10 md:hidden animate-in fade-in-0 duration-300"
         >
-          <nav className="flex flex-col space-y-6 text-xl tracking-widest font-display text-[#F3E8D3]">
-            <button
-              type="button"
-              onClick={() => scrollToSection("act-1")}
-              data-noire-event="navigation_click"
-              data-noire-label="mobile the craving"
-              data-noire-target="#act-1"
-              className="text-left hover:text-[#9B6742] transition-colors"
-            >
-              01 &mdash; The Craving
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection("act-2")}
-              data-noire-event="navigation_click"
-              data-noire-label="mobile origin & cacao"
-              data-noire-target="#act-2"
-              className="text-left hover:text-[#9B6742] transition-colors"
-            >
-              02 &mdash; Origin & Cacao
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection("act-3")}
-              data-noire-event="navigation_click"
-              data-noire-label="mobile transformation"
-              data-noire-target="#act-3"
-              className="text-left hover:text-[#9B6742] transition-colors"
-            >
-              03 &mdash; Transformation
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection("act-6")}
-              data-noire-event="navigation_click"
-              data-noire-label="mobile sensory notes"
-              data-noire-target="#act-6"
-              className="text-left hover:text-[#9B6742] transition-colors"
-            >
-              04 &mdash; Sensory Notes
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection("act-7")}
-              data-noire-event="navigation_click"
-              data-noire-label="mobile reserve collection"
-              data-noire-target="#act-7"
-              className="text-left hover:text-[#9B6742] transition-colors text-[#9B6742]"
-            >
-              05 &mdash; Reserve Collection
-            </button>
+          <nav className="flex flex-col space-y-1 text-xl tracking-widest font-display text-[#F3E8D3]" aria-label="Story chapters">
+            {ACTS.map((act) => (
+              <button
+                key={act.id}
+                type="button"
+                onClick={() => scrollToSection(act.target)}
+                data-noire-event="navigation_click"
+                data-noire-label={`mobile ${act.label.toLowerCase()}`}
+                data-noire-target={`#${act.target}`}
+                aria-current={activeAct === act.id ? "true" : undefined}
+                className={`text-left py-2 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] ${
+                  activeAct === act.id ? "text-[#9B6742]" : "hover:text-[#9B6742]"
+                }`}
+              >
+                {actNumeral(act.id)} &mdash; {act.label}
+              </button>
+            ))}
           </nav>
-          <div className="mt-12 pt-8 border-t border-[#342015] flex flex-col space-y-4">
+          <div className="mt-10 pt-8 border-t border-[#342015] flex flex-col space-y-4">
             <p className="text-xs uppercase tracking-widest text-[#F3E8D3]/50">
               Chocolate, Unhurried.
             </p>
-            <p className="text-[11px] text-[#F3E8D3]/40">
-              Hand-tempered single-origin artisan chocolate.
+            <a
+              href={CONCIERGE_MAILTO}
+              data-noire-event="request_tasting_click"
+              data-noire-label="mobile request a tasting"
+              className="inline-flex items-center space-x-2 text-sm uppercase tracking-widest text-[#F3E8D3] rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+            >
+              <Mail className="w-4 h-4 text-[#9B6742]" />
+              <span>Request a Tasting</span>
+            </a>
+            <p className="text-[11px] text-[#F3E8D3]/50">
+              <span>{CONCIERGE_EMAIL} · </span>
+              <CopyEmailButton label="mobile request a tasting" />
+              <span className="block mt-1 text-[#9B6742]/90 uppercase tracking-widest text-[10px]">
+                {CONCIERGE_REPLY_PROMISE}
+              </span>
             </p>
           </div>
         </div>
