@@ -2,7 +2,7 @@
 
 import { Separator } from "@/components/ui/separator";
 import { Mail, Phone, MessageCircle } from "lucide-react";
-import { PRODUCTS } from "@/data/products";
+import { PRODUCTS, CONC_PROCESS } from "@/data/products";
 import {
   mailtoLink,
   ATELIER_PHONE_DISPLAY,
@@ -50,7 +50,7 @@ export function NoireFooter() {
               </li>
               <li>
                 <a href="#act-3" className="hover:text-[#F3E8D3] transition-colors">
-                  The 72-Hour Conche
+                  {CONC_PROCESS.FOOTER_LABEL}
                 </a>
               </li>
               <li>
@@ -75,6 +75,8 @@ export function NoireFooter() {
               <li>
                 <a
                   href={mailtoLink("Hello NOIRÉ Atelier")}
+                  data-noire-event="contact_click"
+                  data-noire-label="concierge email"
                   className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
                 >
                   <Mail className="w-3.5 h-3.5 text-[#9B6742]" />
@@ -86,6 +88,7 @@ export function NoireFooter() {
               <li>
                 <a
                   href={`tel:${ATELIER_PHONE_E164}`}
+                  data-noire-event="phone_click"
                   className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#9B6742]" />
@@ -99,6 +102,7 @@ export function NoireFooter() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-noire-event="whatsapp_click"
                   className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
                 >
                   <MessageCircle className="w-3.5 h-3.5 text-[#9B6742]" />
@@ -108,6 +112,8 @@ export function NoireFooter() {
             </ul>
             <a
               href={tastingMailto}
+              data-noire-event="request_tasting_click"
+              data-noire-label="footer tasting booking"
               className="inline-block text-[10px] uppercase tracking-widest text-[#9B6742] underline underline-offset-4 hover:text-[#F3E8D3] transition-colors"
             >
               Tasting visits by advance appointment — book by email

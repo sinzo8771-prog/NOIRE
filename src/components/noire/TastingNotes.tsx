@@ -59,19 +59,45 @@ export function TastingNotes({ product }: TastingNotesProps) {
         </div>
       </div>
 
-      {/* Terroir & Origin Micro Details */}
-      <div className="pt-2 grid grid-cols-2 gap-4 text-[11px] border-t border-[#342015]/60">
-        <div>
-          <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
-            Terroir
-          </span>
-          <span className="text-[#F3E8D3]/90">{product.origin}</span>
+      {/* Terroir, Harvest, Process, Weight — compact evidence system (P1.4/P2.1) */}
+      <div className="pt-2 space-y-3 text-[11px] border-t border-[#342015]/60">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+          <div>
+            <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+              Terroir
+            </span>
+            <span className="text-[#F3E8D3]/90">{product.origin}</span>
+          </div>
+          <div>
+            <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+              Harvest
+            </span>
+            <span className="text-[#F3E8D3]/90">{product.harvest}</span>
+          </div>
+          <div>
+            <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+              Conche & Temper
+            </span>
+            <span className="text-[#F3E8D3]/90">{product.roastProfile}</span>
+          </div>
+          <div>
+            <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+              Weight
+            </span>
+            <span className="text-[#F3E8D3]/90">{product.weight}</span>
+          </div>
         </div>
         <div>
           <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
-            Conche & Temper
+            Ingredients
           </span>
-          <span className="text-[#F3E8D3]/90">{product.roastProfile}</span>
+          <span className="text-[#F3E8D3]/90">{product.ingredients.join(" · ")}</span>
+        </div>
+        <div>
+          <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+            Allergen
+          </span>
+          <span className="text-[#F3E8D3]/80">{product.allergens}</span>
         </div>
       </div>
     </div>

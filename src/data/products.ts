@@ -6,6 +6,32 @@ export interface TastingMetric {
 // NOTE: No price fields. NOIRÉ is a showcase/atelier site — availability and
 // pricing run through the concierge (see the "Request This Bar" mailto CTA in
 // ProductStage), not a checkout (Phase 3 of noire-website-plan.md).
+
+/**
+ * P6.3 — Single source of truth for the headline conche process claim.
+ *
+ * The brand advertises a long, unhurried stone-conche process across Act III
+ * (headline + process strip), the footer nav link, and the Chocolate Room
+ * flight name. Each of those strings previously duplicated the same numbers
+ * independently, creating a risk of P0.3-style contradiction: the product data
+ * ("Low-temperature 48h conche") vs. the headline ("72 hours").
+ *
+ * Until the owner confirms the exact model, these strings are centralised here
+ * so a reconciling edit touches exactly one constant instead of four files.
+ * When P0.3 is resolved, update CONC_DURATION_HOURS and CONC_LINE and every
+ * consumer follows automatically.
+ */
+export const CONC_PROCESS = {
+  /** Headline claim — used in Act III <h2> and Chocolate Room flight name. */
+  HEADLINE: "72-Hour Granite Conche",
+  /** Short phrase for the footer nav link. */
+  FOOTER_LABEL: "The 72-Hour Conche",
+  /** Duration string for the process strip step. */
+  DURATION: "72 hours uninterrupted",
+  /** Narrative duration — "three days and nights" in Act III prose. */
+  NARRATIVE: "three days and nights",
+} as const;
+
 export interface Product {
   id: string;
   name: string;
@@ -69,7 +95,7 @@ export const PRODUCTS: Product[] = [
       { label: "Velvet Body", value: 88 },
     ],
     ingredients: ["Ecuadorian Heirloom Cacao (70%)", "Raw Turbinado Sugar", "Cacao Butter", "Hand-harvested Sea Salt"],
-    allergens: "May contain trace traces of dairy from shared artisanal stone mills.",
+    allergens: "May contain traces of dairy from shared artisanal stone mills.",
     flavorAccent: "Brine & Wild Citrus",
     accentColor: "#A68A78",
     model: "/models/chocolate-bar.glb",
@@ -116,7 +142,7 @@ export const PRODUCTS: Product[] = [
       { label: "Sweetness", value: 50 },
       { label: "Velvet Body", value: 98 },
     ],
-    ingredients: ["Madagascar Cacao (55%)", "Grass-fed Whole Milk Powder", "Organic Cane Sugar", "Cocoa Butter"],
+    ingredients: ["Madagascar Cacao (55%)", "Grass-fed Whole Milk Powder", "Organic Cane Sugar", "Cacao Butter"],
     allergens: "Contains Milk.",
     flavorAccent: "Raspberry & Caramel Cream",
     accentColor: "#C29574",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Volume2, VolumeX, Mail, Menu, X, Accessibility } from "lucide-react";
 import { mailtoLink } from "@/lib/site";
 import {
@@ -11,8 +11,17 @@ import {
 
 const CONCIERGE_MAILTO = mailtoLink(
   "Request a Tasting — NOIRÉ Atelier",
-  "Hello NOIRÉ concierge,\n\nI would like to request a private tasting at the atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
+  "Hello NOIRÉ concierge,\\n\\nI would like to request a private tasting at the atelier.\\n\\nPreferred dates:\\nParty size:\\n\\nThank you."
 );
+
+const MOBILE_MENU_ID = "noire-mobile-menu";
+
+const NAV_ITEMS = [
+  { label: "Origin", target: "act-2" },
+  { label: "Craft", target: "act-4" },
+  { label: "Sensory", target: "act-6" },
+  { label: "Collection", target: "act-7" },
+];
 
 interface NoireNavigationProps {
   soundEnabled: boolean;
@@ -30,14 +39,13 @@ export function NoireNavigation({
 }: NoireNavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
-  // Effective cinematic-motion state (OS setting + visitor override)
   const reducedMotion = useReducedMotion();
 
   const toggleMotion = () => {
     try {
-      // Explicit override in BOTH directions so visitors on machines whose OS
-      // forces reduced motion can still opt into the cinematic scrubber.
       localStorage.setItem(MOTION_PREF_KEY, reducedMotion ? "on" : "off");
     } catch {
       // localStorage unavailable — toggle still affects this page load
@@ -53,10 +61,23 @@ export function NoireNavigation({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isActiveFor = (target: string): boolean => {
+    switch (target) {
+      case "act-2":
+        return activeAct >= 1 && activeAct <= 3;
+      case "act-4":
+        return activeAct === 4 || activeAct === 5;
+      case "act-6":
+        return activeAct === 6;
+      case "act-7":
+        return activeAct === 7;
+      default:
+        return false;
+    }
+  };
+
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-    // Prefer the Lenis-aware scroller passed down from the page so programmatic
-    // navigation honors the same smoothing/easing as wheel scrolling
     if (onNavigate) {
       onNavigate(id);
       return;
@@ -67,7 +88,52 @@ export function NoireNavigation({
     }
   };
 
-  return (
+  // P1.5 / P4.2 — accessible mobile menu: body scroll locked while open and
+  // restored on close; Escape closes; Tab focus trapped inside the menu;
+  // focus returns to the toggle button after close.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const firstItem = menuRef.current?.querySelector("button");
+    if (firstItem && document.activeElement !== toggleRef.current) {
+      (firstItem as HTMLButtonElement).focus();
+    }
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+        return;
+      }
+      if (e.key === "Tab") {
+        const focusables = Array.from(
+          menuRef.current?.querySelectorAll("button, a[href], [tabindex]") ?? []
+        ).filter((el: Element) => !el.hasAttribute("disabled"));
+        if (focusables.length === 0) return;
+        const first = focusables[0] as HTMLElement;
+        const last = focusables[focusables.length - 1] as HTMLElement;
+        const active = document.activeElement;
+        if (e.shiftKey && (active === first || active === toggleRef.current)) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      toggleRef.current?.focus();
+    };
+  }, [mobileMenuOpen]);
+return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-700 ${
@@ -84,7 +150,7 @@ export function NoireNavigation({
               e.preventDefault();
               scrollToSection("act-1");
             }}
-            className="group flex flex-col focus:outline-none focus:ring-1 focus:ring-[#9B6742]"
+            className="group flex flex-col focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px]"
             aria-label="NOIRÉ Home"
           >
             <span className="font-display text-2xl sm:text-3xl tracking-[0.25em] text-[#F3E8D3] font-normal transition-opacity duration-300 group-hover:text-[#F3E8D3]/80">
@@ -97,47 +163,31 @@ export function NoireNavigation({
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center space-x-10 text-xs tracking-widest-editorial uppercase text-[#F3E8D3]/60 font-sans">
-            <button
-              onClick={() => scrollToSection("act-2")}
-              className={`transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus:text-[#F3E8D3] ${
-                activeAct >= 1 && activeAct <= 3 ? "text-[#F3E8D3] font-medium" : ""
-              }`}
-            >
-              Origin
-            </button>
-            <button
-              onClick={() => scrollToSection("act-4")}
-              className={`transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus:text-[#F3E8D3] ${
-                activeAct === 4 || activeAct === 5 ? "text-[#F3E8D3] font-medium" : ""
-              }`}
-            >
-              Craft
-            </button>
-            <button
-              onClick={() => scrollToSection("act-6")}
-              className={`transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus:text-[#F3E8D3] ${
-                activeAct === 6 ? "text-[#F3E8D3] font-medium" : ""
-              }`}
-            >
-              Sensory
-            </button>
-            <button
-              onClick={() => scrollToSection("act-7")}
-              className={`transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus:text-[#F3E8D3] ${
-                activeAct === 7 ? "text-[#F3E8D3] font-medium" : ""
-              }`}
-            >
-              Collection
-            </button>
+            {NAV_ITEMS.map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => scrollToSection(item.target)}
+                data-noire-event="navigation_click"
+                data-noire-label={`nav ${item.label.toLowerCase()}`}
+                data-noire-target={`#${item.target}`}
+                className={`transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] ${
+                  isActiveFor(item.target) ? "text-[#F3E8D3] font-medium" : ""
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
           </nav>
-
-          {/* Right utility items */}
+{/* Right utility items */}
           <div className="flex items-center space-x-4 sm:space-x-6">
             {/* Audio Toggle */}
             <button
+              type="button"
               onClick={onToggleSound}
-              className="flex items-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus:ring-1 focus:ring-[#9B6742]"
               aria-label={soundEnabled ? "Mute ambient audio" : "Enable ambient audio"}
+              aria-pressed={soundEnabled}
+              className="flex items-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
             >
               {soundEnabled ? (
                 <>
@@ -152,10 +202,10 @@ export function NoireNavigation({
               )}
             </button>
 
-            {/* Cinematic motion toggle — visible opt-out/opt-in control (Phase 2) */}
+            {/* Cinematic motion toggle — visible opt-out/opt-in control */}
             <button
+              type="button"
               onClick={toggleMotion}
-              className="flex items-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus:ring-1 focus:ring-[#9B6742]"
               aria-pressed={reducedMotion}
               aria-label={
                 reducedMotion
@@ -163,6 +213,7 @@ export function NoireNavigation({
                   : "Disable cinematic scroll motion"
               }
               title="Cinematic scroll motion"
+              className="flex items-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
             >
               <Accessibility
                 className={`w-3.5 h-3.5 ${
@@ -174,22 +225,28 @@ export function NoireNavigation({
               </span>
             </button>
 
-            {/* Concierge inquiry CTA — replaces the decorative cart (Phase 3) */}
+            {/* Concierge inquiry CTA — one Request vocabulary (P1.6) */}
             <a
               href={CONCIERGE_MAILTO}
-              className="relative flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-[#F3E8D3] bg-[#1A100B] hover:bg-[#261710] border border-[#342015] hover:border-[#9B6742] px-3.5 py-1.5 rounded-[2px] transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-[#9B6742]"
+              data-noire-event="request_tasting_click"
+              data-noire-label="nav request a tasting"
+              className="relative flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-[#F3E8D3] bg-[#1A100B] hover:bg-[#261710] border border-[#342015] hover:border-[#9B6742] px-3.5 py-1.5 rounded-[2px] transition-all duration-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
               aria-label="Request a tasting with the NOIRÉ concierge by email"
             >
               <Mail className="w-3.5 h-3.5 text-[#9B6742]" />
               <span className="tracking-wider hidden sm:inline">Request a Tasting</span>
-              <span className="tracking-wider sm:hidden">Inquire</span>
+              <span className="tracking-wider sm:hidden">Request</span>
             </a>
 
             {/* Mobile Menu Toggle */}
             <button
+              ref={toggleRef}
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 text-[#F3E8D3]/80 hover:text-[#F3E8D3] focus:outline-none"
+              className="md:hidden p-1.5 text-[#F3E8D3]/80 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px]"
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls={MOBILE_MENU_ID}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -199,34 +256,58 @@ export function NoireNavigation({
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-30 bg-[#080604]/98 flex flex-col justify-center px-10 md:hidden animate-in fade-in-0 duration-300">
+<div
+          ref={menuRef}
+          id={MOBILE_MENU_ID}
+          className="fixed inset-0 z-30 bg-[#080604]/98 flex flex-col justify-center px-10 md:hidden animate-in fade-in-0 duration-300"
+        >
           <nav className="flex flex-col space-y-6 text-xl tracking-widest font-display text-[#F3E8D3]">
             <button
+              type="button"
               onClick={() => scrollToSection("act-1")}
+              data-noire-event="navigation_click"
+              data-noire-label="mobile the craving"
+              data-noire-target="#act-1"
               className="text-left hover:text-[#9B6742] transition-colors"
             >
               01 &mdash; The Craving
             </button>
             <button
+              type="button"
               onClick={() => scrollToSection("act-2")}
+              data-noire-event="navigation_click"
+              data-noire-label="mobile origin & cacao"
+              data-noire-target="#act-2"
               className="text-left hover:text-[#9B6742] transition-colors"
             >
               02 &mdash; Origin & Cacao
             </button>
             <button
+              type="button"
               onClick={() => scrollToSection("act-3")}
+              data-noire-event="navigation_click"
+              data-noire-label="mobile transformation"
+              data-noire-target="#act-3"
               className="text-left hover:text-[#9B6742] transition-colors"
             >
               03 &mdash; Transformation
             </button>
             <button
+              type="button"
               onClick={() => scrollToSection("act-6")}
+              data-noire-event="navigation_click"
+              data-noire-label="mobile sensory notes"
+              data-noire-target="#act-6"
               className="text-left hover:text-[#9B6742] transition-colors"
             >
               04 &mdash; Sensory Notes
             </button>
             <button
+              type="button"
               onClick={() => scrollToSection("act-7")}
+              data-noire-event="navigation_click"
+              data-noire-label="mobile reserve collection"
+              data-noire-target="#act-7"
               className="text-left hover:text-[#9B6742] transition-colors text-[#9B6742]"
             >
               05 &mdash; Reserve Collection
@@ -245,5 +326,3 @@ export function NoireNavigation({
     </>
   );
 }
-
-

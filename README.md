@@ -8,8 +8,10 @@ The page tells the story in eight "acts" — from wild cacao canopy to hand-temp
 
 - Cinematic frames ship as **WebP** (`public/frames/webp/`, 192 desktop frames ≈ 6.5 MB) with a **mobile manifest** (`public/frames/webp-mobile/`, every 3rd frame ≈ 1.2 MB) selected by viewport width at runtime.
 - Frames load progressively: first ~10 at full priority, the rest streamed with bounded concurrency during browser idle time.
-- `three.js`/`react-three-fiber` are **async chunks**: the 3D product viewer mounts when Act VII nears the viewport; the ambient particle layer mounts during idle time after first paint.
+- `three.js`/`react-three-fiber` are **async chunks**: the 3D product viewer mounts when Act VII nears the viewport; the ambient particle layer mounts during idle time after first paint. The 3D viewer has a static WebGL fallback (no WebGL / context loss / load failure).
 - `prefers-reduced-motion` disables Lenis smoothing, canvas scrubbing, particles, and CSS motion; a "Skip to content" link is the first focusable element.
+- SEO: `robots.txt`, `sitemap.xml`, web manifest, Apple touch icon, canonical, OG/Twitter metadata (all self-hosted).
+- Analytics: a zero-dependency event layer (`src/lib/analytics.ts`) records business-interaction events (`navigation_click`, `request_tasting_click`, `request_bar_click`, `product_selected`, `chocolate_room_open`, `contact_click`, `whatsapp_click`, `phone_click`) into `window.__NOIRE_EVENTS__` / `noire:track` for a future analytics vendor.
 - Long-lived immutable cache headers for frames/models via `vercel.json`.
 
 ## Getting Started
@@ -34,7 +36,7 @@ npm start
 |---|---|
 | `npm run dev` / `build` / `start` / `lint` | Standard Next.js workflows |
 | `node scripts/convert-frames.mjs [--clean]` | Regenerate WebP frame sets + `public/og-image.jpg` from raw JPGs |
-| `node scripts/test-browser.js` | Full Puppeteer regression suite (requires Chrome + server on :3000) |
+| `node scripts/test-browser.js` | Full Puppeteer regression suite (8 groups / 127 checks: boot, acts, nav, product switcher, concierge CTAs, modal, mobile + viewport sweep, reduced motion, keyboard, analytics). Screenshots → `probe-artifacts/browser-regression/`. Requires Chrome + server on :3000 |
 | `node scripts/verify-fixes.js` | Targeted checks: fonts, navigation, animations plugin |
 | `node scripts/probe-overflow.js` | Detect horizontal overflow offenders at mobile width |
 | `node scripts/generate-models.js` | Regenerate the `.glb` product models in `public/models/` |
@@ -46,11 +48,12 @@ src/
   app/            # App Router: layout, page, global styles, robots.ts, sitemap.xml
   components/
     noire/        # Site sections & UI: navigation, modals, canvas, product stage
+    noire/acts/   # The eight cinematic acts (P6.1 decomposition of page.tsx)
     ui/           # shadcn-style primitives (button, dialog, sheet, …)
   three/          # react-three-fiber components (Particles + lazy 3D viewer)
   hooks/          # useAudio, useDeviceCapability, useReducedMotion
   data/           # Product catalog (no prices — concierge model)
-  lib/            # cn() + site config (contact links, OG metadata)
+  lib/            # cn(), site config, analytics event layer
 public/
   frames/         # WebP cinematic scroll frames (webp/ desktop, webp-mobile/ mobile)
   models/         # GLB product models

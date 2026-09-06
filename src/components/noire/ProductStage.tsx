@@ -8,6 +8,7 @@ import { TastingNotes } from "./TastingNotes";
 import { Button } from "@/components/ui/button";
 import { Mail, Sparkles } from "lucide-react";
 import { mailtoLink } from "@/lib/site";
+import { useDeviceCapability } from "@/hooks/useDeviceCapability";
 
 // The 3D viewer (three.js + drei + GLB loader) is a separate async chunk that
 // only downloads once the section approaches the viewport (Phase 1.2).
@@ -31,6 +32,9 @@ export function ProductStage({
 }: ProductStageProps) {
   const viewerAreaRef = useRef<HTMLDivElement | null>(null);
   const [viewerNear, setViewerNear] = useState(false);
+  // P5.4 — devices without WebGL never pay for the 3D chunk and instead get a
+  // static reserve-bar visual + the product information + Request This Bar CTA.
+  const { hasWebGL } = useDeviceCapability();
 
   // Activate the heavy 3D viewer only when Act VII is within ~400px of the
   // viewport — below-the-fold visitors never pay for it (Phase 1.2).
@@ -67,14 +71,19 @@ export function ProductStage({
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        {/* Left: 3D Product Canvas */}
+        {/* Left: 3D Product Canvas (WebGL fallback below if unavailable) */}
         <div className="lg:col-span-6" ref={viewerAreaRef}>
           <div className="w-full h-[380px] sm:h-[460px]">
             {viewerNear ? (
-              <Product3DViewer
-                modelPath={selectedProduct.model}
-                productName={selectedProduct.name}
-              />
+              hasWebGL ? (
+                <Product3DViewer
+                  modelPath={selectedProduct.model}
+                  productName={selectedProduct.name}
+                  productWeight={selectedProduct.weight}
+                />
+              ) : (
+                <StaticReservePreview product={selectedProduct} />
+              )
             ) : (
               <div className="w-full h-full flex items-center justify-center border border-[#342015] rounded-[2px] bg-[#0F0A07] text-[#F3E8D3]/30 text-[10px] uppercase tracking-widest">
                 Reserve bar preview
@@ -83,8 +92,13 @@ export function ProductStage({
           </div>
         </div>
 
-        {/* Right: Product Narrative & Tasting Notes */}
-        <div className="lg:col-span-6 space-y-8">
+        {/* Right: Product Narrative & Tasting Notes (tabpanel for the tabs) */}
+        <div
+          id="noire-product-panel"
+          role="tabpanel"
+          aria-labelledby={`tab-${selectedProduct.id}`}
+          className="lg:col-span-6 space-y-8"
+        >
           <div className="space-y-3">
             <div className="flex items-center space-x-2 text-[#9B6742] text-[11px] uppercase tracking-widest font-sans">
               <Sparkles className="w-3 h-3" />
@@ -118,6 +132,8 @@ export function ProductStage({
             <Button asChild>
               <a
                 href={inquiryHref}
+                data-noire-event="request_bar_click"
+                data-noire-product={selectedProduct.id}
                 className="h-12 px-8 text-xs uppercase tracking-widest-editorial flex items-center justify-center space-x-2 bg-[#F3E8D3] hover:bg-[#DEC3A9] text-[#080604]"
               >
                 <Mail className="w-4 h-4" />
@@ -127,6 +143,31 @@ export function ProductStage({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+/**
+ * P5.4 — static fallback shown when WebGL is unavailable or the 3D viewer
+ * fails. Product information and the Request This Bar CTA always remain
+ * reachable beside this visual.
+ */
+function StaticReservePreview({ product }: { product: Product }) {
+  return (
+    <div
+      role="img"
+      aria-label={`${product.name} — static reserve bar rendering. Request via the concierge.`}
+      className="w-full h-full flex flex-col items-center justify-center gap-4 border border-[#342015] rounded-[2px] bg-gradient-to-b from-[#1A100B] to-[#0F0A07] text-center px-6"
+    >
+      <span className="font-display text-3xl sm:text-4xl tracking-[0.2em] text-[#F3E8D3]/90">
+        {product.name}
+      </span>
+      <span className="text-[10px] uppercase tracking-[0.3em] text-[#9B6742]">
+        {product.weight} &bull; {product.cacaoPercentage}% Cacao
+      </span>
+      <span className="text-[10px] uppercase tracking-widest text-[#F3E8D3]/40 max-w-[240px] leading-relaxed">
+        The 3D reserve visual is unavailable on this device &mdash; request the
+        bar directly below.
+      </span>
     </div>
   );
 }

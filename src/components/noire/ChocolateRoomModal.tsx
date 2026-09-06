@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { Sparkles, Calendar, Clock, MapPin, CheckCircle2 } from "lucide-react";
 import { mailtoLink } from "@/lib/site";
+import { CONC_PROCESS } from "@/data/products";
 
 interface ChocolateRoomModalProps {
   isOpen: boolean;
@@ -31,7 +32,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
     },
     {
       id: "botanical-conche",
-      name: "72-Hour Conche Transformation",
+      name: `${CONC_PROCESS.HEADLINE} Transformation`,
       desc: "Experience warm untempered liquor directly from granite stone melangeurs.",
       duration: "45 Minutes",
     },
@@ -57,7 +58,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-xl border border-[#342015] bg-[#0E0906] text-[#F3E8D3] p-8">
+      <DialogContent className="max-w-xl border border-[#342015] bg-[#0E0906] text-[#F3E8D3] p-8 max-h-[85vh] overflow-y-auto">
         <DialogHeader className="space-y-2">
           <div className="flex items-center space-x-2 text-[#9B6742] text-[10px] uppercase tracking-widest font-sans">
             <Sparkles className="w-3.5 h-3.5" />
@@ -135,6 +136,8 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
               </Button>
               <Button
                 onClick={handleBook}
+                data-noire-event="request_tasting_click"
+                data-noire-label="chocolate room reservation"
                 className="bg-[#9B6742] hover:bg-[#835534] text-[#F3E8D3] text-xs uppercase tracking-widest-editorial px-8 whitespace-normal"
               >
                 Reserve Tasting
