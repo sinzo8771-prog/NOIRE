@@ -1,8 +1,20 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
+import { Mail, Phone, MessageCircle } from "lucide-react";
+import { PRODUCTS } from "@/data/products";
+import {
+  mailtoLink,
+  ATELIER_PHONE_DISPLAY,
+  ATELIER_PHONE_E164,
+} from "@/lib/site";
 
 export function NoireFooter() {
+  const tastingMailto = mailtoLink(
+    "Tasting Appointment — NOIRÉ Atelier",
+    "Hello NOIRÉ concierge,\n\nI would like to book a tasting visit at the Fort atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
+  );
+
   return (
     <footer className="relative bg-[#050302] border-t border-[#342015]/40 text-[#F3E8D3] pt-24 pb-16 px-6 sm:px-12 z-20">
       <div className="max-w-7xl mx-auto space-y-16">
@@ -58,13 +70,97 @@ export function NoireFooter() {
               18 Ropewalk Lane, Heritage Arts District
               <br />
               Fort, Mumbai 400 001
-              <br />
-              concierge@noire-chocolate.com
             </p>
-            <p className="text-[10px] uppercase tracking-widest text-[#F3E8D3]/40 pt-2">
-              Tasting visits by advance appointment
-            </p>
+            <ul className="space-y-2.5 text-xs text-[#F3E8D3]/70">
+              <li>
+                <a
+                  href={mailtoLink("Hello NOIRÉ Atelier")}
+                  className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5 text-[#9B6742]" />
+                  <span>concierge@noire-chocolate.com</span>
+                </a>
+              </li>
+              {/* TODO(owner): replace the placeholder atelier line in
+                  src/lib/site.ts with the real number before launch. */}
+              <li>
+                <a
+                  href={`tel:${ATELIER_PHONE_E164}`}
+                  className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#9B6742]" />
+                  <span>{ATELIER_PHONE_DISPLAY}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://wa.me/${ATELIER_PHONE_E164.replace("+", "")}?text=${encodeURIComponent(
+                    "Hello NOIRÉ — I'd like to arrange a tasting visit."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-[#9B6742]" />
+                  <span>WhatsApp the atelier</span>
+                </a>
+              </li>
+            </ul>
+            <a
+              href={tastingMailto}
+              className="inline-block text-[10px] uppercase tracking-widest text-[#9B6742] underline underline-offset-4 hover:text-[#F3E8D3] transition-colors"
+            >
+              Tasting visits by advance appointment — book by email
+            </a>
           </div>
+        </div>
+
+        {/* Real content behind the two former dead links (Phase 3) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <section
+            id="allergen-declarations"
+            className="space-y-4 p-6 border border-[#342015]/60 bg-[#0A0705] rounded-[2px] scroll-mt-28"
+          >
+            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#9B6742]">
+              Allergen Declarations
+            </h4>
+            <ul className="space-y-3 text-xs text-[#F3E8D3]/60 leading-relaxed">
+              {PRODUCTS.map((p) => (
+                <li key={p.id} className="space-y-0.5">
+                  <span className="block text-[#F3E8D3]/80 uppercase tracking-wider text-[10px]">
+                    {p.name} — {p.cacaoPercentage}%
+                  </span>
+                  <span>{p.allergens}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-[10px] text-[#F3E8D3]/40 leading-relaxed">
+              Full ingredient lists are printed on every wrapper. If you live
+              with severe allergies, write to the concierge before a tasting
+              visit — flights are prepared to order.
+            </p>
+          </section>
+
+          <section
+            id="direct-trade"
+            className="space-y-4 p-6 border border-[#342015]/60 bg-[#0A0705] rounded-[2px] scroll-mt-28"
+          >
+            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#9B6742]">
+              Direct Trade Transparency
+            </h4>
+            <p className="text-xs text-[#F3E8D3]/60 leading-relaxed">
+              We buy directly from agroforestry smallholder cooperatives in
+              Tumaco (Colombia), Esmeraldas (Ecuador) and the Sambirano Valley
+              (Madagascar) on multi-year fixed-price contracts — growers are
+              paid well above commodity market rate, and every harvest lot in
+              the Reserve Collection is traceable to a single estate and
+              fermentation batch.
+            </p>
+            <p className="text-xs text-[#F3E8D3]/60 leading-relaxed">
+              Questions about a specific bar? The concierge will share the
+              harvest and fermentation records for any lot on request.
+            </p>
+          </section>
         </div>
 
         <Separator className="bg-[#342015]/40" />
@@ -76,11 +172,17 @@ export function NoireFooter() {
             Chocolate, Unhurried.
           </p>
           <div className="flex space-x-6 text-[11px]">
-            <span className="hover:text-[#F3E8D3]/70 cursor-pointer">Allergen Declarations</span>
-            <span className="hover:text-[#F3E8D3]/70 cursor-pointer">Direct Trade Transparency</span>
+            <a href="#allergen-declarations" className="hover:text-[#F3E8D3]/70 transition-colors">
+              Allergen Declarations
+            </a>
+            <a href="#direct-trade" className="hover:text-[#F3E8D3]/70 transition-colors">
+              Direct Trade Transparency
+            </a>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
+

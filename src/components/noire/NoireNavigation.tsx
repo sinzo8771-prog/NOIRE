@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Volume2, VolumeX, ShoppingBag, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Volume2, VolumeX, Mail, Menu, X } from "lucide-react";
+import { mailtoLink } from "@/lib/site";
+
+const CONCIERGE_MAILTO = mailtoLink(
+  "Request a Tasting — NOIRÉ Atelier",
+  "Hello NOIRÉ concierge,\n\nI would like to request a private tasting at the atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
+);
 
 interface NoireNavigationProps {
-  cartCount: number;
-  onOpenCart: () => void;
   soundEnabled: boolean;
   onToggleSound: () => void;
   activeAct: number;
@@ -15,8 +18,6 @@ interface NoireNavigationProps {
 }
 
 export function NoireNavigation({
-  cartCount,
-  onOpenCart,
   soundEnabled,
   onToggleSound,
   activeAct,
@@ -132,18 +133,16 @@ export function NoireNavigation({
               )}
             </button>
 
-            {/* Shopping Bag Trigger */}
-            <button
-              onClick={onOpenCart}
+            {/* Concierge inquiry CTA — replaces the decorative cart (Phase 3) */}
+            <a
+              href={CONCIERGE_MAILTO}
               className="relative flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-[#F3E8D3] bg-[#1A100B] hover:bg-[#261710] border border-[#342015] hover:border-[#9B6742] px-3.5 py-1.5 rounded-[2px] transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-[#9B6742]"
-              aria-label={`Open shopping bag with ${cartCount} items`}
+              aria-label="Request a tasting with the NOIRÉ concierge by email"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#9B6742]" />
-              <span className="tracking-wider">Bag</span>
-              <span className="flex items-center justify-center h-4 min-w-[16px] px-1 bg-[#9B6742] text-[#F3E8D3] text-[10px] font-medium rounded-full">
-                {cartCount}
-              </span>
-            </button>
+              <Mail className="w-3.5 h-3.5 text-[#9B6742]" />
+              <span className="tracking-wider hidden sm:inline">Request a Tasting</span>
+              <span className="tracking-wider sm:hidden">Inquire</span>
+            </a>
 
             {/* Mobile Menu Toggle */}
             <button
@@ -205,3 +204,5 @@ export function NoireNavigation({
     </>
   );
 }
+
+

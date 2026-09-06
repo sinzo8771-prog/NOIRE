@@ -1,23 +1,28 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import Lenis from "lenis";
 import { NoireNavigation } from "@/components/noire/NoireNavigation";
 import { StoryProgress } from "@/components/noire/StoryProgress";
 import { NoireCursor } from "@/components/noire/NoireCursor";
-import { NoireCart } from "@/components/noire/NoireCart";
 import { ChocolateRoomModal } from "@/components/noire/ChocolateRoomModal";
 import { ProductStage } from "@/components/noire/ProductStage";
 import { NoireFooter } from "@/components/noire/NoireFooter";
 import { CinematicScrollCanvas } from "@/components/noire/CinematicScrollCanvas";
-import { Canvas } from "@react-three/fiber";
-import { Particles } from "@/three/Particles";
 import { PRODUCTS, Product } from "@/data/products";
-import { useCart } from "@/hooks/useCart";
 import { useAudio } from "@/hooks/useAudio";
 import { useDeviceCapability } from "@/hooks/useDeviceCapability";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+// three.js / react-three-fiber live in this async chunk only — it is mounted
+// during idle time after first paint and skipped entirely under reduced motion
+const AmbientParticles = dynamic(
+  () => import("@/components/noire/AmbientParticles"),
+  { ssr: false }
+);
 
 export default function Home() {
   // Live scroll progress lives in a ref: the cinematic canvas reads it every
@@ -27,18 +32,8 @@ export default function Home() {
   const lenisRef = useRef<Lenis | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product>(PRODUCTS[0]);
   const [roomModalOpen, setRoomModalOpen] = useState(false);
-
-  const {
-    items: cartItems,
-    isOpen: cartOpen,
-    setIsOpen: setCartOpen,
-    addItem: addToCart,
-    updateQuantity,
-    removeItem,
-    clearCart,
-    totalCount: cartCount,
-    subtotal,
-  } = useCart();
+  const [showParticles, setShowParticles] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   const { soundEnabled, toggleSound, playSnap, playTick } = useAudio();
   const { particleCount } = useDeviceCapability();
@@ -50,8 +45,42 @@ export default function Home() {
     playSnapRef.current = playSnap;
   }, [playSnap]);
 
-  // Lenis smooth scroll setup and scroll tracking
+  const actFromProgress = (progress: number): number => {
+    if (progress < 0.12) return 1;
+    if (progress < 0.26) return 2;
+    if (progress < 0.42) return 3;
+    if (progress < 0.58) return 4;
+    if (progress < 0.72) return 5;
+    if (progress < 0.85) return 6;
+    if (progress < 0.94) return 7;
+    return 8;
+  };
+
+  // Scroll driver: Lenis smooth scrolling on the cinematic path; a passive
+  // native-scroll tracker when the user prefers reduced motion (Phase 2)
   useEffect(() => {
+    if (prefersReducedMotion) {
+      let prevAct = 1;
+      const onNativeScroll = () => {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - window.innerHeight;
+        const progress = max > 0 ? window.scrollY / max : 0;
+        scrollProgressRef.current = progress;
+
+        const nextAct = actFromProgress(progress);
+        if (nextAct !== prevAct) {
+          prevAct = nextAct;
+          setActiveAct(nextAct);
+          if (nextAct === 5) {
+            playSnapRef.current();
+          }
+        }
+      };
+      window.addEventListener("scroll", onNativeScroll, { passive: true });
+      onNativeScroll();
+      return () => window.removeEventListener("scroll", onNativeScroll);
+    }
+
     const lenis = new Lenis({
       duration: 1.6,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -73,24 +102,15 @@ export default function Home() {
       // Ref write only — the canvas loop consumes this without React
       scrollProgressRef.current = progress;
 
-      // Determine active act based on scroll progress
-      let currentAct: number;
-      if (progress < 0.12) currentAct = 1;
-      else if (progress < 0.26) currentAct = 2;
-      else if (progress < 0.42) currentAct = 3;
-      else if (progress < 0.58) currentAct = 4;
-      else if (progress < 0.72) currentAct = 5;
-      else if (progress < 0.85) currentAct = 6;
-      else if (progress < 0.94) currentAct = 7;
-      else currentAct = 8;
+      const nextAct = actFromProgress(progress);
 
       // Only re-render when the chapter actually changes, not every frame
-      if (currentAct !== prevAct) {
-        prevAct = currentAct;
-        setActiveAct(currentAct);
+      if (nextAct !== prevAct) {
+        prevAct = nextAct;
+        setActiveAct(nextAct);
 
         // Trigger snap sound effect when entering Act 5 (The Break)
-        if (currentAct === 5) {
+        if (nextAct === 5) {
           playSnapRef.current();
         }
       }
@@ -101,7 +121,29 @@ export default function Home() {
       lenis.destroy();
       lenisRef.current = null;
     };
-  }, []);
+  }, [prefersReducedMotion]);
+
+  // Ambient particle layer mounts during idle time after first paint; never
+  // under reduced motion (Phase 1.2 + Phase 2)
+  useEffect(() => {
+    if (prefersReducedMotion || particleCount <= 0) return;
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    let idleId: number | null = null;
+    let timeoutId: number | null = null;
+    const mount = () => setShowParticles(true);
+    if (typeof w.requestIdleCallback === "function") {
+      idleId = w.requestIdleCallback(mount, { timeout: 2500 });
+    } else {
+      timeoutId = window.setTimeout(mount, 1500);
+    }
+    return () => {
+      if (idleId !== null) w.cancelIdleCallback?.(idleId);
+      if (timeoutId !== null) window.clearTimeout(timeoutId);
+    };
+  }, [prefersReducedMotion, particleCount]);
 
   const scrollToSectionId = (sectionId: string) => {
     const elem = document.getElementById(sectionId);
@@ -115,7 +157,7 @@ export default function Home() {
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     } else {
-      elem.scrollIntoView({ behavior: "smooth" });
+      elem.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
   };
 
@@ -125,29 +167,23 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-[#080604] text-[#F3E8D3] selection:bg-[#9B6742] selection:text-[#F3E8D3]">
+      {/* Accessibility: jump straight to the story (Phase 2) */}
+      <a href="#act-1" className="skip-link">
+        Skip to content
+      </a>
+
       <NoireCursor />
 
       {/* Cinematic Frame-by-Frame Scrubbing Canvas Background */}
       <CinematicScrollCanvas progressRef={scrollProgressRef} totalFrames={192} />
 
-      {/* Floating 3D Atmospheric Cacao Particles Layer */}
-      {particleCount > 0 && (
-        <div className="fixed inset-0 pointer-events-none z-[1] w-full h-full">
-          <Canvas
-            camera={{ position: [0, 0, 8], fov: 45 }}
-            gl={{ alpha: true }}
-            className="w-full h-full"
-          >
-            <ambientLight intensity={0.5} />
-            <Particles count={particleCount} opacity={0.35} />
-          </Canvas>
-        </div>
+      {/* Floating 3D Atmospheric Cacao Particles Layer (idle-mounted lazy chunk) */}
+      {showParticles && particleCount > 0 && (
+        <AmbientParticles count={particleCount} />
       )}
 
       {/* Fixed Navigation Header */}
       <NoireNavigation
-        cartCount={cartCount}
-        onOpenCart={() => setCartOpen(true)}
         soundEnabled={soundEnabled}
         onToggleSound={toggleSound}
         activeAct={activeAct}
@@ -156,17 +192,6 @@ export default function Home() {
 
       {/* Story Chapter Navigation Bar */}
       <StoryProgress activeAct={activeAct} onSelectAct={scrollToAct} />
-
-      {/* Cart Drawer */}
-      <NoireCart
-        isOpen={cartOpen}
-        onClose={() => setCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={updateQuantity}
-        onRemoveItem={removeItem}
-        onClearCart={clearCart}
-        subtotal={subtotal}
-      />
 
       {/* The Chocolate Room Reservation Modal */}
       <ChocolateRoomModal
@@ -246,11 +271,11 @@ export default function Home() {
           </div>
 
           <div className="lg:col-span-6 flex justify-end">
-            <div className="p-8 border border-[#342015]/60 bg-[#0F0A07]/70 backdrop-blur-md max-w-sm space-y-3 rounded-[2px]">
+            <div className="space-y-4 max-w-sm bg-[#080604]/40 backdrop-blur-sm p-6 border-l border-[#342015] rounded-[2px]">
               <span className="text-[10px] uppercase tracking-widest text-[#9B6742]">
                 Terroir Note
               </span>
-              <p className="font-editorial text-sm italic text-[#F3E8D3]/80 leading-relaxed">
+              <p className="font-editorial italic text-sm text-[#F3E8D3]/70 leading-relaxed">
                 &ldquo;A cacao tree requires five seasons to produce its first harvest. We honor that patience by never accelerating the cure.&rdquo;
               </p>
             </div>
@@ -410,7 +435,7 @@ export default function Home() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          ACT VII — COLLECTION & COMMERCE
+          ACT VII — COLLECTION (showcase, not commerce)
       ───────────────────────────────────────────────────────────── */}
       <section
         id="act-7"
@@ -429,10 +454,6 @@ export default function Home() {
           <ProductStage
             selectedProduct={selectedProduct}
             onSelectProduct={setSelectedProduct}
-            onAddToCart={(product) => {
-              addToCart(product);
-              playTick();
-            }}
           />
         </div>
       </section>
@@ -476,3 +497,7 @@ export default function Home() {
     </main>
   );
 }
+
+
+
+

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Calendar, Clock, MapPin, CheckCircle2 } from "lucide-react";
+import { mailtoLink } from "@/lib/site";
 
 interface ChocolateRoomModalProps {
   isOpen: boolean;
@@ -13,30 +14,13 @@ interface ChocolateRoomModalProps {
 export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps) {
   const [selectedFlight, setSelectedFlight] = useState("grand-cru");
   const [confirmed, setConfirmed] = useState(false);
-  const confirmTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Reset confirmation state and clear any pending auto-close timer whenever
-  // the dialog is dismissed, so a stale timer can never slam a freshly
-  // reopened dialog shut
+  // Reset confirmation state whenever the dialog is dismissed
   useEffect(() => {
     if (!isOpen) {
-      if (confirmTimerRef.current) {
-        clearTimeout(confirmTimerRef.current);
-        confirmTimerRef.current = null;
-      }
       setConfirmed(false);
     }
   }, [isOpen]);
-
-  // Final cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (confirmTimerRef.current) {
-        clearTimeout(confirmTimerRef.current);
-        confirmTimerRef.current = null;
-      }
-    };
-  }, []);
 
   const flights = [
     {
@@ -60,15 +44,15 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
   ];
 
   const handleBook = () => {
+    // Real booking handoff (Phase 4): open the visitor's email client with a
+    // pre-filled reservation request for the selected flight, instead of
+    // simulating a confirmation.
+    const flight = flights.find((f) => f.id === selectedFlight);
+    window.location.href = mailtoLink(
+      `Tasting Reservation — ${flight?.name ?? "Private Tasting"}`,
+      "Hello NOIRÉ concierge,\n\nI would like to reserve the tasting flight above.\n\nPreferred dates:\nParty size:\nContact number:\n\nThank you."
+    );
     setConfirmed(true);
-    if (confirmTimerRef.current) {
-      clearTimeout(confirmTimerRef.current);
-    }
-    confirmTimerRef.current = setTimeout(() => {
-      confirmTimerRef.current = null;
-      setConfirmed(false);
-      onClose();
-    }, 2800);
   };
 
   return (
@@ -91,10 +75,10 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
           <div className="py-12 text-center space-y-4 animate-in fade-in-50">
             <CheckCircle2 className="w-10 h-10 text-[#9B6742] mx-auto" />
             <h3 className="font-display text-2xl text-[#F3E8D3]">
-              Reservation Confirmed
+              Request Prepared
             </h3>
             <p className="text-xs text-[#F3E8D3]/70 max-w-sm mx-auto leading-relaxed">
-              Your tasting table has been reserved at the NOIRÉ Atelier. An invitation letter with temperature-sensitive sealing wax has been dispatched to your email.
+              Your email client has opened with a pre-filled reservation request. Press send and the concierge will confirm your table by reply — reservations are confirmed personally, never automatically.
             </p>
           </div>
         ) : (

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const serifFont = Cormorant_Garamond({
@@ -18,6 +19,7 @@ const sansFont = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "NOIRÉ — Chocolate, Unhurried.",
   description:
     "A cinematic journey from wild single-origin cacao canopy to slow-tempered artisan chocolate. Built with unhurried devotion.",
@@ -34,6 +36,22 @@ export const metadata: Metadata = {
       "A cinematic journey from wild single-origin cacao canopy to slow-tempered artisan chocolate.",
     type: "website",
     locale: "en_US",
+    siteName: "NOIRÉ Atelier",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "NOIRÉ — single-origin artisan chocolate, hand-tempered in Mumbai",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NOIRÉ — Chocolate, Unhurried.",
+    description:
+      "A cinematic journey from wild single-origin cacao canopy to slow-tempered artisan chocolate.",
+    images: ["/og-image.jpg"],
   },
 };
 

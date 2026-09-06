@@ -6,8 +6,15 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 interface CinematicScrollCanvasProps {
   /** Live scroll progress (0..1), mutated outside React render (by Lenis) */
   progressRef: React.MutableRefObject<number>;
+  /** Total frames in the desktop manifest (mobile serves every 3rd frame) */
   totalFrames?: number;
 }
+
+const MOBILE_MEDIA_QUERY = "(max-width: 767px)";
+const MOBILE_FRAME_STRIDE = 3; // 192 source frames -> 64 mobile frames
+const PRIORITY_FRAME_COUNT = 10; // fetched immediately to unlock the hero
+const MAX_CONCURRENT_LOADS = 8; // network-friendly background streaming
+const LOADER_VISIBLE_FRAMES = 10; // indicator hides once this many are ready
 
 // Draw image onto canvas with letterbox/cover aspect ratio fit
 const renderImageToCanvas = (
@@ -35,31 +42,31 @@ export function CinematicScrollCanvas({
   totalFrames = 192,
 }: CinematicScrollCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(totalFrames).fill(null));
-  const currentFrameRef = useRef(0);
-  const drawnFrameRef = useRef(-1);
+  // Images are stored by POSITION in the active frame set. Desktop serves all
+  // 192 source frames (WebP); mobile serves every 3rd source frame (64 files,
+  // ~1.2MB total) so cellular devices download a fraction of the payload.
+  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
+  const frameIndicesRef = useRef<number[]>([]);
+  const currentPosRef = useRef(0);
+  const drawnPosRef = useRef(-1);
   const animationFrameRef = useRef<number | null>(null);
   const reducedMotion = useReducedMotion();
   const [loadedCount, setLoadedCount] = useState(0);
+  const [activeSetSize, setActiveSetSize] = useState(totalFrames);
 
-  // Helper to format frame filename: frame_0001.jpg
-  const getFrameUrl = useCallback((index: number) => {
-    const num = (index + 1).toString().padStart(4, "0");
-    return `/frames/frame_${num}.jpg`;
-  }, []);
-
-  // Draw frame with letterbox/cover aspect ratio fit
-  const drawFrame = useCallback((frameIndex: number) => {
+  // Draw frame (position-based) with letterbox/cover aspect ratio fit
+  const drawFrame = useCallback((pos: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
-    const img = imagesRef.current[frameIndex];
+    const images = imagesRef.current;
+    const img = images[pos];
     if (!img || !img.complete || img.naturalWidth === 0) {
       // Fallback to nearest loaded previous frame
-      for (let i = frameIndex - 1; i >= 0; i--) {
-        const fallbackImg = imagesRef.current[i];
+      for (let i = pos - 1; i >= 0; i--) {
+        const fallbackImg = images[i];
         if (fallbackImg && fallbackImg.complete && fallbackImg.naturalWidth > 0) {
           renderImageToCanvas(ctx, canvas, fallbackImg);
           return;
@@ -71,84 +78,160 @@ export function CinematicScrollCanvas({
     renderImageToCanvas(ctx, canvas, img);
   }, []);
 
-  // Preload frames progressively: first frame immediately, then in order
+  // Build the active frame set and run the progressive loader (mount only).
   useEffect(() => {
-    let isCancelled = false;
-    const images = imagesRef.current;
-    let loaded = 0;
+    const isMobileViewport = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+    const frameIndices = isMobileViewport
+      ? Array.from(
+          { length: Math.ceil(totalFrames / MOBILE_FRAME_STRIDE) },
+          (_, i) => i * MOBILE_FRAME_STRIDE
+        )
+      : Array.from({ length: totalFrames }, (_, i) => i);
 
-    const trackLoad = (img: HTMLImageElement, index: number) => {
-      images[index] = img;
+    frameIndicesRef.current = frameIndices;
+    const images = (imagesRef.current = new Array(frameIndices.length).fill(null));
+    setActiveSetSize(frameIndices.length);
+
+    const urlFor = (sourceIndex: number) => {
+      const n = String(sourceIndex + 1).padStart(4, "0");
+      return isMobileViewport
+        ? `/frames/webp-mobile/frame_${n}.webp`
+        : `/frames/webp/frame_${n}.webp`;
+    };
+
+    let cancelled = false;
+    let loaded = 0;
+    let inFlight = 0;
+    let cursor = 0;
+    let idleHandle: number | null = null;
+    let timeoutHandle: number | null = null;
+
+    const trackLoad = (img: HTMLImageElement, pos: number) => {
+      images[pos] = img;
       loaded += 1;
       // Pre-decode off the main thread so a frame's first paint during
       // scrolling never stalls on synchronous decode
       if (typeof img.decode === "function") {
         img.decode().catch(() => undefined);
       }
-      // Only re-render for the loading indicator while it is still visible
-      if (loaded <= 12) setLoadedCount(loaded);
+      if (loaded <= LOADER_VISIBLE_FRAMES) {
+        setLoadedCount(loaded);
+      }
+      // If this frame is at/near the current scrub target, paint it now so
+      // early scroll positions never wait for the rAF loop
+      const targetPos = Math.round(
+        progressRef.current * Math.max(0, frameIndices.length - 1)
+      );
+      if (pos <= targetPos + 4) {
+        drawFrame(targetPos);
+      }
     };
 
-    // Load first frame immediately for instant first paint
-    const img0 = new Image();
-    img0.src = getFrameUrl(0);
-    img0.onload = () => {
-      if (isCancelled) return;
-      trackLoad(img0, 0);
-      drawFrame(0);
+    const loadNext = () => {
+      while (
+        !cancelled &&
+        inFlight < MAX_CONCURRENT_LOADS &&
+        cursor < frameIndices.length
+      ) {
+        const pos = cursor++;
+        const img = new Image();
+        img.decoding = "async";
+        if (pos === 0) {
+          // The opening frame is a likely LCP element on mobile — jump the
+          // browser's fetch queue ahead of fonts/JS for this one request.
+          (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority =
+            "high";
+        }
+        img.onload = img.onerror = () => {
+          inFlight -= 1;
+          if (!cancelled) {
+            trackLoad(img, pos);
+            scheduleNext();
+          }
+        };
+        img.src = urlFor(frameIndices[pos]);
+        inFlight += 1;
+      }
     };
 
-    // Load all remaining frames
-    for (let i = 1; i < totalFrames; i++) {
-      const img = new Image();
-      img.src = getFrameUrl(i);
-      img.onload = () => {
-        if (isCancelled) return;
-        trackLoad(img, i);
+    const scheduleNext = () => {
+      if (cancelled || cursor >= frameIndices.length) return;
+      // The first ~10 frames unlock the hero — fetch them at full priority.
+      if (cursor < PRIORITY_FRAME_COUNT) {
+        loadNext();
+        return;
+      }
+      // Background frames stream in during idle time so they never compete
+      // with fonts, hydration, or first interaction (Phase 1.1).
+      const w = window as Window & {
+        requestIdleCallback?: (
+          cb: () => void,
+          opts?: { timeout: number }
+        ) => number;
+        cancelIdleCallback?: (handle: number) => void;
       };
-    }
+      if (typeof w.requestIdleCallback === "function") {
+        idleHandle = w.requestIdleCallback(() => loadNext(), { timeout: 800 });
+      } else {
+        timeoutHandle = window.setTimeout(loadNext, 120);
+      }
+    };
+
+    loadNext();
 
     return () => {
-      isCancelled = true;
+      cancelled = true;
+      if (idleHandle !== null) {
+        (window as Window & { cancelIdleCallback?: (h: number) => void })
+          .cancelIdleCallback?.(idleHandle);
+      }
+      if (timeoutHandle !== null) {
+        window.clearTimeout(timeoutHandle);
+      }
     };
-  }, [totalFrames, getFrameUrl, drawFrame]);
+  }, [totalFrames, progressRef, drawFrame]);
 
   // Single self-driving rAF loop: reads scroll progress from the ref, lerps
-  // the frame index (time-based, frame-rate independent) and only repaints
-  // when the visible frame actually changes
+  // the active frame and repaints only when the frame index actually changes.
   useEffect(() => {
+    // Reduced motion (Phase 2): no scrubbing and no render loop at all. The
+    // loader paints the opening frame once it arrives; the page scrolls like
+    // a normal document with no scroll-driven animation.
+    if (reducedMotion) {
+      return;
+    }
+
     let active = true;
     let lastTime = performance.now();
 
     const renderLoop = (time: number) => {
       if (!active) return;
-
-      // Clamp dt so tab switches never produce a giant jump
       const dt = Math.min(0.1, (time - lastTime) / 1000);
       lastTime = time;
 
-      const targetFrame = Math.min(
-        totalFrames - 1,
-        Math.max(0, progressRef.current * (totalFrames - 1))
-      );
-
-      if (reducedMotion) {
-        // Snap directly to target in reduced motion mode
-        currentFrameRef.current = targetFrame;
-      } else {
-        // High-precision exponential smoothing, frame-rate independent
-        const diff = targetFrame - currentFrameRef.current;
-        if (Math.abs(diff) > 0.005) {
-          currentFrameRef.current += diff * (1 - Math.exp(-dt * 9));
-        } else {
-          currentFrameRef.current = targetFrame;
-        }
+      const framesLength = frameIndicesRef.current.length;
+      if (framesLength === 0) {
+        animationFrameRef.current = requestAnimationFrame(renderLoop);
+        return;
       }
 
-      const frameToDraw = Math.round(currentFrameRef.current);
-      if (frameToDraw !== drawnFrameRef.current) {
-        drawnFrameRef.current = frameToDraw;
-        drawFrame(frameToDraw);
+      const targetPos = Math.min(
+        framesLength - 1,
+        Math.max(0, progressRef.current * (framesLength - 1))
+      );
+
+      // High-precision exponential smoothing, frame-rate independent
+      const diff = targetPos - currentPosRef.current;
+      if (Math.abs(diff) > 0.005) {
+        currentPosRef.current += diff * (1 - Math.exp(-dt * 9));
+      } else {
+        currentPosRef.current = targetPos;
+      }
+
+      const posToDraw = Math.round(currentPosRef.current);
+      if (posToDraw !== drawnPosRef.current) {
+        drawnPosRef.current = posToDraw;
+        drawFrame(posToDraw);
       }
 
       animationFrameRef.current = requestAnimationFrame(renderLoop);
@@ -162,7 +245,7 @@ export function CinematicScrollCanvas({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [totalFrames, progressRef, drawFrame, reducedMotion]);
+  }, [progressRef, drawFrame, reducedMotion]);
 
   // Canvas resize listener with DevicePixelRatio
   useEffect(() => {
@@ -172,7 +255,7 @@ export function CinematicScrollCanvas({
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
-      drawFrame(Math.round(currentFrameRef.current));
+      drawFrame(Math.round(currentPosRef.current));
     };
 
     handleResize();
@@ -185,6 +268,8 @@ export function CinematicScrollCanvas({
       {/* High Performance 2D/3D Scrubber Canvas */}
       <canvas
         ref={canvasRef}
+        role="img"
+        aria-label="Cinematic film still of cacao and chocolate craftsmanship, changes with scroll"
         className="w-full h-full object-cover transition-opacity duration-1000"
         style={{
           filter: "contrast(1.04) brightness(0.92)",
@@ -208,12 +293,16 @@ export function CinematicScrollCanvas({
       <div className="absolute inset-0 grain-overlay opacity-40 pointer-events-none" />
 
       {/* Minimalistic initial preloading status */}
-      {loadedCount < 10 && (
+      {loadedCount < LOADER_VISIBLE_FRAMES && (
         <div className="absolute bottom-6 left-6 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-[#9B6742]/60">
           <span className="w-1.5 h-1.5 rounded-full bg-[#9B6742] animate-ping" />
-          <span>Cinematic Frames Initializing ({loadedCount}/{totalFrames})</span>
+          <span>
+            Cinematic Frames Initializing ({loadedCount}/{activeSetSize})
+          </span>
         </div>
       )}
     </div>
   );
 }
+
+

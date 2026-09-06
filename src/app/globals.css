@@ -79,3 +79,39 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #9B6742;
 }
+
+/* ── Accessibility (Phase 2) ─────────────────────────────────────────── */
+
+/* Skip-to-content link: visually hidden until focused */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: #9b6742;
+  color: #f3e8d3;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Honor prefers-reduced-motion: neutralize decorative CSS motion globally.
+   Scroll-driven JS animation (canvas scrubbing, Lenis smoothing, 3D
+   particles) is separately disabled in page.tsx / CinematicScrollCanvas.tsx. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

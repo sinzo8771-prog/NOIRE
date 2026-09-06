@@ -3,13 +3,14 @@ export interface TastingMetric {
   value: number; // 0 to 100
 }
 
+// NOTE: No price fields. NOIRÉ is a showcase/atelier site — availability and
+// pricing run through the concierge (see the "Request This Bar" mailto CTA in
+// ProductStage), not a checkout (Phase 3 of noire-website-plan.md).
 export interface Product {
   id: string;
   name: string;
   subtitle: string;
   cacaoPercentage: number;
-  price: number;
-  currency: string;
   weight: string;
   origin: string;
   harvest: string;
@@ -30,8 +31,6 @@ export const PRODUCTS: Product[] = [
     name: "ORIGIN 72",
     subtitle: "Pure Single Origin Dark Chocolate",
     cacaoPercentage: 72,
-    price: 890,
-    currency: "INR",
     weight: "80g",
     origin: "Tumaco, Colombia",
     harvest: "Winter 2025 Micro-Lot",
@@ -56,8 +55,6 @@ export const PRODUCTS: Product[] = [
     name: "DARK SEA SALT",
     subtitle: "70% Arriba Cacao with Flaked Maldon",
     cacaoPercentage: 70,
-    price: 920,
-    currency: "INR",
     weight: "80g",
     origin: "Esmeraldas, Ecuador",
     harvest: "Single Estate Spring Harvest",
@@ -82,8 +79,6 @@ export const PRODUCTS: Product[] = [
     name: "ROASTED HAZELNUT",
     subtitle: "68% Cacao with Piedmont Nocciola",
     cacaoPercentage: 68,
-    price: 950,
-    currency: "INR",
     weight: "80g",
     origin: "Chanchamayo, Peru & Alta Langa, Italy",
     harvest: "Late Autumn Harvest",
@@ -108,8 +103,6 @@ export const PRODUCTS: Product[] = [
     name: "MADAGASCAR MILK",
     subtitle: "55% High-Percentage Dark-Milk",
     cacaoPercentage: 55,
-    price: 890,
-    currency: "INR",
     weight: "80g",
     origin: "Sambirano Valley, Madagascar",
     harvest: "Estate Fermented Reserve",
