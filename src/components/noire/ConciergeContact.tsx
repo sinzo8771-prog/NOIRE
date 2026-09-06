@@ -65,10 +65,10 @@ export function CopyEmailButton({ className = "", label }: CopyEmailButtonProps)
       data-noire-event="concierge_copy_click"
       data-noire-label={label ?? "copy concierge email"}
       aria-label="Copy concierge email address"
-      className={`inline-flex items-center space-x-1.5 text-[11px] uppercase tracking-widest text-[#F3E8D3]/60 hover:text-[#F3E8D3] transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] ${className}`}
+      className={`inline-flex items-center space-x-1.5 text-[11px] uppercase tracking-widest text-ivory/60 hover:text-ivory transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper ${className}`}
     >
       {state === "copied" ? (
-        <Check className="w-3.5 h-3.5 text-[#B57B4C]" aria-hidden="true" />
+        <Check className="w-3.5 h-3.5 text-copper-text" aria-hidden="true" />
       ) : (
         <Copy className="w-3.5 h-3.5" aria-hidden="true" />
       )}
@@ -95,20 +95,20 @@ interface ConciergeFallbackProps {
 export function ConciergeFallback({ className = "", label }: ConciergeFallbackProps) {
   return (
     <p
-      className={`text-[11px] leading-relaxed text-[#F3E8D3]/50 ${className}`}
+      className={`text-[11px] leading-relaxed text-ivory/50 ${className}`}
     >
       <span>No email app open? Write directly to </span>
       <a
         href={`mailto:${CONCIERGE_EMAIL}`}
         data-noire-event="contact_click"
         data-noire-label={label ? `${label} fallback address` : "fallback address"}
-        className="text-[#F3E8D3]/80 hover:text-[#F3E8D3] underline underline-offset-4 decoration-[#9B6742]/60 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+        className="text-ivory/80 hover:text-ivory underline underline-offset-4 decoration-copper/60 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
       >
         {CONCIERGE_EMAIL}
       </a>
       <span aria-hidden="true"> · </span>
       <CopyEmailButton label={label} />
-      <span className="block mt-1 text-[#B57B4C]/90 uppercase tracking-widest text-[10px]">
+      <span className="block mt-1 text-copper-text/90 uppercase tracking-widest text-[10px]">
         {CONCIERGE_REPLY_PROMISE}
       </span>
     </p>

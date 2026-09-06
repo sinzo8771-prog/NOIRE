@@ -35,7 +35,7 @@ export function ScrollProgressHairline() {
     >
       <div
         ref={barRef}
-        className="h-full w-full origin-left bg-[#9B6742]"
+        className="h-full w-full origin-left bg-copper"
         style={{ transform: "scaleX(0)" }}
       />
     </div>

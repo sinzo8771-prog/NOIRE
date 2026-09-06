@@ -135,7 +135,7 @@ return (
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-700 ${
           isScrolled
-            ? "bg-[#080604]/90 backdrop-blur-md border-b border-[#342015]/40 py-3.5"
+            ? "bg-cacao-950/90 backdrop-blur-md border-b border-cacao-700/40 py-3.5"
             : "bg-transparent py-6"
         }`}
       >
@@ -147,19 +147,19 @@ return (
               e.preventDefault();
               scrollToSection("act-1");
             }}
-            className="group flex flex-col focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px]"
+            className="group flex flex-col focus:outline-none focus-visible:ring-1 focus-visible:ring-copper rounded-[2px]"
             aria-label="NOIRÉ Home"
           >
-            <span className="font-display text-2xl sm:text-3xl tracking-[0.25em] text-[#F3E8D3] font-normal transition-opacity duration-300 group-hover:text-[#F3E8D3]/80">
+            <span className="font-display text-2xl sm:text-3xl tracking-[0.25em] text-ivory font-normal transition-opacity duration-300 group-hover:text-ivory/80">
               NOIRÉ
             </span>
-            <span className="text-[9px] uppercase tracking-[0.35em] text-[#B57B4C] -mt-1 font-sans">
+            <span className="text-[9px] uppercase tracking-[0.35em] text-copper-text -mt-1 font-sans">
               Atelier
             </span>
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-10 text-xs tracking-widest-editorial uppercase text-[#F3E8D3]/60 font-sans">
+          <nav className="hidden md:flex items-center space-x-10 text-xs tracking-widest-editorial uppercase text-ivory/60 font-sans">
             {NAV_ITEMS.map((item) => (
               <button
                 key={item.label}
@@ -169,8 +169,8 @@ return (
                 data-noire-event="navigation_click"
                 data-noire-label={`nav ${item.label.toLowerCase()}`}
                 data-noire-target={`#${item.target}`}
-                className={`py-2 min-h-[44px] inline-flex items-center transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] ${
-                  isActiveFor(item.target) ? "text-[#F3E8D3] font-medium" : ""
+                className={`py-2 min-h-[44px] inline-flex items-center transition-colors duration-300 hover:text-ivory focus:outline-none focus-visible:ring-1 focus-visible:ring-copper rounded-[2px] ${
+                  isActiveFor(item.target) ? "text-ivory font-medium" : ""
                 }`}
               >
                 {item.label}
@@ -185,16 +185,16 @@ return (
               onClick={onToggleSound}
               aria-label={soundEnabled ? "Mute ambient audio" : "Enable ambient audio"}
               aria-pressed={soundEnabled}
-              className="hidden sm:flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 min-h-[44px] min-w-[44px] rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              className="hidden sm:flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-ivory/70 hover:text-ivory transition-colors py-1 px-2.5 min-h-[44px] min-w-[44px] rounded-[2px] border border-cacao-700/60 hover:border-copper focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
             >
               {soundEnabled ? (
                 <>
-                  <Volume2 className="w-3.5 h-3.5 text-[#B57B4C] animate-pulse" />
+                  <Volume2 className="w-3.5 h-3.5 text-copper-text animate-pulse" />
                   <span className="hidden sm:inline">Audio On</span>
                 </>
               ) : (
                 <>
-                  <VolumeX className="w-3.5 h-3.5 text-[#F3E8D3]/40" />
+                  <VolumeX className="w-3.5 h-3.5 text-ivory/40" />
                   <span className="hidden sm:inline">Audio Off</span>
                 </>
               )}
@@ -211,11 +211,11 @@ return (
                   : "Disable cinematic scroll motion"
               }
               title="Cinematic scroll motion"
-              className="hidden sm:flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 min-h-[44px] min-w-[44px] rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              className="hidden sm:flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-ivory/70 hover:text-ivory transition-colors py-1 px-2.5 min-h-[44px] min-w-[44px] rounded-[2px] border border-cacao-700/60 hover:border-copper focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
             >
               <Accessibility
                 className={`w-3.5 h-3.5 ${
-                  reducedMotion ? "text-[#F3E8D3]/40" : "text-[#B57B4C]"
+                  reducedMotion ? "text-ivory/40" : "text-copper-text"
                 }`}
               />
               <span className="hidden lg:inline">
@@ -229,10 +229,10 @@ return (
               data-noire-event="request_tasting_click"
               data-noire-label="nav request a tasting"
               title={`Request a tasting — ${CONCIERGE_REPLY_PROMISE}`}
-              className="relative flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-[#F3E8D3] bg-[#1A100B] hover:bg-[#261710] border border-[#342015] hover:border-[#9B6742] px-3.5 py-1.5 rounded-[2px] transition-all duration-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              className="relative flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-ivory bg-cacao-850 hover:bg-cacao-800 border border-cacao-700 hover:border-copper px-3.5 py-1.5 rounded-[2px] transition-all duration-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
               aria-label="Request a tasting with the NOIRÉ concierge by email"
             >
-              <Mail className="w-3.5 h-3.5 text-[#B57B4C]" />
+              <Mail className="w-3.5 h-3.5 text-copper-text" />
               <span className="tracking-wider hidden sm:inline">Request a Tasting</span>
               <span className="tracking-wider sm:hidden">Request</span>
             </a>
@@ -249,7 +249,7 @@ return (
               ref={toggleRef}
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-[#F3E8D3]/80 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px]"
+              className="md:hidden p-1.5 min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-ivory/80 hover:text-ivory focus:outline-none focus-visible:ring-1 focus-visible:ring-copper rounded-[2px]"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
               aria-controls={MOBILE_MENU_ID}
@@ -265,9 +265,9 @@ return (
 <div
           ref={menuRef}
           id={MOBILE_MENU_ID}
-          className="fixed inset-0 z-30 bg-[#080604]/98 flex flex-col justify-center px-10 md:hidden animate-in fade-in-0 duration-300"
+          className="fixed inset-0 z-30 bg-cacao-950/98 flex flex-col justify-center px-10 md:hidden animate-in fade-in-0 duration-300"
         >
-          <nav className="flex flex-col space-y-1 text-xl tracking-widest font-display text-[#F3E8D3]" aria-label="Story chapters">
+          <nav className="flex flex-col space-y-1 text-xl tracking-widest font-display text-ivory" aria-label="Story chapters">
             {ACTS.map((act) => (
               <button
                 key={act.id}
@@ -277,16 +277,16 @@ return (
                 data-noire-label={`mobile ${act.label.toLowerCase()}`}
                 data-noire-target={`#${act.target}`}
                 aria-current={activeAct === act.id ? "location" : undefined}
-                className={`text-left py-2 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] ${
-                  activeAct === act.id ? "text-[#B57B4C]" : "hover:text-[#B57B4C]"
+                className={`text-left py-2 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper ${
+                  activeAct === act.id ? "text-copper-text" : "hover:text-copper-text"
                 }`}
               >
                 {actNumeral(act.id)} &mdash; {act.label}
               </button>
             ))}
           </nav>
-          <div className="mt-10 pt-8 border-t border-[#342015] flex flex-col space-y-4">
-            <p className="text-xs uppercase tracking-widest text-[#F3E8D3]/50">
+          <div className="mt-10 pt-8 border-t border-cacao-700 flex flex-col space-y-4">
+            <p className="text-xs uppercase tracking-widest text-ivory/50">
               Chocolate, Unhurried.
             </p>
             {/* P2: audio + motion controls live here on xs, where the header
@@ -297,12 +297,12 @@ return (
                 onClick={onToggleSound}
                 aria-label={soundEnabled ? "Mute ambient audio" : "Enable ambient audio"}
                 aria-pressed={soundEnabled}
-                className="inline-flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 min-h-[44px] px-3 rounded-[2px] border border-[#342015]/60 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+                className="inline-flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-ivory/70 min-h-[44px] px-3 rounded-[2px] border border-cacao-700/60 focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
               >
                 {soundEnabled ? (
-                  <Volume2 className="w-3.5 h-3.5 text-[#B57B4C]" aria-hidden="true" />
+                  <Volume2 className="w-3.5 h-3.5 text-copper-text" aria-hidden="true" />
                 ) : (
-                  <VolumeX className="w-3.5 h-3.5 text-[#F3E8D3]/40" aria-hidden="true" />
+                  <VolumeX className="w-3.5 h-3.5 text-ivory/40" aria-hidden="true" />
                 )}
                 <span>{soundEnabled ? "Audio On" : "Audio Off"}</span>
               </button>
@@ -315,11 +315,11 @@ return (
                     ? "Enable cinematic scroll motion"
                     : "Disable cinematic scroll motion"
                 }
-                className="inline-flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 min-h-[44px] px-3 rounded-[2px] border border-[#342015]/60 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+                className="inline-flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-ivory/70 min-h-[44px] px-3 rounded-[2px] border border-cacao-700/60 focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
               >
                 <Accessibility
                   className={`w-3.5 h-3.5 ${
-                    reducedMotion ? "text-[#F3E8D3]/40" : "text-[#B57B4C]"
+                    reducedMotion ? "text-ivory/40" : "text-copper-text"
                   }`}
                   aria-hidden="true"
                 />
@@ -330,15 +330,15 @@ return (
               href={CONCIERGE_MAILTO}
               data-noire-event="request_tasting_click"
               data-noire-label="mobile request a tasting"
-              className="inline-flex items-center space-x-2 text-sm uppercase tracking-widest text-[#F3E8D3] rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              className="inline-flex items-center space-x-2 text-sm uppercase tracking-widest text-ivory rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
             >
-              <Mail className="w-4 h-4 text-[#B57B4C]" />
+              <Mail className="w-4 h-4 text-copper-text" />
               <span>Request a Tasting</span>
             </a>
-            <p className="text-[11px] text-[#F3E8D3]/50">
+            <p className="text-[11px] text-ivory/50">
               <span>{CONCIERGE_EMAIL} · </span>
               <CopyEmailButton label="mobile request a tasting" />
-              <span className="block mt-1 text-[#B57B4C]/90 uppercase tracking-widest text-[10px]">
+              <span className="block mt-1 text-copper-text/90 uppercase tracking-widest text-[10px]">
                 {CONCIERGE_REPLY_PROMISE}
               </span>
             </p>

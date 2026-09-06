@@ -83,7 +83,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${serifFont.variable} ${sansFont.variable} dark`}>
-      <body className="bg-[#080604] text-[#F3E8D3] selection:bg-[#9B6742] selection:text-[#F3E8D3] antialiased">
+      <body className="bg-cacao-950 text-ivory selection:bg-copper selection:text-ivory antialiased">
         {children}
       </body>
     </html>

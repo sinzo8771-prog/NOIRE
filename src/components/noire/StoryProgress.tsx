@@ -19,15 +19,15 @@ export function StoryProgress({ activeAct, onSelectAct }: StoryProgressProps) {
           <button
             key={act.id}
             onClick={() => onSelectAct(act.id)}
-            className="group flex items-center justify-end space-x-3 py-2 text-right rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+            className="group flex items-center justify-end space-x-3 py-2 text-right rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
             aria-label={`Jump to Act ${actNumeral(act.id)}: ${act.label}`}
             aria-current={isActive ? "location" : undefined}
           >
             <span
               className={`text-[10px] uppercase tracking-widest font-sans transition-all duration-300 ${
                 isActive
-                  ? "opacity-100 text-[#F3E8D3] font-medium"
-                  : "opacity-40 group-hover:opacity-70 text-[#F3E8D3]/60"
+                  ? "opacity-100 text-ivory font-medium"
+                  : "opacity-40 group-hover:opacity-70 text-ivory/60"
               }`}
             >
               {actNumeral(act.id)} {act.label}
@@ -35,8 +35,8 @@ export function StoryProgress({ activeAct, onSelectAct }: StoryProgressProps) {
             <span
               className={`transition-all duration-300 rounded-full ${
                 isActive
-                  ? "w-5 h-[2px] bg-[#9B6742]"
-                  : "w-2 h-[1px] bg-[#342015] group-hover:bg-[#F3E8D3]/50"
+                  ? "w-5 h-[2px] bg-copper"
+                  : "w-2 h-[1px] bg-cacao-700 group-hover:bg-ivory/50"
               }`}
             />
           </button>

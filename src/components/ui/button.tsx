@@ -4,20 +4,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap text-xs uppercase tracking-widest-editorial transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] disabled:pointer-events-none disabled:opacity-50 select-none",
+  "inline-flex items-center justify-center whitespace-nowrap text-xs uppercase tracking-widest-editorial transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-copper disabled:pointer-events-none disabled:opacity-50 select-none",
   {
     variants: {
       variant: {
         default:
-          "bg-[#F3E8D3] text-[#080604] hover:bg-[#E2D2B5] active:scale-[0.98]",
+          "bg-ivory text-cacao-950 hover:bg-[#E2D2B5] active:scale-[0.98]",
         copper:
-          "bg-[#835534] text-[#F3E8D3] hover:bg-[#6B4227] active:scale-[0.98]",
+          "bg-copper-surface text-ivory hover:bg-copper-hover active:scale-[0.98]",
         outline:
-          "border border-[#342015] bg-transparent text-[#F3E8D3] hover:border-[#9B6742] hover:bg-[#1A100B] hover:text-[#F3E8D3]",
+          "border border-cacao-700 bg-transparent text-ivory hover:border-copper hover:bg-cacao-850 hover:text-ivory",
         ghost:
-          "text-[#F3E8D3]/70 hover:text-[#F3E8D3] hover:bg-[#1A100B]/60",
+          "text-ivory/70 hover:text-ivory hover:bg-cacao-850/60",
         link:
-          "text-[#F3E8D3] underline-offset-4 hover:underline hover:text-[#B57B4C]",
+          "text-ivory underline-offset-4 hover:underline hover:text-copper-text",
       },
       size: {
         default: "h-11 px-7 py-3 rounded-[2px]",

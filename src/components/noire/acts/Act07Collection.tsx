@@ -22,10 +22,10 @@ export function Act07Collection({
     >
       <div className="space-y-12">
         <div className="space-y-3">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#B57B4C] font-sans">
-            Act VII &bull; The Reserve Collection <span className="text-[#F3E8D3]/60">&middot; 07 / 08</span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+            Act VII &bull; The Reserve Collection <span className="text-ivory/60">&middot; 07 / 08</span>
           </span>
-          <h2 className="font-display text-4xl sm:text-6xl font-normal text-[#F3E8D3]">
+          <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory">
             Four Resolute Expressions.
           </h2>
         </div>

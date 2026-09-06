@@ -170,7 +170,7 @@ export default function Home() {
   const goToCollection = () => scrollToSectionId("act-7");
 
   return (
-    <main className="relative min-h-screen bg-[#080604] text-[#F3E8D3] selection:bg-[#9B6742] selection:text-[#F3E8D3]">
+    <main className="relative min-h-screen bg-cacao-950 text-ivory selection:bg-copper selection:text-ivory">
       {/* Accessibility: jump straight to the story */}
       <a href="#act-1" className="skip-link">
         Skip to content

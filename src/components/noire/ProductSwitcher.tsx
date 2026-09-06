@@ -20,7 +20,7 @@ export function ProductSwitcher({
     <div
       role="tablist"
       aria-label="NOIRÉ reserve chocolate bars"
-      className="flex flex-wrap gap-2 sm:gap-8 border-b border-[#342015] pb-4"
+      className="flex flex-wrap gap-2 sm:gap-8 border-b border-cacao-700 pb-4"
     >
       {PRODUCTS.map((prod) => {
         const isActive = selectedProduct.id === prod.id;
@@ -35,18 +35,18 @@ export function ProductSwitcher({
             onClick={() => onSelectProduct(prod)}
             data-noire-event="product_selected"
             data-noire-product={prod.id}
-            className={`group relative py-2 px-1 text-xs sm:text-sm uppercase tracking-widest-editorial transition-all duration-300 rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] cursor-pointer ${
+            className={`group relative py-2 px-1 text-xs sm:text-sm uppercase tracking-widest-editorial transition-all duration-300 rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper cursor-pointer ${
               isActive
-                ? "text-[#F3E8D3] font-medium"
-                : "text-[#F3E8D3]/50 hover:text-[#F3E8D3]/80"
+                ? "text-ivory font-medium"
+                : "text-ivory/50 hover:text-ivory/80"
             }`}
           >
             <span>{prod.name}</span>
-            <span className="ml-2 text-[10px] text-[#B57B4C]">
+            <span className="ml-2 text-[10px] text-copper-text">
               {prod.cacaoPercentage}%
             </span>
             {isActive && (
-              <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#9B6742]" />
+              <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-copper" />
             )}
           </button>
         );

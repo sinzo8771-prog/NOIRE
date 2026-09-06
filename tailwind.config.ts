@@ -31,7 +31,10 @@ const config: Config = {
           faint: "#8A7E6C",
         },
         copper: {
-          DEFAULT: "#9B6742",
+          DEFAULT: "#9B6742", // graphics: borders, rings, bars, large display
+          text: "#B57B4C",    // small/functional text on cacao-950 (5.69:1 AA)
+          surface: "#835534", // copper surfaces carrying ivory text (5.22:1 AA)
+          hover: "#6B4227",    // hover state for copper surfaces (7.11:1 AA)
           light: "#B87F56",
           dark: "#744B2E",
           glow: "rgba(155, 103, 66, 0.2)",

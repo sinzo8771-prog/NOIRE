@@ -14,6 +14,21 @@ The page tells the story in eight "acts" — from wild cacao canopy to hand-temp
 - Analytics: a zero-dependency event layer (`src/lib/analytics.ts`) records business-interaction events (`navigation_click`, `request_tasting_click`, `request_bar_click`, `product_selected`, `chocolate_room_open`, `contact_click`, `whatsapp_click`, `phone_click`) into `window.__NOIRE_EVENTS__` / `noire:track` for a future analytics vendor.
 - Long-lived immutable cache headers for frames/models via `vercel.json`.
 
+## Design Tokens
+
+Palette roles live in `tailwind.config.ts` — use them, never raw hex (one-off
+deep elevations like `#0F0A07` and 3D light colors excepted):
+
+| Token | Value | Role, contrast |
+|---|---|---|
+| `cacao-950/850/700` | `#080604` / `#1A100B` / `#342015` | Canvas, surfaces, hairlines |
+| `ivory` | `#F3E8D3` | Primary text (16.66:1) |
+| `copper-text` | `#B57B4C` | Small/functional copper text (5.69:1) |
+| `copper-surface` / `copper-hover` | `#835534` / `#6B4227` | Copper surfaces + hover (5.22 / 7.11:1) |
+| `copper` | `#9B6742` | Graphics only: borders, rings, bars, large display |
+
+Rule: text never goes below `ivory/50`; icons never below their 3:1 pairings.
+
 ## Getting Started
 
 ```bash

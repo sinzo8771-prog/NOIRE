@@ -295,7 +295,7 @@ export function CinematicScrollCanvas({
   }, [drawFrame]);
 
   return (
-    <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden bg-[#080604]">
+    <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden bg-cacao-950">
       {/* High Performance 2D/3D Scrubber Canvas */}
       <canvas
         ref={canvasRef}
@@ -309,13 +309,13 @@ export function CinematicScrollCanvas({
 
       {/* Cinematic Vignette & Luxury Dark Contrast Gradients */}
       {/* Top soft vignette for navigation readability */}
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#080604]/90 via-[#080604]/40 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-cacao-950/90 via-cacao-950/40 to-transparent" />
 
       {/* Left heavy gradient for editorial typography contrast */}
-      <div className="absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-[#080604]/92 via-[#080604]/75 to-transparent" />
+      <div className="absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-cacao-950/92 via-cacao-950/75 to-transparent" />
 
       {/* Bottom vignette for chapter navigation and footer transition */}
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#080604] via-[#080604]/60 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cacao-950 via-cacao-950/60 to-transparent" />
 
       {/* Subtle organic warm copper radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,rgba(155,103,66,0.12),transparent_70%)] mix-blend-screen" />
@@ -325,8 +325,8 @@ export function CinematicScrollCanvas({
 
       {/* Minimalistic initial preloading status */}
       {loadedCount < LOADER_VISIBLE_FRAMES && (
-        <div className="absolute bottom-6 left-6 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-[#B57B4C]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#9B6742] animate-ping" />
+        <div className="absolute bottom-6 left-6 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-copper-text">
+          <span className="w-1.5 h-1.5 rounded-full bg-copper animate-ping" />
           <span>
             Cinematic Frames Initializing ({loadedCount}/{activeSetSize})
           </span>

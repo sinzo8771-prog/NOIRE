@@ -58,14 +58,14 @@ export default function Product3DViewer({
 }: Product3DViewerProps) {
   const fallbackPanel = (
     <div
-      className="w-full h-full flex flex-col items-center justify-center gap-3 bg-[#0F0A07] border border-[#342015] rounded-[2px] text-center px-6"
+      className="w-full h-full flex flex-col items-center justify-center gap-3 bg-[#0F0A07] border border-cacao-700 rounded-[2px] text-center px-6"
       role="img"
       aria-label={`${productName} — static reserve bar rendering. Request via the concierge.`}
     >
-      <span className="font-display text-2xl tracking-[0.2em] text-[#F3E8D3]/80">
+      <span className="font-display text-2xl tracking-[0.2em] text-ivory/80">
         {productName}
       </span>
-      <span className="text-[10px] uppercase tracking-widest text-[#F3E8D3]/50">
+      <span className="text-[10px] uppercase tracking-widest text-ivory/50">
         3D rendering unavailable &mdash; request this bar via the concierge below.
       </span>
     </div>
@@ -73,15 +73,15 @@ export default function Product3DViewer({
 
   return (
     <div
-      className="relative w-full h-full bg-[#0F0A07] border border-[#342015] rounded-[2px] overflow-hidden flex items-center justify-center"
+      className="relative w-full h-full bg-[#0F0A07] border border-cacao-700 rounded-[2px] overflow-hidden flex items-center justify-center"
       role="img"
       aria-label={`Interactive 3D model of the ${productName} chocolate bar. Drag to rotate.`}
     >
       <ViewerErrorBoundary fallback={fallbackPanel}>
         <Suspense
           fallback={
-            <div className="flex flex-col items-center justify-center space-y-3 text-[#F3E8D3]/50">
-              <span className="w-8 h-8 border border-[#9B6742] border-t-transparent rounded-full animate-spin" />
+            <div className="flex flex-col items-center justify-center space-y-3 text-ivory/50">
+              <span className="w-8 h-8 border border-copper border-t-transparent rounded-full animate-spin" />
               <span className="text-[10px] uppercase tracking-widest">
                 Rendering 3D Bar
               </span>
@@ -119,13 +119,13 @@ export default function Product3DViewer({
       </ViewerErrorBoundary>
 
       {/* Orbit cue indicator */}
-      <div className="absolute bottom-4 left-4 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-[#F3E8D3]/50 pointer-events-none">
-        <Rotate3D className="w-3.5 h-3.5 text-[#B57B4C]" />
+      <div className="absolute bottom-4 left-4 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-ivory/50 pointer-events-none">
+        <Rotate3D className="w-3.5 h-3.5 text-copper-text" />
         <span>Drag to rotate</span>
       </div>
 
       {/* Weight stamp (from product data, P6.2) */}
-      <div className="absolute top-4 right-4 text-[9px] uppercase tracking-widest text-[#B57B4C] border border-[#9B6742]/40 px-2 py-0.5 rounded-[1px] bg-[#080604]/60">
+      <div className="absolute top-4 right-4 text-[9px] uppercase tracking-widest text-copper-text border border-copper/40 px-2 py-0.5 rounded-[1px] bg-cacao-950/60">
         Hand Cast {productWeight}
       </div>
     </div>

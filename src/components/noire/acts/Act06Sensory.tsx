@@ -40,20 +40,20 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-5xl mx-auto"
     >
       <div className="space-y-10">
-        <h2 className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#B57B4C] font-sans font-normal">
-          Act VI &bull; Sensory Progression <span className="text-[#F3E8D3]/60">&middot; 06 / 08</span>
+        <h2 className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans font-normal">
+          Act VI &bull; Sensory Progression <span className="text-ivory/60">&middot; 06 / 08</span>
         </h2>
 
-        <ol className="border-t border-[#342015]">
+        <ol className="border-t border-cacao-700">
           {SEQUENCE.map((s, i) => (
             <li
               key={s.word}
-              className={`border-b border-[#342015]/70 py-8 sm:py-10 grid grid-cols-1 sm:grid-cols-[minmax(0,260px)_1fr] gap-3 sm:items-baseline transition-transform duration-500 ${OFFSETS[i]}`}
+              className={`border-b border-cacao-700/70 py-8 sm:py-10 grid grid-cols-1 sm:grid-cols-[minmax(0,260px)_1fr] gap-3 sm:items-baseline transition-transform duration-500 ${OFFSETS[i]}`}
             >
-              <h3 className="font-display text-4xl sm:text-5xl text-[#9B6742] font-normal leading-none">
+              <h3 className="font-display text-4xl sm:text-5xl text-copper font-normal leading-none">
                 {s.word}
               </h3>
-              <p className="text-xs sm:text-sm text-[#F3E8D3]/60 leading-relaxed">{s.desc}</p>
+              <p className="text-xs sm:text-sm text-ivory/60 leading-relaxed">{s.desc}</p>
             </li>
           ))}
         </ol>
@@ -65,7 +65,7 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
           data-noire-event="navigation_click"
           data-noire-label="act6 explore collection"
           data-noire-target="#act-7"
-          className="inline-flex items-center gap-2 min-h-[44px] text-[10px] uppercase tracking-[0.3em] text-[#B57B4C] hover:text-[#F3E8D3] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] py-1"
+          className="inline-flex items-center gap-2 min-h-[44px] text-[10px] uppercase tracking-[0.3em] text-copper-text hover:text-ivory transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-copper rounded-[2px] py-1"
         >
           Continue to the Reserve Collection <span aria-hidden="true">&rarr;</span>
         </button>

@@ -16,7 +16,7 @@ import { useDeviceCapability } from "@/hooks/useDeviceCapability";
 const Product3DViewer = dynamic(() => import("./Product3DViewer"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full flex items-center justify-center text-[#F3E8D3]/30 text-[10px] uppercase tracking-widest">
+    <div className="w-full h-full flex items-center justify-center text-ivory/30 text-[10px] uppercase tracking-widest">
       Preparing the reserve bar…
     </div>
   ),
@@ -86,7 +86,7 @@ export function ProductStage({
                 <StaticReservePreview product={selectedProduct} />
               )
             ) : (
-              <div className="w-full h-full flex items-center justify-center border border-[#342015] rounded-[2px] bg-[#0F0A07] text-[#F3E8D3]/30 text-[10px] uppercase tracking-widest">
+              <div className="w-full h-full flex items-center justify-center border border-cacao-700 rounded-[2px] bg-[#0F0A07] text-ivory/30 text-[10px] uppercase tracking-widest">
                 Reserve bar preview
               </div>
             )}
@@ -101,17 +101,17 @@ export function ProductStage({
           className="lg:col-span-6 space-y-8"
         >
           <div className="space-y-3">
-            <div className="flex items-center space-x-2 text-[#B57B4C] text-[11px] uppercase tracking-widest font-sans">
+            <div className="flex items-center space-x-2 text-copper-text text-[11px] uppercase tracking-widest font-sans">
               <Sparkles className="w-3 h-3" />
               <span>{selectedProduct.harvest}</span>
             </div>
-            <h3 className="font-display text-3xl sm:text-4xl tracking-wide font-normal text-[#F3E8D3]">
+            <h3 className="font-display text-3xl sm:text-4xl tracking-wide font-normal text-ivory">
               {selectedProduct.name}
             </h3>
-            <p className="font-editorial italic text-base text-[#B57B4C]">
+            <p className="font-editorial italic text-base text-copper-text">
               {selectedProduct.subtitle}
             </p>
-            <p className="text-xs sm:text-sm text-[#F3E8D3]/70 leading-relaxed pt-2">
+            <p className="text-xs sm:text-sm text-ivory/70 leading-relaxed pt-2">
               {selectedProduct.description}
             </p>
           </div>
@@ -120,12 +120,12 @@ export function ProductStage({
           <TastingNotes product={selectedProduct} />
 
           {/* Inquiry CTA — no fake commerce (Phase 3) */}
-          <div className="pt-6 border-t border-[#342015] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div className="pt-6 border-t border-cacao-700 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <span className="block text-[10px] uppercase tracking-widest text-[#F3E8D3]/50">
+              <span className="block text-[10px] uppercase tracking-widest text-ivory/50">
                 Artisanal Bar
               </span>
-              <span className="text-xs text-[#F3E8D3]/70">
+              <span className="text-xs text-ivory/70">
                 {selectedProduct.weight} &bull; {selectedProduct.origin}
               </span>
             </div>
@@ -136,7 +136,7 @@ export function ProductStage({
                 data-noire-event="request_bar_click"
                 data-noire-product={selectedProduct.id}
                 title="Request this bar — replies within one day, personally"
-                className="h-12 px-8 text-xs uppercase tracking-widest-editorial flex items-center justify-center space-x-2 bg-[#F3E8D3] hover:bg-[#DEC3A9] text-[#080604]"
+                className="h-12 px-8 text-xs uppercase tracking-widest-editorial flex items-center justify-center space-x-2 bg-ivory hover:bg-cacao-200 text-cacao-950"
               >
                 <Mail className="w-4 h-4" />
                 <span>Request This Bar</span>
@@ -161,15 +161,15 @@ function StaticReservePreview({ product }: { product: Product }) {
     <div
       role="img"
       aria-label={`${product.name} — static reserve bar rendering. Request via the concierge.`}
-      className="w-full h-full flex flex-col items-center justify-center gap-4 border border-[#342015] rounded-[2px] bg-gradient-to-b from-[#1A100B] to-[#0F0A07] text-center px-6"
+      className="w-full h-full flex flex-col items-center justify-center gap-4 border border-cacao-700 rounded-[2px] bg-gradient-to-b from-cacao-850 to-[#0F0A07] text-center px-6"
     >
-      <span className="font-display text-3xl sm:text-4xl tracking-[0.2em] text-[#F3E8D3]/90">
+      <span className="font-display text-3xl sm:text-4xl tracking-[0.2em] text-ivory/90">
         {product.name}
       </span>
-      <span className="text-[10px] uppercase tracking-[0.3em] text-[#B57B4C]">
+      <span className="text-[10px] uppercase tracking-[0.3em] text-copper-text">
         {product.weight} &bull; {product.cacaoPercentage}% Cacao
       </span>
-      <span className="text-[10px] uppercase tracking-widest text-[#F3E8D3]/50 max-w-[240px] leading-relaxed">
+      <span className="text-[10px] uppercase tracking-widest text-ivory/50 max-w-[240px] leading-relaxed">
         The 3D reserve visual is unavailable on this device &mdash; request the
         bar directly below.
       </span>

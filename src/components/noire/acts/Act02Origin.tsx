@@ -11,13 +11,13 @@ export function Act02Origin() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-6 space-y-8">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#B57B4C] font-sans">
-            Act II &bull; Origin & Canopy <span className="text-[#F3E8D3]/60">&middot; 02 / 08</span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+            Act II &bull; Origin & Canopy <span className="text-ivory/60">&middot; 02 / 08</span>
           </span>
-          <h2 className="font-display text-4xl sm:text-6xl font-normal text-[#F3E8D3] leading-tight">
+          <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory leading-tight">
             Where the wild pod awakens.
           </h2>
-          <p className="text-sm sm:text-base text-[#F3E8D3]/70 leading-relaxed max-w-md">
+          <p className="text-sm sm:text-base text-ivory/70 leading-relaxed max-w-md">
             High in the biodiverse rainforests of Tumaco and Esmeraldas, heirloom Theobroma cacao
             grows under the shade of banana palms and mahogany trees. Rich volcanic soil, equatorial
             rainfall, and unhurried natural pollination.
@@ -28,20 +28,20 @@ export function Act02Origin() {
             {["SOIL", "HEAT", "TIME", "HANDS"].map((word) => (
               <div
                 key={word}
-                className="p-4 bg-[#120B07]/80 border border-[#342015] rounded-[2px] backdrop-blur-sm"
+                className="p-4 bg-cacao-900/80 border border-cacao-700 rounded-[2px] backdrop-blur-sm"
               >
-                <span className="font-display text-lg tracking-widest text-[#B57B4C]">{word}</span>
+                <span className="font-display text-lg tracking-widest text-copper-text">{word}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="lg:col-span-6 flex justify-end">
-          <div className="space-y-4 max-w-sm bg-[#080604]/40 backdrop-blur-sm p-6 border-l border-[#342015] rounded-[2px]">
-            <span className="text-[10px] uppercase tracking-widest text-[#B57B4C]">
+          <div className="space-y-4 max-w-sm bg-cacao-950/40 backdrop-blur-sm p-6 border-l border-cacao-700 rounded-[2px]">
+            <span className="text-[10px] uppercase tracking-widest text-copper-text">
               Terroir Note
             </span>
-            <p className="font-editorial italic text-sm text-[#F3E8D3]/70 leading-relaxed">
+            <p className="font-editorial italic text-sm text-ivory/70 leading-relaxed">
               &ldquo;A cacao tree requires five seasons to produce its first harvest. We honor that
               patience by never accelerating the cure.&rdquo;
             </p>

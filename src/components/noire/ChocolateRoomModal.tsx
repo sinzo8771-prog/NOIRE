@@ -62,27 +62,27 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-xl border border-[#342015] bg-[#0E0906] text-[#F3E8D3] p-8 max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-w-xl border border-cacao-700 bg-[#0E0906] text-ivory p-8 max-h-[85vh] overflow-y-auto">
         <DialogHeader className="space-y-2">
-          <div className="flex items-center space-x-2 text-[#B57B4C] text-[10px] uppercase tracking-widest font-sans">
+          <div className="flex items-center space-x-2 text-copper-text text-[10px] uppercase tracking-widest font-sans">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Private Atelier Salon</span>
           </div>
-          <DialogTitle className="font-display text-3xl font-normal tracking-wide text-[#F3E8D3]">
+          <DialogTitle className="font-display text-3xl font-normal tracking-wide text-ivory">
             THE CHOCOLATE ROOM
           </DialogTitle>
-          <DialogDescription className="text-xs uppercase tracking-widest text-[#F3E8D3]/60">
+          <DialogDescription className="text-xs uppercase tracking-widest text-ivory/60">
             A quiet sanctuary for sensory immersion, blind tasting, and slow conche exploration.
           </DialogDescription>
         </DialogHeader>
 
         {confirmed ? (
           <div className="py-10 text-center space-y-4 animate-in fade-in-50">
-            <CheckCircle2 className="w-10 h-10 text-[#B57B4C] mx-auto" />
-            <h3 className="font-display text-2xl text-[#F3E8D3]">
+            <CheckCircle2 className="w-10 h-10 text-copper-text mx-auto" />
+            <h3 className="font-display text-2xl text-ivory">
               Request Ready
             </h3>
-            <p className="text-xs text-[#F3E8D3]/70 max-w-sm mx-auto leading-relaxed">
+            <p className="text-xs text-ivory/70 max-w-sm mx-auto leading-relaxed">
               Your reservation request
               {confirmedFlight
                 ? ` for the ${confirmedFlight.name} (${confirmedFlight.duration})`
@@ -90,19 +90,19 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
               {" "}is prepared. If your email app opened, press send — if
               nothing happened, write to us directly:
             </p>
-            <p className="text-sm text-[#F3E8D3]">
+            <p className="text-sm text-ivory">
               <a
                 href={`mailto:${CONCIERGE_EMAIL}`}
                 data-noire-event="contact_click"
                 data-noire-label="chocolate room fallback address"
-                className="underline underline-offset-4 decoration-[#9B6742]/60 hover:text-[#F3E8D3]/80 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+                className="underline underline-offset-4 decoration-copper/60 hover:text-ivory/80 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
               >
                 {CONCIERGE_EMAIL}
               </a>
               <span aria-hidden="true"> · </span>
               <CopyEmailButton label="chocolate room reservation" />
             </p>
-            <p className="text-[10px] uppercase tracking-widest text-[#B57B4C]/90">
+            <p className="text-[10px] uppercase tracking-widest text-copper-text/90">
               {CONCIERGE_REPLY_PROMISE} Reservations are confirmed personally,
               never automatically.
             </p>
@@ -110,7 +110,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
         ) : (
           <div className="space-y-6 py-4">
             <div className="space-y-3">
-              <span className="block text-[10px] uppercase tracking-widest text-[#F3E8D3]/50">
+              <span className="block text-[10px] uppercase tracking-widest text-ivory/50">
                 Select Tasting Flight
               </span>
               <div className="space-y-2.5">
@@ -120,19 +120,19 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
                     onClick={() => setSelectedFlight(f.id)}
                     className={`w-full text-left p-4 rounded-[2px] border transition-all duration-300 ${
                       selectedFlight === f.id
-                        ? "border-[#9B6742] bg-[#1A100B]"
-                        : "border-[#342015] bg-[#120B07] hover:border-[#342015]/90 opacity-70 hover:opacity-100"
+                        ? "border-copper bg-cacao-850"
+                        : "border-cacao-700 bg-cacao-900 hover:border-cacao-700/90 opacity-70 hover:opacity-100"
                     }`}
                   >
                     <div className="flex justify-between items-baseline">
-                      <h4 className="font-display text-base tracking-wide text-[#F3E8D3]">
+                      <h4 className="font-display text-base tracking-wide text-ivory">
                         {f.name}
                       </h4>
-                      <span className="text-[10px] text-[#B57B4C] font-mono">
+                      <span className="text-[10px] text-copper-text font-mono">
                         {f.duration}
                       </span>
                     </div>
-                    <p className="text-xs text-[#F3E8D3]/60 mt-1 leading-relaxed">
+                    <p className="text-xs text-ivory/60 mt-1 leading-relaxed">
                       {f.desc}
                     </p>
                   </button>
@@ -140,26 +140,26 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-xs text-[#F3E8D3]/70 pt-2 border-t border-[#342015]/60">
+            <div className="grid grid-cols-2 gap-3 text-xs text-ivory/70 pt-2 border-t border-cacao-700/60">
               <div className="flex items-center space-x-2">
-                <MapPin className="w-3.5 h-3.5 text-[#B57B4C]" />
+                <MapPin className="w-3.5 h-3.5 text-copper-text" />
                 <span className="text-[11px]">NOIRÉ Atelier, Fort Mumbai</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Clock className="w-3.5 h-3.5 text-[#B57B4C]" />
+                <Clock className="w-3.5 h-3.5 text-copper-text" />
                 <span className="text-[11px]">By appointment only</span>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#342015]">
-              <p className="text-[10px] uppercase tracking-widest text-[#B57B4C]/90">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-cacao-700">
+              <p className="text-[10px] uppercase tracking-widest text-copper-text/90">
                 {CONCIERGE_REPLY_PROMISE}
               </p>
               <div className="flex flex-wrap justify-end gap-3">
               <Button
                 variant="outline"
                 onClick={onClose}
-                className="border-[#342015] text-xs uppercase tracking-widest whitespace-normal"
+                className="border-cacao-700 text-xs uppercase tracking-widest whitespace-normal"
               >
                 Close
               </Button>
@@ -167,7 +167,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
                 onClick={handleBook}
                 data-noire-event="request_tasting_click"
                 data-noire-label="chocolate room reservation"
-                className="bg-[#835534] hover:bg-[#6B4227] text-[#F3E8D3] text-xs uppercase tracking-widest-editorial px-8 whitespace-normal"
+                className="bg-copper-surface hover:bg-copper-hover text-ivory text-xs uppercase tracking-widest-editorial px-8 whitespace-normal"
               >
                 Reserve Tasting
               </Button>
