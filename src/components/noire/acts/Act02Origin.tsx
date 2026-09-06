@@ -11,8 +11,8 @@ export function Act02Origin() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-6 space-y-8">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-            Act II &bull; Origin & Canopy <span className="opacity-60">&middot; 02 / 08</span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#B57B4C] font-sans">
+            Act II &bull; Origin & Canopy <span className="text-[#F3E8D3]/60">&middot; 02 / 08</span>
           </span>
           <h2 className="font-display text-4xl sm:text-6xl font-normal text-[#F3E8D3] leading-tight">
             Where the wild pod awakens.
@@ -30,7 +30,7 @@ export function Act02Origin() {
                 key={word}
                 className="p-4 bg-[#120B07]/80 border border-[#342015] rounded-[2px] backdrop-blur-sm"
               >
-                <span className="font-display text-lg tracking-widest text-[#9B6742]">{word}</span>
+                <span className="font-display text-lg tracking-widest text-[#B57B4C]">{word}</span>
               </div>
             ))}
           </div>
@@ -38,7 +38,7 @@ export function Act02Origin() {
 
         <div className="lg:col-span-6 flex justify-end">
           <div className="space-y-4 max-w-sm bg-[#080604]/40 backdrop-blur-sm p-6 border-l border-[#342015] rounded-[2px]">
-            <span className="text-[10px] uppercase tracking-widest text-[#9B6742]">
+            <span className="text-[10px] uppercase tracking-widest text-[#B57B4C]">
               Terroir Note
             </span>
             <p className="font-editorial italic text-sm text-[#F3E8D3]/70 leading-relaxed">

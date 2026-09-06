@@ -325,7 +325,7 @@ export function CinematicScrollCanvas({
 
       {/* Minimalistic initial preloading status */}
       {loadedCount < LOADER_VISIBLE_FRAMES && (
-        <div className="absolute bottom-6 left-6 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-[#9B6742]/60">
+        <div className="absolute bottom-6 left-6 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-[#B57B4C]">
           <span className="w-1.5 h-1.5 rounded-full bg-[#9B6742] animate-ping" />
           <span>
             Cinematic Frames Initializing ({loadedCount}/{activeSetSize})

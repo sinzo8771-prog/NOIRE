@@ -40,9 +40,9 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-5xl mx-auto"
     >
       <div className="space-y-10">
-        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-          Act VI &bull; Sensory Progression <span className="opacity-60">&middot; 06 / 08</span>
-        </span>
+        <h2 className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#B57B4C] font-sans font-normal">
+          Act VI &bull; Sensory Progression <span className="text-[#F3E8D3]/60">&middot; 06 / 08</span>
+        </h2>
 
         <ol className="border-t border-[#342015]">
           {SEQUENCE.map((s, i) => (
@@ -65,7 +65,7 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
           data-noire-event="navigation_click"
           data-noire-label="act6 explore collection"
           data-noire-target="#act-7"
-          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-[#9B6742] hover:text-[#F3E8D3] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] py-1"
+          className="inline-flex items-center gap-2 min-h-[44px] text-[10px] uppercase tracking-[0.3em] text-[#B57B4C] hover:text-[#F3E8D3] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] py-1"
         >
           Continue to the Reserve Collection <span aria-hidden="true">&rarr;</span>
         </button>

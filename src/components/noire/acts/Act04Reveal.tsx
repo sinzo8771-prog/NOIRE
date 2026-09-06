@@ -20,13 +20,13 @@ export function Act04Reveal() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 space-y-6">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-            Act IV &bull; The Reveal <span className="opacity-60">&middot; 04 / 08</span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#B57B4C] font-sans">
+            Act IV &bull; The Reveal <span className="text-[#F3E8D3]/60">&middot; 04 / 08</span>
           </span>
           <h2 className="font-display text-5xl sm:text-7xl font-normal text-[#F3E8D3] leading-[0.95]">
             {flagship.cacaoPercentage}% CACAO.
             <br />
-            <span className="font-editorial italic text-[#9B6742]">
+            <span className="font-editorial italic text-[#B57B4C]">
               Nothing unnecessary.
             </span>
           </h2>
@@ -39,7 +39,7 @@ export function Act04Reveal() {
 
         <div className="lg:col-span-5 flex justify-end">
           <div className="border-l border-[#342015] pl-8 space-y-4 max-w-xs bg-[#080604]/40 backdrop-blur-sm p-4 rounded-[2px]">
-            <span className="text-[10px] uppercase tracking-widest text-[#9B6742]">
+            <span className="text-[10px] uppercase tracking-widest text-[#B57B4C]">
               Formula Restraint
             </span>
             <p className="text-xs text-[#F3E8D3]/60 leading-relaxed">

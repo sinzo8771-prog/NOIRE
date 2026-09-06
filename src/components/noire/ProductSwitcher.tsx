@@ -38,11 +38,11 @@ export function ProductSwitcher({
             className={`group relative py-2 px-1 text-xs sm:text-sm uppercase tracking-widest-editorial transition-all duration-300 rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] cursor-pointer ${
               isActive
                 ? "text-[#F3E8D3] font-medium"
-                : "text-[#F3E8D3]/40 hover:text-[#F3E8D3]/80"
+                : "text-[#F3E8D3]/50 hover:text-[#F3E8D3]/80"
             }`}
           >
             <span>{prod.name}</span>
-            <span className="ml-2 text-[10px] text-[#9B6742]">
+            <span className="ml-2 text-[10px] text-[#B57B4C]">
               {prod.cacaoPercentage}%
             </span>
             {isActive && (

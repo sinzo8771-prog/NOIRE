@@ -101,14 +101,14 @@ export function ProductStage({
           className="lg:col-span-6 space-y-8"
         >
           <div className="space-y-3">
-            <div className="flex items-center space-x-2 text-[#9B6742] text-[11px] uppercase tracking-widest font-sans">
+            <div className="flex items-center space-x-2 text-[#B57B4C] text-[11px] uppercase tracking-widest font-sans">
               <Sparkles className="w-3 h-3" />
               <span>{selectedProduct.harvest}</span>
             </div>
             <h3 className="font-display text-3xl sm:text-4xl tracking-wide font-normal text-[#F3E8D3]">
               {selectedProduct.name}
             </h3>
-            <p className="font-editorial italic text-base text-[#9B6742]">
+            <p className="font-editorial italic text-base text-[#B57B4C]">
               {selectedProduct.subtitle}
             </p>
             <p className="text-xs sm:text-sm text-[#F3E8D3]/70 leading-relaxed pt-2">
@@ -122,7 +122,7 @@ export function ProductStage({
           {/* Inquiry CTA — no fake commerce (Phase 3) */}
           <div className="pt-6 border-t border-[#342015] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <span className="block text-[10px] uppercase tracking-widest text-[#F3E8D3]/40">
+              <span className="block text-[10px] uppercase tracking-widest text-[#F3E8D3]/50">
                 Artisanal Bar
               </span>
               <span className="text-xs text-[#F3E8D3]/70">
@@ -166,10 +166,10 @@ function StaticReservePreview({ product }: { product: Product }) {
       <span className="font-display text-3xl sm:text-4xl tracking-[0.2em] text-[#F3E8D3]/90">
         {product.name}
       </span>
-      <span className="text-[10px] uppercase tracking-[0.3em] text-[#9B6742]">
+      <span className="text-[10px] uppercase tracking-[0.3em] text-[#B57B4C]">
         {product.weight} &bull; {product.cacaoPercentage}% Cacao
       </span>
-      <span className="text-[10px] uppercase tracking-widest text-[#F3E8D3]/40 max-w-[240px] leading-relaxed">
+      <span className="text-[10px] uppercase tracking-widest text-[#F3E8D3]/50 max-w-[240px] leading-relaxed">
         The 3D reserve visual is unavailable on this device &mdash; request the
         bar directly below.
       </span>

@@ -153,7 +153,7 @@ return (
             <span className="font-display text-2xl sm:text-3xl tracking-[0.25em] text-[#F3E8D3] font-normal transition-opacity duration-300 group-hover:text-[#F3E8D3]/80">
               NOIRÉ
             </span>
-            <span className="text-[9px] uppercase tracking-[0.35em] text-[#9B6742] -mt-1 font-sans">
+            <span className="text-[9px] uppercase tracking-[0.35em] text-[#B57B4C] -mt-1 font-sans">
               Atelier
             </span>
           </a>
@@ -169,7 +169,7 @@ return (
                 data-noire-event="navigation_click"
                 data-noire-label={`nav ${item.label.toLowerCase()}`}
                 data-noire-target={`#${item.target}`}
-                className={`py-2 transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] ${
+                className={`py-2 min-h-[44px] inline-flex items-center transition-colors duration-300 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px] ${
                   isActiveFor(item.target) ? "text-[#F3E8D3] font-medium" : ""
                 }`}
               >
@@ -185,11 +185,11 @@ return (
               onClick={onToggleSound}
               aria-label={soundEnabled ? "Mute ambient audio" : "Enable ambient audio"}
               aria-pressed={soundEnabled}
-              className="flex items-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              className="hidden sm:flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 min-h-[44px] min-w-[44px] rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
             >
               {soundEnabled ? (
                 <>
-                  <Volume2 className="w-3.5 h-3.5 text-[#9B6742] animate-pulse" />
+                  <Volume2 className="w-3.5 h-3.5 text-[#B57B4C] animate-pulse" />
                   <span className="hidden sm:inline">Audio On</span>
                 </>
               ) : (
@@ -211,11 +211,11 @@ return (
                   : "Disable cinematic scroll motion"
               }
               title="Cinematic scroll motion"
-              className="flex items-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              className="hidden sm:flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 min-h-[44px] min-w-[44px] rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
             >
               <Accessibility
                 className={`w-3.5 h-3.5 ${
-                  reducedMotion ? "text-[#F3E8D3]/40" : "text-[#9B6742]"
+                  reducedMotion ? "text-[#F3E8D3]/40" : "text-[#B57B4C]"
                 }`}
               />
               <span className="hidden lg:inline">
@@ -232,7 +232,7 @@ return (
               className="relative flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-[#F3E8D3] bg-[#1A100B] hover:bg-[#261710] border border-[#342015] hover:border-[#9B6742] px-3.5 py-1.5 rounded-[2px] transition-all duration-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
               aria-label="Request a tasting with the NOIRÉ concierge by email"
             >
-              <Mail className="w-3.5 h-3.5 text-[#9B6742]" />
+              <Mail className="w-3.5 h-3.5 text-[#B57B4C]" />
               <span className="tracking-wider hidden sm:inline">Request a Tasting</span>
               <span className="tracking-wider sm:hidden">Request</span>
             </a>
@@ -249,7 +249,7 @@ return (
               ref={toggleRef}
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 text-[#F3E8D3]/80 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px]"
+              className="md:hidden p-1.5 min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-[#F3E8D3]/80 hover:text-[#F3E8D3] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] rounded-[2px]"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
               aria-controls={MOBILE_MENU_ID}
@@ -276,9 +276,9 @@ return (
                 data-noire-event="navigation_click"
                 data-noire-label={`mobile ${act.label.toLowerCase()}`}
                 data-noire-target={`#${act.target}`}
-                aria-current={activeAct === act.id ? "true" : undefined}
+                aria-current={activeAct === act.id ? "location" : undefined}
                 className={`text-left py-2 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] ${
-                  activeAct === act.id ? "text-[#9B6742]" : "hover:text-[#9B6742]"
+                  activeAct === act.id ? "text-[#B57B4C]" : "hover:text-[#B57B4C]"
                 }`}
               >
                 {actNumeral(act.id)} &mdash; {act.label}
@@ -289,19 +289,56 @@ return (
             <p className="text-xs uppercase tracking-widest text-[#F3E8D3]/50">
               Chocolate, Unhurried.
             </p>
+            {/* P2: audio + motion controls live here on xs, where the header
+                shows only the CTA + menu toggle to protect 375px widths. */}
+            <div className="flex flex-wrap gap-3 sm:hidden">
+              <button
+                type="button"
+                onClick={onToggleSound}
+                aria-label={soundEnabled ? "Mute ambient audio" : "Enable ambient audio"}
+                aria-pressed={soundEnabled}
+                className="inline-flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 min-h-[44px] px-3 rounded-[2px] border border-[#342015]/60 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              >
+                {soundEnabled ? (
+                  <Volume2 className="w-3.5 h-3.5 text-[#B57B4C]" aria-hidden="true" />
+                ) : (
+                  <VolumeX className="w-3.5 h-3.5 text-[#F3E8D3]/40" aria-hidden="true" />
+                )}
+                <span>{soundEnabled ? "Audio On" : "Audio Off"}</span>
+              </button>
+              <button
+                type="button"
+                onClick={toggleMotion}
+                aria-pressed={reducedMotion}
+                aria-label={
+                  reducedMotion
+                    ? "Enable cinematic scroll motion"
+                    : "Disable cinematic scroll motion"
+                }
+                className="inline-flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 min-h-[44px] px-3 rounded-[2px] border border-[#342015]/60 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
+              >
+                <Accessibility
+                  className={`w-3.5 h-3.5 ${
+                    reducedMotion ? "text-[#F3E8D3]/40" : "text-[#B57B4C]"
+                  }`}
+                  aria-hidden="true"
+                />
+                <span>{reducedMotion ? "Motion Off" : "Motion On"}</span>
+              </button>
+            </div>
             <a
               href={CONCIERGE_MAILTO}
               data-noire-event="request_tasting_click"
               data-noire-label="mobile request a tasting"
               className="inline-flex items-center space-x-2 text-sm uppercase tracking-widest text-[#F3E8D3] rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
             >
-              <Mail className="w-4 h-4 text-[#9B6742]" />
+              <Mail className="w-4 h-4 text-[#B57B4C]" />
               <span>Request a Tasting</span>
             </a>
             <p className="text-[11px] text-[#F3E8D3]/50">
               <span>{CONCIERGE_EMAIL} · </span>
               <CopyEmailButton label="mobile request a tasting" />
-              <span className="block mt-1 text-[#9B6742]/90 uppercase tracking-widest text-[10px]">
+              <span className="block mt-1 text-[#B57B4C]/90 uppercase tracking-widest text-[10px]">
                 {CONCIERGE_REPLY_PROMISE}
               </span>
             </p>

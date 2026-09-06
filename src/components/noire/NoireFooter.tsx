@@ -16,7 +16,7 @@ import {
 export function NoireFooter() {
   const tastingMailto = mailtoLink(
     "Tasting request — NOIRÉ Atelier",
-    "Hello NOIRÉ concierge,\n\nI would like to book a tasting visit at the Fort atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
+    "Hello NOIRÉ concierge,\n\nI would like to request a private tasting at the Fort atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
   );
 
   return (
@@ -28,7 +28,7 @@ export function NoireFooter() {
             <h3 className="font-display text-3xl sm:text-4xl tracking-[0.2em] font-normal text-[#F3E8D3]">
               NOIRÉ
             </h3>
-            <p className="text-sm font-editorial italic text-[#9B6742] max-w-md text-balance leading-relaxed">
+            <p className="text-sm font-editorial italic text-[#B57B4C] max-w-md text-balance leading-relaxed">
               &ldquo;Some things cannot be accelerated without stripping their soul. We roast slowly, conche for days, and temper by hand.&rdquo;
             </p>
             <p className="text-xs text-[#F3E8D3]/50 max-w-md leading-relaxed">
@@ -38,7 +38,7 @@ export function NoireFooter() {
 
           {/* Navigation Links — the same eight chapters as the rail */}
           <div className="md:col-span-3 space-y-4">
-            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#9B6742]">
+            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#B57B4C]">
               Story Chapters
             </h4>
             <ul className="space-y-2.5 text-xs text-[#F3E8D3]/70">
@@ -60,7 +60,7 @@ export function NoireFooter() {
 
           {/* Contact / Atelier details */}
           <div className="md:col-span-3 space-y-4">
-            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#9B6742]">
+            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#B57B4C]">
               Atelier Coordinates
             </h4>
             <p className="text-xs text-[#F3E8D3]/70 leading-relaxed">
@@ -76,7 +76,7 @@ export function NoireFooter() {
                   data-noire-label="concierge email"
                   className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
                 >
-                  <Mail className="w-3.5 h-3.5 text-[#9B6742]" />
+                  <Mail className="w-3.5 h-3.5 text-[#B57B4C]" />
                   <span>{CONCIERGE_EMAIL}</span>
                 </a>
               </li>
@@ -93,7 +93,7 @@ export function NoireFooter() {
                     data-noire-event="phone_click"
                     className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#9B6742]" />
+                    <Phone className="w-3.5 h-3.5 text-[#B57B4C]" />
                     <span>{ATELIER_PHONE_DISPLAY}</span>
                   </a>
                 </li>
@@ -109,20 +109,20 @@ export function NoireFooter() {
                     data-noire-event="whatsapp_click"
                     className="inline-flex items-center space-x-2 hover:text-[#F3E8D3] transition-colors"
                   >
-                    <MessageCircle className="w-3.5 h-3.5 text-[#9B6742]" />
+                    <MessageCircle className="w-3.5 h-3.5 text-[#B57B4C]" />
                     <span>WhatsApp the atelier</span>
                   </a>
                 </li>
               )}
             </ul>
-            <p className="text-[10px] uppercase tracking-widest text-[#9B6742]/90">
+            <p className="text-[10px] uppercase tracking-widest text-[#B57B4C]/90">
               {CONCIERGE_REPLY_PROMISE}
             </p>
             <a
               href={tastingMailto}
               data-noire-event="request_tasting_click"
               data-noire-label="footer tasting booking"
-              className="inline-block text-[10px] uppercase tracking-widest text-[#9B6742] underline underline-offset-4 hover:text-[#F3E8D3] transition-colors"
+              className="inline-block text-[10px] uppercase tracking-widest text-[#B57B4C] underline underline-offset-4 hover:text-[#F3E8D3] transition-colors"
             >
               Tasting visits by advance appointment — book by email
             </a>
@@ -135,7 +135,7 @@ export function NoireFooter() {
             id="allergen-declarations"
             className="space-y-4 p-6 border border-[#342015]/60 bg-[#0A0705] rounded-[2px] scroll-mt-28"
           >
-            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#9B6742]">
+            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#B57B4C]">
               Allergen Declarations
             </h4>
             <ul className="space-y-3 text-xs text-[#F3E8D3]/60 leading-relaxed">
@@ -148,7 +148,7 @@ export function NoireFooter() {
                 </li>
               ))}
             </ul>
-            <p className="text-[10px] text-[#F3E8D3]/40 leading-relaxed">
+            <p className="text-[10px] text-[#F3E8D3]/50 leading-relaxed">
               Full ingredient lists are printed on every wrapper. If you live
               with severe allergies, write to the concierge before a tasting
               visit — flights are prepared to order.
@@ -159,7 +159,7 @@ export function NoireFooter() {
             id="direct-trade"
             className="space-y-4 p-6 border border-[#342015]/60 bg-[#0A0705] rounded-[2px] scroll-mt-28"
           >
-            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#9B6742]">
+            <h4 className="text-[11px] uppercase tracking-widest-editorial text-[#B57B4C]">
               Direct Trade Transparency
             </h4>
             <p className="text-xs text-[#F3E8D3]/60 leading-relaxed">
@@ -180,9 +180,9 @@ export function NoireFooter() {
         <Separator className="bg-[#342015]/40" />
 
         {/* Bottom copyright and anti-slop signature */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#F3E8D3]/40 space-y-4 sm:space-y-0">
+        <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#F3E8D3]/50 space-y-4 sm:space-y-0">
           <p>&copy; {new Date().getFullYear()} NOIRÉ ATELIER. All rights reserved.</p>
-          <p className="tracking-widest uppercase text-[10px] text-[#9B6742]">
+          <p className="tracking-widest uppercase text-[10px] text-[#B57B4C]">
             Chocolate, Unhurried.
           </p>
           <div className="flex space-x-6 text-[11px]">

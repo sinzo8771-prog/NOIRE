@@ -65,7 +65,7 @@ export default function Product3DViewer({
       <span className="font-display text-2xl tracking-[0.2em] text-[#F3E8D3]/80">
         {productName}
       </span>
-      <span className="text-[10px] uppercase tracking-widest text-[#F3E8D3]/40">
+      <span className="text-[10px] uppercase tracking-widest text-[#F3E8D3]/50">
         3D rendering unavailable &mdash; request this bar via the concierge below.
       </span>
     </div>
@@ -80,7 +80,7 @@ export default function Product3DViewer({
       <ViewerErrorBoundary fallback={fallbackPanel}>
         <Suspense
           fallback={
-            <div className="flex flex-col items-center justify-center space-y-3 text-[#F3E8D3]/40">
+            <div className="flex flex-col items-center justify-center space-y-3 text-[#F3E8D3]/50">
               <span className="w-8 h-8 border border-[#9B6742] border-t-transparent rounded-full animate-spin" />
               <span className="text-[10px] uppercase tracking-widest">
                 Rendering 3D Bar
@@ -119,13 +119,13 @@ export default function Product3DViewer({
       </ViewerErrorBoundary>
 
       {/* Orbit cue indicator */}
-      <div className="absolute bottom-4 left-4 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-[#F3E8D3]/40 pointer-events-none">
-        <Rotate3D className="w-3.5 h-3.5 text-[#9B6742]" />
+      <div className="absolute bottom-4 left-4 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-[#F3E8D3]/50 pointer-events-none">
+        <Rotate3D className="w-3.5 h-3.5 text-[#B57B4C]" />
         <span>Drag to rotate</span>
       </div>
 
       {/* Weight stamp (from product data, P6.2) */}
-      <div className="absolute top-4 right-4 text-[9px] uppercase tracking-widest text-[#9B6742] border border-[#9B6742]/40 px-2 py-0.5 rounded-[1px] bg-[#080604]/60">
+      <div className="absolute top-4 right-4 text-[9px] uppercase tracking-widest text-[#B57B4C] border border-[#9B6742]/40 px-2 py-0.5 rounded-[1px] bg-[#080604]/60">
         Hand Cast {productWeight}
       </div>
     </div>

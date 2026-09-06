@@ -2,9 +2,15 @@
  * NOIRÉ frame-sequence converter (Phase 1.1 of noire-website-plan.md)
  *
  * Converts the raw 192× 1280x720 JPG frames in public/frames/ into:
- *   1. public/frames/webp/        — 192 desktop frames, 1280w WebP q60 (~40-60% smaller)
+ *   1. public/frames/webp/        — 192 desktop frames, 1152w WebP q42 (~4.4MB total budget)
  *   2. public/frames/webp-mobile/ — every 3rd frame (64 total), 768w WebP q55 (mobile scrubber)
  *   3. public/og-image.jpg        — 1200x630 social card generated from frame_0096
+ *
+ * Desktop budget note (2026-09-06 audit): 1280w q60 shipped ~6.5MB; 1152w q42
+ * ships ~4.4MB with no visible loss on atmospheric plates (verified
+ * side-by-side on frame_0001). Keep desktop under ~4.5MB on regeneration —
+ * prefer lowering quality before touching resolution or frame count, so the
+ * scrubber's temporal resolution never changes silently.
  *
  * Usage:
  *   node scripts/convert-frames.mjs            # convert only
@@ -48,11 +54,11 @@ for (const f of files) {
   const outName = f.replace(/\.jpg$/, ".webp");
   const img = sharp(srcPath);
 
-  // Desktop: keep 1280w, WebP q60
+  // Desktop: 1152w WebP q42 (audit budget — see header note)
   const dInfo = await img
     .clone()
-    .resize({ width: 1280 })
-    .webp({ quality: 60, effort: 4, smartSubsample: true })
+    .resize({ width: 1152 })
+    .webp({ quality: 42, effort: 4, smartSubsample: true })
     .toFile(path.join(DESKTOP_DIR, outName));
   desktopTotal += dInfo.size;
   desktopCount += 1;

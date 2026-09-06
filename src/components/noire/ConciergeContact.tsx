@@ -68,7 +68,7 @@ export function CopyEmailButton({ className = "", label }: CopyEmailButtonProps)
       className={`inline-flex items-center space-x-1.5 text-[11px] uppercase tracking-widest text-[#F3E8D3]/60 hover:text-[#F3E8D3] transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742] ${className}`}
     >
       {state === "copied" ? (
-        <Check className="w-3.5 h-3.5 text-[#9B6742]" aria-hidden="true" />
+        <Check className="w-3.5 h-3.5 text-[#B57B4C]" aria-hidden="true" />
       ) : (
         <Copy className="w-3.5 h-3.5" aria-hidden="true" />
       )}
@@ -108,7 +108,7 @@ export function ConciergeFallback({ className = "", label }: ConciergeFallbackPr
       </a>
       <span aria-hidden="true"> · </span>
       <CopyEmailButton label={label} />
-      <span className="block mt-1 text-[#9B6742]/90 uppercase tracking-widest text-[10px]">
+      <span className="block mt-1 text-[#B57B4C]/90 uppercase tracking-widest text-[10px]">
         {CONCIERGE_REPLY_PROMISE}
       </span>
     </p>

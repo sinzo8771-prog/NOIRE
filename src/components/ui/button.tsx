@@ -11,13 +11,13 @@ const buttonVariants = cva(
         default:
           "bg-[#F3E8D3] text-[#080604] hover:bg-[#E2D2B5] active:scale-[0.98]",
         copper:
-          "bg-[#9B6742] text-[#F3E8D3] hover:bg-[#835534] active:scale-[0.98]",
+          "bg-[#835534] text-[#F3E8D3] hover:bg-[#6B4227] active:scale-[0.98]",
         outline:
           "border border-[#342015] bg-transparent text-[#F3E8D3] hover:border-[#9B6742] hover:bg-[#1A100B] hover:text-[#F3E8D3]",
         ghost:
           "text-[#F3E8D3]/70 hover:text-[#F3E8D3] hover:bg-[#1A100B]/60",
         link:
-          "text-[#F3E8D3] underline-offset-4 hover:underline hover:text-[#9B6742]",
+          "text-[#F3E8D3] underline-offset-4 hover:underline hover:text-[#B57B4C]",
       },
       size: {
         default: "h-11 px-7 py-3 rounded-[2px]",

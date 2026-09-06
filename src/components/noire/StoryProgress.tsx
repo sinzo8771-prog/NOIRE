@@ -21,7 +21,7 @@ export function StoryProgress({ activeAct, onSelectAct }: StoryProgressProps) {
             onClick={() => onSelectAct(act.id)}
             className="group flex items-center justify-end space-x-3 py-2 text-right rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]"
             aria-label={`Jump to Act ${actNumeral(act.id)}: ${act.label}`}
-            aria-current={isActive ? "true" : undefined}
+            aria-current={isActive ? "location" : undefined}
           >
             <span
               className={`text-[10px] uppercase tracking-widest font-sans transition-all duration-300 ${

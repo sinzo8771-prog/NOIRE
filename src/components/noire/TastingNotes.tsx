@@ -14,7 +14,7 @@ export function TastingNotes({ product }: TastingNotesProps) {
         <span className="text-[11px] uppercase tracking-widest-editorial text-[#F3E8D3]/60">
           Cacao Content
         </span>
-        <span className="font-display text-2xl text-[#9B6742]">
+        <span className="font-display text-2xl text-[#B57B4C]">
           {product.cacaoPercentage}%
         </span>
       </div>
@@ -43,7 +43,7 @@ export function TastingNotes({ product }: TastingNotesProps) {
       <details className="group pt-2 border-t border-[#342015]/60">
         <summary className="cursor-pointer list-none flex items-center justify-between py-3 text-[10px] uppercase tracking-widest text-[#F3E8D3]/50 hover:text-[#F3E8D3]/80 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#9B6742]">
           <span>Palate & Provenance</span>
-          <span aria-hidden="true" className="text-[#9B6742] text-sm leading-none transition-transform duration-300 group-open:rotate-45">
+          <span aria-hidden="true" className="text-[#B57B4C] text-sm leading-none transition-transform duration-300 group-open:rotate-45">
             +
           </span>
         </summary>
@@ -54,7 +54,7 @@ export function TastingNotes({ product }: TastingNotesProps) {
             <div key={metric.label} className="space-y-1">
               <div className="flex justify-between text-[11px] text-[#F3E8D3]/80 tracking-wide">
                 <span>{metric.label}</span>
-                <span className="text-[#9B6742] font-mono text-[10px]">
+                <span className="text-[#B57B4C] font-mono text-[10px]">
                   {metric.value}%
                 </span>
               </div>
@@ -72,26 +72,26 @@ export function TastingNotes({ product }: TastingNotesProps) {
         <div className="pt-2 space-y-3 text-[11px]">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
             <div>
-              <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+              <span className="block text-[#F3E8D3]/50 text-[10px] uppercase tracking-wider">
                 Terroir
               </span>
               <span className="text-[#F3E8D3]/90">{product.origin}</span>
             </div>
             <div>
-              <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+              <span className="block text-[#F3E8D3]/50 text-[10px] uppercase tracking-wider">
                 Conche & Temper
               </span>
               <span className="text-[#F3E8D3]/90">{product.roastProfile}</span>
             </div>
           </div>
           <div>
-            <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+            <span className="block text-[#F3E8D3]/50 text-[10px] uppercase tracking-wider">
               Ingredients
             </span>
             <span className="text-[#F3E8D3]/90">{product.ingredients.join(" · ")}</span>
           </div>
           <div>
-            <span className="block text-[#F3E8D3]/40 text-[10px] uppercase tracking-wider">
+            <span className="block text-[#F3E8D3]/50 text-[10px] uppercase tracking-wider">
               Allergen
             </span>
             <span className="text-[#F3E8D3]/80">{product.allergens}</span>

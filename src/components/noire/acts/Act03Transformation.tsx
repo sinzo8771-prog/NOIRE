@@ -16,8 +16,8 @@ export function Act03Transformation() {
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-7xl mx-auto"
     >
       <div className="max-w-3xl space-y-8">
-        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-          Act III &bull; Transformation <span className="opacity-60">&middot; 03 / 08</span>
+        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#B57B4C] font-sans">
+          Act III &bull; Transformation <span className="text-[#F3E8D3]/60">&middot; 03 / 08</span>
         </span>
         <h2 className="font-display text-4xl sm:text-6xl font-normal text-[#F3E8D3] leading-tight">
                     The {CONC_PROCESS.HEADLINE}.
@@ -41,7 +41,7 @@ export function Act03Transformation() {
               key={s.step}
               className="p-3.5 bg-[#120B07]/85 border border-[#342015] rounded-[2px] backdrop-blur-sm space-y-1"
             >
-              <span className="text-[9px] font-mono text-[#9B6742]">{s.step}</span>
+              <span className="text-[9px] font-mono text-[#B57B4C]">{s.step}</span>
               <p className="text-xs uppercase tracking-wider font-semibold text-[#F3E8D3]">
                 {s.name}
               </p>

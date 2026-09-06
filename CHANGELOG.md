@@ -72,9 +72,33 @@ Verified (post-fix, production build + headless Chrome): all four scenarios (nor
 mobile / override) load the correct frame set, repaint while scrolling, with zero console or
 network errors.
 
+## Update — Impeccable critique + audit backlog (2026-09-06)
+
+Critique 25/36 → 27/36 (both P1s closed); audit 15/20 Good. Detector clean across
+`src` + `public`; regression `scripts/test-browser.js` 122/127 (5 remaining failures
+are pre-existing analytics drifts: `product_selected` ×4, `chocolate_room_open` ×1).
+
+- **Concierge handoff:** visible address + copy fallback + "Replies within one day,
+  personally." at all five CTAs; honest "Request Ready" modal confirmation with flight
+  echo; unified tasting subject; phone/WhatsApp hidden until a real line is configured
+  (`ATELIER_PHONE_CONFIGURED` in `src/lib/site.ts`).
+- **Navigation:** one canonical 8-chapter list (`src/data/acts.ts`) drives rail, mobile
+  overlay, and footer; grouped desktop anchors with range-active states; persistent rail
+  labels, focus rings, 44px targets (audio/motion move into the overlay on xs).
+- **Collection:** Act VII distills to cacao % + tasting notes + ask; metrics/provenance
+  behind a native disclosure.
+- **Wayfinding:** `0n / 08` counters on every act + sub-xl progress hairline.
+- **Contrast:** text copper `#B57B4C` (5.69:1), copper surfaces `#835534` (5.22:1,
+  hover `#6B4227`); large display keeps `#9B6742`.
+- **Frames:** desktop set recompressed 1152w q42, 6.51 → **4.39 MB** (verified
+  side-by-side, no visible loss); `scripts/convert-frames.mjs` budget updated.
+- **Facts:** conche duration ruled 72h (owner), single-sourced and matching.
+
 ## Known follow-ups
 
 - Real-phone cellular test and production-hosted Lighthouse run after deploying to Vercel.
-- Replace placeholder phone number in `src/lib/site.ts`.
-- `scripts/test-browser.js` still exercises the removed cart flow (dev-only script; update if
-  the regression suite is used again).
+- Set the real atelier number in `src/lib/site.ts` and flip `ATELIER_PHONE_CONFIGURED`
+  to true (footer phone/WhatsApp rows render only when configured).
+- `product_selected` / `chocolate_room_open` analytics assertions in
+  `scripts/test-browser.js` pre-date the event layer wiring — fix or drop them if the
+  suite is used as a gate.

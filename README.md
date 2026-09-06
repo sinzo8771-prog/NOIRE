@@ -6,7 +6,7 @@ The page tells the story in eight "acts" — from wild cacao canopy to hand-temp
 
 ## Performance & Accessibility
 
-- Cinematic frames ship as **WebP** (`public/frames/webp/`, 192 desktop frames ≈ 6.5 MB) with a **mobile manifest** (`public/frames/webp-mobile/`, every 3rd frame ≈ 1.2 MB) selected by viewport width at runtime.
+- Cinematic frames ship as **WebP** (`public/frames/webp/`, 192 desktop frames ≈ 4.4 MB) with a **mobile manifest** (`public/frames/webp-mobile/`, every 3rd frame ≈ 1.2 MB) selected by viewport width at runtime.
 - Frames load progressively: first ~10 at full priority, the rest streamed with bounded concurrency during browser idle time.
 - `three.js`/`react-three-fiber` are **async chunks**: the 3D product viewer mounts when Act VII nears the viewport; the ambient particle layer mounts during idle time after first paint. The 3D viewer has a static WebGL fallback (no WebGL / context loss / load failure).
 - `prefers-reduced-motion` disables Lenis smoothing, canvas scrubbing, particles, and CSS motion; a "Skip to content" link is the first focusable element.

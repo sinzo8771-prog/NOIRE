@@ -19,8 +19,8 @@ export function Act05Break({ onPlaySnap }: Act05BreakProps) {
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-7xl mx-auto"
     >
       <div className="max-w-2xl space-y-6">
-        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#9B6742] font-sans">
-          Act V &bull; The Break <span className="opacity-60">&middot; 05 / 08</span>
+        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#B57B4C] font-sans">
+          Act V &bull; The Break <span className="text-[#F3E8D3]/60">&middot; 05 / 08</span>
         </span>
         <h2 className="font-display text-4xl sm:text-6xl font-normal text-[#F3E8D3] leading-tight">
           A snap you feel in your fingertips.
@@ -34,7 +34,7 @@ export function Act05Break({ onPlaySnap }: Act05BreakProps) {
           <Button
             variant="outline"
             onClick={onPlaySnap}
-            className="border-[#342015] text-[#9B6742] hover:border-[#9B6742] text-xs uppercase tracking-widest backdrop-blur-sm"
+            className="border-[#342015] text-[#B57B4C] hover:border-[#9B6742] text-xs uppercase tracking-widest backdrop-blur-sm"
           >
             Audition the Snap
           </Button>
