@@ -48,6 +48,30 @@ Executed 2026-09-06. Baselines in `AUDIT.md`; raw Lighthouse JSON kept during th
   "Add to Bag", "Bag 0", "YOUR BAG", ShoppingBag.
 - `/robots.txt` and `/sitemap.xml` serve correct content from the production build.
 
+## Update — scroll animation on reduced-motion machines
+
+Reported: "scroll animation not working properly." Empirical probe (`scripts/scroll-probe.js`:
+wheel + programmatic scroll, canvas pixel fingerprints, request/status capture) proved the
+scrubber works on normal-motion machines (192 frames, 6 distinct canvas states, zero errors,
+desktop + mobile). Root cause: machines with `prefers-reduced-motion: reduce` active at the OS
+level (e.g. Windows "Animation effects" off) got the Phase 2 fallback, which originally froze
+the canvas on a single static frame.
+
+Changes:
+
+- Reduced-motion visitors now get **snap-mode scrubbing**: the canvas updates 1:1 with scroll
+  through a 64-frame subset (2.2 MB desktop / 1.2 MB mobile) — user-driven motion only, no
+  smoothing/lerp/parallax, native scrolling, no autonomous animation.
+- New **"Motion On/Off" toggle** in the navigation (persisted in localStorage, broadcast via
+  `noire-motion-change`) so visitors can override the OS preference in either direction —
+  including forcing the cinematic scrub ON on machines whose OS forces reduced motion.
+- Loader now resolves the effective preference synchronously (override > OS query) and reacts
+  to mid-session flips; reduced-motion loads the light frame set, normal loads all 192.
+
+Verified (post-fix, production build + headless Chrome): all four scenarios (normal / OS-reduce /
+mobile / override) load the correct frame set, repaint while scrolling, with zero console or
+network errors.
+
 ## Known follow-ups
 
 - Real-phone cellular test and production-hosted Lighthouse run after deploying to Vercel.

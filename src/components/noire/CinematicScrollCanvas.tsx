@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useReducedMotion, readMotionOverride } from "@/hooks/useReducedMotion";
 
 interface CinematicScrollCanvasProps {
   /** Live scroll progress (0..1), mutated outside React render (by Lenis) */
@@ -78,15 +78,29 @@ export function CinematicScrollCanvas({
     renderImageToCanvas(ctx, canvas, img);
   }, []);
 
-  // Build the active frame set and run the progressive loader (mount only).
+  // Build the active frame set and run the progressive loader. Re-runs when
+  // the reduced-motion preference flips mid-session.
   useEffect(() => {
     const isMobileViewport = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+    // Resolve the effective motion preference synchronously (hook state can
+    // lag one paint): the visitor's in-site override wins, then the OS query.
+    // Under reduced motion the scrubber runs in snap mode (user-driven only,
+    // no smoothing/lerp) through every 3rd frame — so it still streams the
+    // smaller 64-frame set instead of freezing on a single static image.
+    const override = readMotionOverride();
+    const isReduced = override
+      ? override === "off"
+      : window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const desktopStride = isReduced ? MOBILE_FRAME_STRIDE : 1;
     const frameIndices = isMobileViewport
       ? Array.from(
           { length: Math.ceil(totalFrames / MOBILE_FRAME_STRIDE) },
           (_, i) => i * MOBILE_FRAME_STRIDE
         )
-      : Array.from({ length: totalFrames }, (_, i) => i);
+      : Array.from(
+          { length: Math.ceil(totalFrames / desktopStride) },
+          (_, i) => i * desktopStride
+        );
 
     frameIndicesRef.current = frameIndices;
     const images = (imagesRef.current = new Array(frameIndices.length).fill(null));
@@ -189,16 +203,33 @@ export function CinematicScrollCanvas({
         window.clearTimeout(timeoutHandle);
       }
     };
-  }, [totalFrames, progressRef, drawFrame]);
+  }, [totalFrames, progressRef, drawFrame, reducedMotion]);
 
   // Single self-driving rAF loop: reads scroll progress from the ref, lerps
   // the active frame and repaints only when the frame index actually changes.
   useEffect(() => {
-    // Reduced motion (Phase 2): no scrubbing and no render loop at all. The
-    // loader paints the opening frame once it arrives; the page scrolls like
-    // a normal document with no scroll-driven animation.
+    // Reduced motion (Phase 2): no Lenis smoothing and no lerp — the canvas
+    // snaps 1:1 to scroll position through the reduced frame set. Motion is
+    // strictly user-driven (a frame only changes because the user scrolled);
+    // no autonomous animation, no parallax smoothing.
     if (reducedMotion) {
-      return;
+      let lastDrawnPos = -1;
+      let snapRafId = requestAnimationFrame(function check() {
+        const framesLength = frameIndicesRef.current.length;
+        if (framesLength > 0) {
+          const targetPos = Math.min(
+            framesLength - 1,
+            Math.max(0, progressRef.current * (framesLength - 1))
+          );
+          const pos = Math.round(targetPos);
+          if (pos !== lastDrawnPos) {
+            lastDrawnPos = pos;
+            drawFrame(pos);
+          }
+        }
+        snapRafId = requestAnimationFrame(check);
+      });
+      return () => cancelAnimationFrame(snapRafId);
     }
 
     let active = true;

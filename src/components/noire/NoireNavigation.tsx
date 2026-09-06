@@ -1,8 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Volume2, VolumeX, Mail, Menu, X } from "lucide-react";
+import { Volume2, VolumeX, Mail, Menu, X, Accessibility } from "lucide-react";
 import { mailtoLink } from "@/lib/site";
+import {
+  useReducedMotion,
+  MOTION_PREF_KEY,
+  MOTION_PREF_EVENT,
+} from "@/hooks/useReducedMotion";
 
 const CONCIERGE_MAILTO = mailtoLink(
   "Request a Tasting — NOIRÉ Atelier",
@@ -25,6 +30,20 @@ export function NoireNavigation({
 }: NoireNavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Effective cinematic-motion state (OS setting + visitor override)
+  const reducedMotion = useReducedMotion();
+
+  const toggleMotion = () => {
+    try {
+      // Explicit override in BOTH directions so visitors on machines whose OS
+      // forces reduced motion can still opt into the cinematic scrubber.
+      localStorage.setItem(MOTION_PREF_KEY, reducedMotion ? "on" : "off");
+    } catch {
+      // localStorage unavailable — toggle still affects this page load
+    }
+    window.dispatchEvent(new Event(MOTION_PREF_EVENT));
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -131,6 +150,28 @@ export function NoireNavigation({
                   <span className="hidden sm:inline">Audio Off</span>
                 </>
               )}
+            </button>
+
+            {/* Cinematic motion toggle — visible opt-out/opt-in control (Phase 2) */}
+            <button
+              onClick={toggleMotion}
+              className="flex items-center space-x-2 text-[11px] uppercase tracking-widest text-[#F3E8D3]/70 hover:text-[#F3E8D3] transition-colors py-1 px-2.5 rounded-[2px] border border-[#342015]/60 hover:border-[#9B6742] focus:outline-none focus:ring-1 focus:ring-[#9B6742]"
+              aria-pressed={reducedMotion}
+              aria-label={
+                reducedMotion
+                  ? "Enable cinematic scroll motion"
+                  : "Disable cinematic scroll motion"
+              }
+              title="Cinematic scroll motion"
+            >
+              <Accessibility
+                className={`w-3.5 h-3.5 ${
+                  reducedMotion ? "text-[#F3E8D3]/40" : "text-[#9B6742]"
+                }`}
+              />
+              <span className="hidden lg:inline">
+                {reducedMotion ? "Motion Off" : "Motion On"}
+              </span>
             </button>
 
             {/* Concierge inquiry CTA — replaces the decorative cart (Phase 3) */}
