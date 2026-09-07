@@ -15,6 +15,10 @@
  *   Test 7 — Mobile .............. 375×812 + 390×844: no overflow, menu, product, modal
  *   Test 8 — Reduced motion ...... no Lenis smoothing, snap/static frame, no particles,
  *                                  CSS motion neutralised, page remains navigable/readable
+ *   Test 9 — OpenDesign additions . Nocturne is the default hero (?hero=classic
+ *                                  restores Craving, no hydration errors),
+ *                                  #tasting interlude present/ordered/clean at 375px
+ *   Test 10 — Reserve Drop ........ #reserve-drop present/ordered/clean at 375px
  *
  * Environment:
  *   CHROME_PATH  (default: C:\Program Files\Google\Chrome\Application\chrome.exe)
@@ -791,6 +795,138 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     actsOk = actsOk && ok;
   }
   check("All eight acts readable under reduced motion", actsOk);
+
+  // ── Test 9: OpenDesign additions — hero variant + tasting interlude ──
+  console.log("\n[Test 9] Hero variant + tasting interlude");
+  await page.setViewport({ width: 1440, height: 900 });
+  await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "no-preference" }]);
+  const errBase = consoleErrors.length;
+  const pageErrBase = pageErrors.length;
+  await page.goto(BASE, { waitUntil: "networkidle0", timeout: 90000 });
+  await wait(1500);
+  const defaultHero = await page.$eval("#act-1", (el) => el.innerText).catch(() => "");
+  check(
+    "Default route renders Nocturne headline",
+    /Darkness,/.test(defaultHero) && /tempered/.test(defaultHero),
+    defaultHero.replace(/\s+/g, " ").slice(0, 80)
+  );
+  check(
+    "Default route replaces classic hero",
+    !/Something worth waiting for/.test(defaultHero)
+  );
+  check(
+    "Default hero adds no console/page errors (no hydration mismatch)",
+    consoleErrors.length === errBase && pageErrors.length === pageErrBase,
+    `console+${consoleErrors.length - errBase} page+${pageErrors.length - pageErrBase}`
+  );
+  const nocturneMailto = await page.$eval(
+    '#act-1 a[data-noire-event="request_tasting_click"]',
+    (el) => el.getAttribute("href")
+  ).catch(() => null);
+  check(
+    "Nocturne tasting CTA targets concierge mailto",
+    !!nocturneMailto && decodeMailto(nocturneMailto).includes("Request a Tasting"),
+    (nocturneMailto || "missing").slice(0, 60)
+  );
+  await shot(page, "10-hero-nocturne");
+
+  await page.goto(`${BASE}/?hero=classic`, { waitUntil: "networkidle0", timeout: 90000 });
+  await wait(1500);
+  const classicHero = await page.$eval("#act-1", (el) => el.innerText).catch(() => "");
+  check(
+    "Classic route restores original hero",
+    /Something worth waiting for/.test(classicHero) && !/Darkness,/.test(classicHero),
+    classicHero.replace(/\s+/g, " ").slice(0, 80)
+  );
+
+  await page.goto(BASE, { waitUntil: "networkidle0", timeout: 90000 });
+  await wait(1500);
+  const tasting = await page.$eval("#tasting", (el) => el.innerText).catch(() => "");
+  check(
+    "Tasting interlude present with heading",
+    /THE TASTING RITUAL/.test(tasting) && /movements/.test(tasting),
+    tasting.replace(/\s+/g, " ").slice(0, 80)
+  );
+  const movements = await page.$$eval("#tasting h3", (els) =>
+    els.map((el) => el.textContent.trim()).join(",")
+  ).catch(() => "");
+  check("Tasting renders all three movements", movements === "Look,Breathe,Melt", movements);
+  const tastingMailto = await page.$eval(
+    '#tasting a[data-noire-event="request_tasting_click"]',
+    (el) => el.getAttribute("href")
+  ).catch(() => null);
+  check(
+    "Tasting mailto CTA targets concierge",
+    !!tastingMailto && decodeMailto(tastingMailto).includes("Request a Tasting"),
+    (tastingMailto || "missing").slice(0, 60)
+  );
+  const roomBtn = await page.$('#tasting button[data-noire-event="chocolate_room_open"]');
+  check("Tasting Chocolate Room button present", !!roomBtn);
+  const order = await page.evaluate(() => {
+    const tops = ["act-8", "tasting"].map((id) => document.getElementById(id)?.offsetTop ?? -1);
+    const footerTop = document.querySelector("footer")?.offsetTop ?? -1;
+    return { act8: tops[0], tasting: tops[1], footer: footerTop };
+  });
+  check(
+    "Tasting sits between Act VIII and footer",
+    order.act8 >= 0 && order.act8 < order.tasting && order.tasting < order.footer,
+    `act-8=${order.act8} tasting=${order.tasting} footer=${order.footer}`
+  );
+  await page.setViewport({ width: 375, height: 812 });
+  await wait(500);
+  const tastingOffenders = await horizontalOffenders(page, "#tasting *");
+  check(
+    "Tasting has no horizontal offenders at 375px",
+    tastingOffenders.length === 0,
+    tastingOffenders.length
+      ? tastingOffenders.map((o) => `${o.tag}:${o.cls}`).slice(0, 3).join(", ")
+      : "clean"
+  );
+  await shot(page, "10-tasting-375");
+
+  // ── Test 10: Reserve Drop interlude ───────────────────────────────────
+  console.log("\n[Test 10] Reserve Drop interlude");
+  await page.setViewport({ width: 1440, height: 900 });
+  await page.goto(BASE, { waitUntil: "networkidle0", timeout: 90000 });
+  await wait(1500);
+  const drop = await page.$eval("#reserve-drop", (el) => el.innerText).catch(() => "");
+  check(
+    "Reserve Drop present with heading",
+    /THE RESERVE DROP/.test(drop) && /gone quietly/.test(drop),
+    drop.replace(/\s+/g, " ").slice(0, 80)
+  );
+  const dropMailto = await page.$eval(
+    '#reserve-drop a[data-noire-event="request_bar_click"]',
+    (el) => el.getAttribute("href")
+  ).catch(() => null);
+  check(
+    "Reserve List CTA targets concierge mailto",
+    !!dropMailto && decodeMailto(dropMailto).includes("Join the Reserve List"),
+    (dropMailto || "missing").slice(0, 60)
+  );
+  const dropExplore = await page.$('#reserve-drop button[data-noire-label="reserve drop explore collection"]');
+  check("Reserve Drop collection button present", !!dropExplore);
+  const dropOrder = await page.evaluate(() => {
+    const tops = ["tasting", "reserve-drop"].map((id) => document.getElementById(id)?.offsetTop ?? -1);
+    const footerTop = document.querySelector("footer")?.offsetTop ?? -1;
+    return { tasting: tops[0], drop: tops[1], footer: footerTop };
+  });
+  check(
+    "Reserve Drop sits between tasting and footer",
+    dropOrder.tasting >= 0 && dropOrder.tasting < dropOrder.drop && dropOrder.drop < dropOrder.footer,
+    `tasting=${dropOrder.tasting} drop=${dropOrder.drop} footer=${dropOrder.footer}`
+  );
+  await page.setViewport({ width: 375, height: 812 });
+  await wait(500);
+  const dropOffenders = await horizontalOffenders(page, "#reserve-drop *");
+  check(
+    "Reserve Drop has no horizontal offenders at 375px",
+    dropOffenders.length === 0,
+    dropOffenders.length
+      ? dropOffenders.map((o) => `${o.tag}:${o.cls}`).slice(0, 3).join(", ")
+      : "clean"
+  );
+  await shot(page, "10-reserve-drop-375");
 
   // ── Summary ───────────────────────────────────────────────────────────
   console.log("\n──────────────────────────────────────────────────");

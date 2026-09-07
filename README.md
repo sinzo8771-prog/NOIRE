@@ -51,7 +51,7 @@ npm start
 |---|---|
 | `npm run dev` / `build` / `start` / `lint` | Standard Next.js workflows |
 | `node scripts/convert-frames.mjs [--clean]` | Regenerate WebP frame sets + `public/og-image.jpg` from raw JPGs |
-| `node scripts/test-browser.js` | Full Puppeteer regression suite (8 groups / 127 checks: boot, acts, nav, product switcher, concierge CTAs, modal, mobile + viewport sweep, reduced motion, keyboard, analytics). Screenshots → `probe-artifacts/browser-regression/`. Requires Chrome + server on :3000 |
+| `node scripts/test-browser.js` | Full Puppeteer regression suite (10 groups / 143 checks: boot, acts, nav, product switcher, concierge CTAs, modal, mobile + viewport sweep, reduced motion, keyboard, analytics, hero variant + tasting interlude, reserve drop). Screenshots → `probe-artifacts/browser-regression/`. Requires Chrome + server on :3000 |
 | `node scripts/verify-fixes.js` | Targeted checks: fonts, navigation, animations plugin |
 | `node scripts/probe-overflow.js` | Detect horizontal overflow offenders at mobile width |
 | `node scripts/generate-models.js` | Regenerate the `.glb` product models in `public/models/` |

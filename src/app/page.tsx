@@ -10,6 +10,7 @@ import { ScrollProgressHairline } from "@/components/noire/ScrollProgressHairlin
 import { NoireFooter } from "@/components/noire/NoireFooter";
 import { CinematicScrollCanvas } from "@/components/noire/CinematicScrollCanvas";
 import { Act01Craving } from "@/components/noire/acts/Act01Craving";
+import { Act01Nocturne } from "@/components/noire/acts/Act01Nocturne";
 import { Act02Origin } from "@/components/noire/acts/Act02Origin";
 import { Act03Transformation } from "@/components/noire/acts/Act03Transformation";
 import { Act04Reveal } from "@/components/noire/acts/Act04Reveal";
@@ -17,6 +18,8 @@ import { Act05Break } from "@/components/noire/acts/Act05Break";
 import { Act06Sensory } from "@/components/noire/acts/Act06Sensory";
 import { Act07Collection } from "@/components/noire/acts/Act07Collection";
 import { Act08Savor } from "@/components/noire/acts/Act08Savor";
+import { TastingRitual } from "@/components/noire/TastingRitual";
+import { ReserveDrop } from "@/components/noire/ReserveDrop";
 import { PRODUCTS, Product } from "@/data/products";
 import { useAudio } from "@/hooks/useAudio";
 import { useDeviceCapability } from "@/hooks/useDeviceCapability";
@@ -40,6 +43,17 @@ export default function Home() {
   const [roomModalOpen, setRoomModalOpen] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+
+  // OpenDesign hero A/B: Nocturne is the default hero; `?hero=classic`
+  // restores the original Craving hero for comparison.
+  // Applied post-hydration (not in render) so SSR HTML always matches the
+  // first client paint — no hydration mismatch. Preview-only mechanism.
+  const [heroVariant, setHeroVariant] = useState<"nocturne" | "classic">("nocturne");
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("hero") === "classic") {
+      setHeroVariant("classic");
+    }
+  }, []);
 
   const { soundEnabled, toggleSound, playSnap } = useAudio();
   const { particleCount } = useDeviceCapability();
@@ -207,7 +221,11 @@ export default function Home() {
       />
 
       {/* ── The Eight Acts ─────────────────────────────────────────────── */}
-      <Act01Craving onExploreCollection={goToCollection} />
+      {heroVariant === "classic" ? (
+        <Act01Craving onExploreCollection={goToCollection} />
+      ) : (
+        <Act01Nocturne onExploreCollection={goToCollection} />
+      )}
       <Act02Origin />
       <Act03Transformation />
       <Act04Reveal />
@@ -218,6 +236,10 @@ export default function Home() {
         onSelectProduct={setSelectedProduct}
       />
       <Act08Savor onOpenRoom={() => setRoomModalOpen(true)} />
+
+      {/* Interlude (not an act — the eight-act rail is untouched) */}
+      <TastingRitual onOpenRoom={() => setRoomModalOpen(true)} />
+      <ReserveDrop onExploreCollection={goToCollection} />
 
       <NoireFooter />
     </main>

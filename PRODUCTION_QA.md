@@ -59,16 +59,27 @@
 
 ## Browsers / viewports regression sweep (P8, automated)
 
-`node scripts/test-browser.js` — **127/127 checks pass** across:
+`node scripts/test-browser.js` — **143/143 checks pass** across:
 
 - Desktop 1440×900, tablet 768×1024, 1024×768
 - Mobile 375×812, 390×844, 414×896 (no horizontal overflow at any width)
 - Reduced motion, keyboard-first, analytics event layer
+- Hero variant route (`?hero=classic` restores Craving; Nocturne is default) + tasting interlude (Test 9) + reserve drop (Test 10)
 
 Capture location: `probe-artifacts/browser-regression/`
 
 ## Local verification log
 
+- **2026-09-07 (Nocturne default + Reserve Drop):** fresh `npm run build`
+  + `next start` + `node scripts/test-browser.js` → **143/143 pass,
+  0 console errors, 0 page errors**, including new Test 10 (#reserve-drop
+  present, ordered tasting > drop > footer, clean at 375px) and updated
+  Test 9 (Nocturne default, `?hero=classic` restores Craving).
+- **2026-09-07 (OpenDesign additions):** fresh `npm run build`
+  + `next start` + `node scripts/test-browser.js` → **137/137 pass,
+  0 console errors, 0 page errors**, including new Test 9 (hero variant
+  route renders Nocturne with no hydration errors; #tasting present,
+  ordered act-8 > tasting > footer, clean at 375px).
 - **2026-09-06 (post P0.3/P6.3 centralization):** fresh `npm run build`
   (First Load JS 131 kB / route 43.2 kB — unchanged) + `next start` +
   `node scripts/test-browser.js` → **127/127 pass, 0 console errors,
