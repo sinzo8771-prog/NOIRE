@@ -11,7 +11,7 @@ export function Act02Origin() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-6 space-y-8">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
             Act II &bull; Origin & Canopy <span className="text-ivory/60">&middot; 02 / 08</span>
           </span>
           <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory leading-tight">

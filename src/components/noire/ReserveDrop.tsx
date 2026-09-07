@@ -41,7 +41,7 @@ export function ReserveDrop({ onExploreCollection }: ReserveDropProps) {
     >
       <div className="grid sm:grid-cols-2 gap-12 sm:gap-16 items-start">
         <div className="space-y-8 text-left">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
             Interlude &bull; The Reserve Drop
           </span>
           <h2
@@ -50,7 +50,7 @@ export function ReserveDrop({ onExploreCollection }: ReserveDropProps) {
           >
             Small batches,
             <br />
-            <span className="font-editorial italic text-copper-text">gone quietly.</span>
+            <span className="font-editorial italic text-copper-bright">gone quietly.</span>
           </h2>
           <p className="font-editorial text-xl text-copper-text italic leading-relaxed max-w-md">
             From time to time, a micro-lot leaves the atelier. Those on the

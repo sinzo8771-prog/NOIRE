@@ -28,7 +28,7 @@ export function NoireFooter() {
             <h3 className="font-display text-3xl sm:text-4xl tracking-[0.2em] font-normal text-ivory">
               NOIRÉ
             </h3>
-            <p className="text-sm font-editorial italic text-copper-text max-w-md text-balance leading-relaxed">
+            <p className="text-sm font-editorial italic text-copper-bright max-w-md text-balance leading-relaxed">
               &ldquo;Some things cannot be accelerated without stripping their soul. We roast slowly, conche for days, and temper by hand.&rdquo;
             </p>
             <p className="text-xs text-ivory/50 max-w-md leading-relaxed">

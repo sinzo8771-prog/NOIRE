@@ -22,7 +22,7 @@ export function Act07Collection({
     >
       <div className="space-y-12">
         <div className="space-y-3">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
             Act VII &bull; The Reserve Collection <span className="text-ivory/60">&middot; 07 / 08</span>
           </span>
           <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory">

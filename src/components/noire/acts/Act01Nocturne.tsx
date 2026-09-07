@@ -30,7 +30,7 @@ export function Act01Nocturne({ onExploreCollection }: Act01NocturneProps) {
       {/* Eyebrow with hairlines */}
       <div className="flex items-center justify-center gap-6">
         <span aria-hidden="true" className="h-px w-16 sm:w-28 bg-cacao-700/60" />
-        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
           Act I &bull; The Craving <span className="text-ivory/60">&middot; 01 / 08</span>
         </span>
         <span aria-hidden="true" className="h-px w-16 sm:w-28 bg-cacao-700/60" />
@@ -46,7 +46,7 @@ export function Act01Nocturne({ onExploreCollection }: Act01NocturneProps) {
           <br />
           tempered.
         </h1>
-        <p className="font-editorial text-xl sm:text-2xl text-copper-text italic leading-relaxed max-w-xl mx-auto">
+        <p className="font-editorial text-xl sm:text-2xl text-copper-bright italic leading-relaxed max-w-xl mx-auto">
           Single-origin cacao, hand-tempered in small batches. The quiet art of
           deliberate patience.
         </p>

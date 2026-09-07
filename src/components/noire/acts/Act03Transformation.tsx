@@ -16,7 +16,7 @@ export function Act03Transformation() {
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-7xl mx-auto"
     >
       <div className="max-w-3xl space-y-8">
-        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
           Act III &bull; Transformation <span className="text-ivory/60">&middot; 03 / 08</span>
         </span>
         <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory leading-tight">
@@ -38,7 +38,7 @@ export function Act03Transformation() {
             { step: "05", name: "STONE CONCHE", desc: CONC_PROCESS.DURATION },
           ].map((s) => (
             <li key={s.step} className="border-t border-cacao-700/40 pt-4 space-y-1">
-              <span className="text-[10px] tracking-[0.25em] text-copper-text font-sans">{s.step}</span>
+              <span className="text-[10px] tracking-[0.25em] text-copper-text font-mono">{s.step}</span>
               <p className="text-xs uppercase tracking-wider font-semibold text-ivory">
                 {s.name}
               </p>

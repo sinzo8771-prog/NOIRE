@@ -18,13 +18,13 @@ export function Act08Savor({ onOpenRoom }: Act08SavorProps) {
     >
       {/* Open editorial finale — hairline frame, not a box (brand) */}
       <div className="space-y-8 py-12 sm:py-16 px-2 sm:px-8 border-y border-cacao-700/40">
-        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
           Act VIII &bull; Epilogue <span className="text-ivory/60">&middot; 08 / 08</span>
         </span>
         <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal text-ivory leading-tight">
           Some things deserve
           <br />
-          <span className="font-editorial italic text-copper-text">
+          <span className="font-editorial italic text-copper-bright">
             to be savored slowly.
           </span>
         </h2>

@@ -303,7 +303,7 @@ export function CinematicScrollCanvas({
         aria-label="Cinematic film still of cacao and chocolate craftsmanship, changes with scroll"
         className="w-full h-full object-cover transition-opacity duration-1000"
         style={{
-          filter: "contrast(1.04) brightness(0.92)",
+          filter: "contrast(1.04) brightness(0.88)",
         }}
       />
 
@@ -313,6 +313,11 @@ export function CinematicScrollCanvas({
 
       {/* Left heavy gradient for editorial typography contrast */}
       <div className="absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-cacao-950/92 via-cacao-950/75 to-transparent" />
+
+      {/* Center-weighted scrim for centered moments (Nocturne hero, tasting,
+          reserve drop, finale): soft radial darkening that preserves the
+          frame edges while lifting centered ivory/copper type */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(8,6,4,0.5),transparent_72%)]" />
 
       {/* Bottom vignette for chapter navigation and footer transition */}
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cacao-950 via-cacao-950/60 to-transparent" />

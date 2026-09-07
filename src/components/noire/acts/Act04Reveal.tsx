@@ -20,13 +20,13 @@ export function Act04Reveal() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 space-y-6">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+          <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
             Act IV &bull; The Reveal <span className="text-ivory/60">&middot; 04 / 08</span>
           </span>
           <h2 className="font-display text-5xl sm:text-7xl font-normal text-ivory leading-[0.95]">
             {flagship.cacaoPercentage}% CACAO.
             <br />
-            <span className="font-editorial italic text-copper-text">
+            <span className="font-editorial italic text-copper-bright">
               Nothing unnecessary.
             </span>
           </h2>

@@ -24,6 +24,7 @@ deep elevations like `#0F0A07` and 3D light colors excepted):
 | `cacao-950/850/700` | `#080604` / `#1A100B` / `#342015` | Canvas, surfaces, hairlines |
 | `ivory` | `#F3E8D3` | Primary text (16.66:1) |
 | `copper-text` | `#B57B4C` | Small/functional copper text (5.69:1) |
+| `copper-bright` | `#D29A6B` | Large editorial italic + display words (8.26:1) |
 | `copper-surface` / `copper-hover` | `#835534` / `#6B4227` | Copper surfaces + hover (5.22 / 7.11:1) |
 | `copper` | `#9B6742` | Graphics only: borders, rings, bars, large display |
 

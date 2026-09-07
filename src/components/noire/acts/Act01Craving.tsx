@@ -20,7 +20,7 @@ export function Act01Craving({ onExploreCollection }: Act01CravingProps) {
       className="relative z-10 min-h-screen flex flex-col justify-between px-6 sm:px-12 pt-36 pb-16 max-w-7xl mx-auto"
     >
       <div className="space-y-3">
-        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
           Act I &bull; The Craving <span className="text-ivory/60">&middot; 01 / 08</span>
         </span>
         <p className="text-xs uppercase tracking-widest text-ivory/50">
@@ -33,7 +33,7 @@ export function Act01Craving({ onExploreCollection }: Act01CravingProps) {
         <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl font-normal tracking-tight text-ivory leading-[0.95]">
           Something worth waiting for.
         </h1>
-        <p className="font-editorial text-xl sm:text-2xl text-copper-text italic max-w-lg leading-relaxed">
+        <p className="font-editorial text-xl sm:text-2xl text-copper-bright italic max-w-lg leading-relaxed">
           Unhurried heat. Single-origin cacao. The quiet art of deliberate patience.
         </p>
         <button

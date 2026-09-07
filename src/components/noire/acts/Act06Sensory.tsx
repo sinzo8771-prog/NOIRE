@@ -40,7 +40,7 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-5xl mx-auto"
     >
       <div className="space-y-10">
-        <p className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
           Act VI &bull; Sensory Progression <span className="text-ivory/60">&middot; 06 / 08</span>
         </p>
 
@@ -50,10 +50,10 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
               key={s.word}
               className={`border-b border-cacao-700/70 py-8 sm:py-10 grid grid-cols-1 sm:grid-cols-[minmax(0,260px)_1fr] gap-3 sm:items-baseline transition-transform duration-500 ${OFFSETS[i]}`}
             >
-              <h2 className="font-display text-4xl sm:text-5xl text-copper font-normal leading-none">
+              <h2 className="font-display text-4xl sm:text-5xl text-copper-bright font-normal leading-none">
                 {s.word}
               </h2>
-              <p className="text-xs sm:text-sm text-ivory/60 leading-relaxed">{s.desc}</p>
+              <p className="text-xs sm:text-sm text-ivory/70 leading-relaxed">{s.desc}</p>
             </li>
           ))}
         </ol>

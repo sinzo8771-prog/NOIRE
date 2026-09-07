@@ -41,7 +41,7 @@ export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
       className="relative z-10 px-6 sm:px-12 py-28 sm:py-36 max-w-5xl mx-auto text-center"
     >
       <div className="space-y-8">
-        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
+        <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
           Interlude &bull; The Tasting Ritual
         </span>
         <h2
@@ -50,7 +50,7 @@ export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
         >
           Taste in three
           <br />
-          <span className="font-editorial italic text-copper-text">movements.</span>
+          <span className="font-editorial italic text-copper-bright">movements.</span>
         </h2>
         <p className="font-editorial text-xl sm:text-2xl text-copper-text italic leading-relaxed max-w-xl mx-auto">
           A quiet method for loud chocolate. Nothing required but attention.

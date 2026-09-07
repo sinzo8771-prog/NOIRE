@@ -26,6 +26,8 @@ cart — all conversion runs through concierge email CTAs.
 - **Surfaces:** `cacao-850` `#1A100B`, `cacao-700` `#342015` — layered depth
 - **Primary text:** `ivory` `#F3E8D3` (16.66:1 on canvas)
 - **Functional copper text:** `copper-text` `#B57B4C` (5.69:1, AA)
+- **Bright copper display:** `copper-bright` `#D29A6B` (8.26:1, AAA) — large
+  editorial italic, display words, headline accents. Never flat fills.
 - **Copper surfaces:** `copper-surface` `#835534` + `copper-hover` `#6B4227`
 - **Graphics only:** `copper` `#9B6742` — borders, rings, hairlines, large display
 - **Muted text floor:** never below `ivory/50`; icons never below their 3:1 pairings
@@ -34,7 +36,11 @@ cart — all conversion runs through concierge email CTAs.
 
 - **Display:** `.font-display` → `var(--font-serif)` (Instrument Serif, weight 400 only)
 - **Editorial accent:** `.font-editorial` → serif italic, copper-text, for support lines
-- **Functional labels:** `font-sans` (Inter), uppercase, `tracking-[0.3em+]`, 10–12px
+- **Functional labels:** `font-sans` (Inter), uppercase, `tracking-[0.3em]`, 10–12px
+- **Kickers/metadata:** `font-mono` (system mono stack, zero webfont cost),
+  uppercase, `tracking-[0.35em]` — act eyebrows, step numbers. Per the
+  OpenDesign `editorial-monocle` direction: mono for metadata, sans for
+  labels, serif for voice.
 - **Scale:** hero display `text-5xl → sm:7xl → lg:8xl`, `leading-[0.95]`, tight tracking
 - Headings carry personality; body copy optimises scanability and contrast.
 
@@ -49,7 +55,10 @@ cart — all conversion runs through concierge email CTAs.
 - Prefer one strong composition per act: eyebrow kicker, monumental headline,
   italic support line, single restrained action
 - Whitespace separates concerns before adding borders or shadows
-- Cinematic canvas layers sit behind content (`relative z-10` content)
+- Cinematic canvas layers sit behind content (`relative z-10` content);
+  the canvas carries the legibility scrims (left editorial gradient +
+  center-weighted radial for centered moments + top/bottom vignettes),
+  so components never add their own boxes or shadows for contrast
 
 ## 6. Components
 

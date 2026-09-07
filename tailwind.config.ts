@@ -33,6 +33,7 @@ const config: Config = {
         copper: {
           DEFAULT: "#9B6742", // graphics: borders, rings, bars, large display
           text: "#B57B4C",    // small/functional text on cacao-950 (5.69:1 AA)
+          bright: "#D29A6B",  // large editorial italic + display words (8.26:1 AAA)
           surface: "#835534", // copper surfaces carrying ivory text (5.22:1 AA)
           hover: "#6B4227",    // hover state for copper surfaces (7.11:1 AA)
           light: "#B87F56",
