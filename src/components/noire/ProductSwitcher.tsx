@@ -35,7 +35,7 @@ export function ProductSwitcher({
             onClick={() => onSelectProduct(prod)}
             data-noire-event="product_selected"
             data-noire-product={prod.id}
-            className={`group relative py-2 px-1 text-xs sm:text-sm uppercase tracking-widest-editorial transition-all duration-300 rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper cursor-pointer ${
+            className={`group relative inline-flex items-center py-2 px-1 min-h-[44px] text-xs sm:text-sm uppercase tracking-widest-editorial transition-all duration-300 rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper cursor-pointer ${
               isActive
                 ? "text-ivory font-medium"
                 : "text-ivory/50 hover:text-ivory/80"

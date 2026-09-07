@@ -27,8 +27,8 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
   const flights = [
     {
       id: "grand-cru",
-      name: "Grand Cru Single-Terroir Flight",
-      desc: "Four unblended harvests paired with single-estate cold brew infusions.",
+      name: "Grand Cru Harvest Flight",
+      desc: "Four unblended harvests paired with single-origin cold brew infusions.",
       duration: "60 Minutes",
     },
     {
@@ -39,8 +39,8 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
     },
     {
       id: "salt-smoke",
-      name: "Heirloom & Salt Exploration",
-      desc: "Arriba Nacional paired with mineral crusts from Brittany and Maldon.",
+      name: "Arriba & Salt Exploration",
+      desc: "Arriba Nacional paired with flaked Maldon sea salt.",
       duration: "45 Minutes",
     },
   ];

@@ -28,7 +28,7 @@ export function Act08Savor({ onOpenRoom }: Act08SavorProps) {
           </span>
         </h2>
         <p className="text-sm sm:text-base text-ivory/70 max-w-lg mx-auto leading-relaxed">
-          Visit our quiet atelier salon in Mumbai for bespoke single-estate tasting flights and
+          Visit our quiet atelier salon in Mumbai for bespoke single-origin tasting flights and
           stone-conche pairing experiences.
         </p>
 

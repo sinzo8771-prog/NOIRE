@@ -18,7 +18,7 @@ export function Act02Origin() {
             Where the wild pod awakens.
           </h2>
           <p className="text-sm sm:text-base text-ivory/70 leading-relaxed max-w-md">
-            High in the biodiverse rainforests of Tumaco and Esmeraldas, heirloom Theobroma cacao
+            High in the biodiverse rainforests of Tumaco and Esmeraldas, Theobroma cacao
             grows under the shade of banana palms and mahogany trees. Rich volcanic soil, equatorial
             rainfall, and unhurried natural pollination.
           </p>

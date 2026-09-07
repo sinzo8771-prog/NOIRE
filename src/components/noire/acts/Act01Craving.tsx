@@ -34,7 +34,7 @@ export function Act01Craving({ onExploreCollection }: Act01CravingProps) {
           Something worth waiting for.
         </h1>
         <p className="font-editorial text-xl sm:text-2xl text-copper-text italic max-w-lg leading-relaxed">
-          Unhurried heat. Single-estate heirloom beans. The quiet art of deliberate patience.
+          Unhurried heat. Single-origin cacao. The quiet art of deliberate patience.
         </p>
         <button
           type="button"

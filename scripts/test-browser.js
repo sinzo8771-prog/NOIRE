@@ -64,9 +64,9 @@ const PRODUCTS = [
     cacao: "70%",
     subtitle: "70% Arriba Cacao with Flaked Maldon",
     origin: "Esmeraldas, Ecuador",
-    desc: "Wild floral heirloom Arriba Nacional cacao",
+    desc: "Wild floral Arriba Nacional cacao",
     notes: ["Floral Jasmine", "Wild Citrus", "Flaked Sea Mineral", "Smoked Toffee"],
-    ingredient: "Ecuadorian Heirloom Cacao",
+    ingredient: "Ecuadorian Arriba Nacional Cacao",
     allergen: "traces of dairy",
   },
   {

@@ -57,7 +57,7 @@ export const PRODUCTS: Product[] = [
     cacaoPercentage: 72,
     weight: "80g",
     origin: "Tumaco, Colombia",
-    harvest: "Winter 2025 Micro-Lot",
+    harvest: "Winter Micro-Lot",
     roastProfile: "Low-temperature 72-hour conche",
     description:
       "A resolute, pure bar born from deep Colombian rainforest canopy. Characterized by earthen tobacco warmth, dried figs, and an unhurried, satin melt.",
@@ -81,10 +81,10 @@ export const PRODUCTS: Product[] = [
     cacaoPercentage: 70,
     weight: "80g",
     origin: "Esmeraldas, Ecuador",
-    harvest: "Single Estate Spring Harvest",
+    harvest: "Spring Harvest Reserve",
     roastProfile: "Slow drum roast, hand-tempered",
     description:
-      "Wild floral heirloom Arriba Nacional cacao illuminated by delicate pyramids of hand-harvested flaked sea salt that bloom across the palate in rhythmic waves.",
+      "Wild floral Arriba Nacional cacao illuminated by delicate pyramids of hand-harvested flaked sea salt that bloom across the palate in rhythmic waves.",
     tastingNotes: ["Floral Jasmine", "Wild Citrus", "Flaked Sea Mineral", "Smoked Toffee"],
     metrics: [
       { label: "Cacao Intensity", value: 78 },
@@ -92,7 +92,7 @@ export const PRODUCTS: Product[] = [
       { label: "Sweetness", value: 38 },
       { label: "Velvet Body", value: 88 },
     ],
-    ingredients: ["Ecuadorian Heirloom Cacao (70%)", "Raw Turbinado Sugar", "Cacao Butter", "Hand-harvested Sea Salt"],
+    ingredients: ["Ecuadorian Arriba Nacional Cacao (70%)", "Raw Turbinado Sugar", "Cacao Butter", "Hand-harvested Sea Salt"],
     allergens: "May contain traces of dairy from shared artisanal stone mills.",
     flavorAccent: "Brine & Wild Citrus",
     accentColor: "#A68A78",
@@ -129,7 +129,7 @@ export const PRODUCTS: Product[] = [
     cacaoPercentage: 55,
     weight: "80g",
     origin: "Sambirano Valley, Madagascar",
-    harvest: "Estate Fermented Reserve",
+    harvest: "Fermented Reserve",
     roastProfile: "Gentle convective roast",
     description:
       "A revelation for those who think milk chocolate cannot be complex. High-cacao Sambirano beans bring raspberry and passionfruit brightness tempered by golden grass-fed cream.",

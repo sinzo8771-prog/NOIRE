@@ -32,7 +32,7 @@ export function NoireFooter() {
               &ldquo;Some things cannot be accelerated without stripping their soul. We roast slowly, conche for days, and temper by hand.&rdquo;
             </p>
             <p className="text-xs text-ivory/50 max-w-md leading-relaxed">
-              All NOIRÉ cacao is sourced via transparent direct-trade partnerships with agroforestry smallholders in Tumaco, Esmeraldas, and Sambirano. No palm fats. No artificial emulsifiers.
+              All NOIRÉ cacao is sourced through direct relationships with cacao growers in Tumaco, Esmeraldas, and Sambirano. No palm fats. No artificial emulsifiers.
             </p>
           </div>
 
@@ -163,12 +163,10 @@ export function NoireFooter() {
               Direct Trade Transparency
             </h4>
             <p className="text-xs text-ivory/60 leading-relaxed">
-              We buy directly from agroforestry smallholder cooperatives in
+              We buy directly from cacao growers in
               Tumaco (Colombia), Esmeraldas (Ecuador) and the Sambirano Valley
-              (Madagascar) on multi-year fixed-price contracts — growers are
-              paid well above commodity market rate, and every harvest lot in
-              the Reserve Collection is traceable to a single estate and
-              fermentation batch.
+              (Madagascar) — prioritizing long-term relationships over
+              commodity-market sourcing.
             </p>
             <p className="text-xs text-ivory/60 leading-relaxed">
               Questions about a specific bar? The concierge will share the
