@@ -23,15 +23,20 @@ export function Act02Origin() {
             rainfall, and unhurried natural pollination.
           </p>
 
-          {/* Asymmetrical visual composition words */}
-          <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          {/* Terroir strip — hairline rules, not boxes (brand) */}
+          <div
+            role="list"
+            aria-label="Terroir principles"
+            className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center border-y border-cacao-700/40 py-5"
+          >
             {["SOIL", "HEAT", "TIME", "HANDS"].map((word) => (
-              <div
+              <span
                 key={word}
-                className="p-4 bg-cacao-900/80 border border-cacao-700 rounded-[2px] backdrop-blur-sm"
+                role="listitem"
+                className="font-display text-lg tracking-widest text-copper-text"
               >
-                <span className="font-display text-lg tracking-widest text-copper-text">{word}</span>
-              </div>
+                {word}
+              </span>
             ))}
           </div>
         </div>

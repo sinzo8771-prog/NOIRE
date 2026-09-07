@@ -28,8 +28,8 @@ export function Act03Transformation() {
           tannins while delicate floral notes and deep fruit sugars awaken.
         </p>
 
-        {/* Sequential Process Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-6">
+        {/* Sequential process timeline — hairline rules + copper ticks, not boxes */}
+        <ol className="grid grid-cols-2 sm:grid-cols-5 gap-x-3 gap-y-6 pt-6">
           {[
             { step: "01", name: "FERMENT", desc: "Banana leaf wrap" },
             { step: "02", name: "SUN DRY", desc: "Teak drying beds" },
@@ -37,18 +37,15 @@ export function Act03Transformation() {
             { step: "04", name: "CRUSH", desc: "Pure roasted nibs" },
             { step: "05", name: "STONE CONCHE", desc: CONC_PROCESS.DURATION },
           ].map((s) => (
-            <div
-              key={s.step}
-              className="p-3.5 bg-cacao-900/85 border border-cacao-700 rounded-[2px] backdrop-blur-sm space-y-1"
-            >
-              <span className="text-[9px] font-mono text-copper-text">{s.step}</span>
+            <li key={s.step} className="border-t border-cacao-700/40 pt-4 space-y-1">
+              <span className="text-[10px] tracking-[0.25em] text-copper-text font-sans">{s.step}</span>
               <p className="text-xs uppercase tracking-wider font-semibold text-ivory">
                 {s.name}
               </p>
               <p className="text-[10px] text-ivory/50">{s.desc}</p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

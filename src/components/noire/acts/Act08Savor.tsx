@@ -16,7 +16,8 @@ export function Act08Savor({ onOpenRoom }: Act08SavorProps) {
       id="act-8"
       className="relative z-10 min-h-[85vh] flex flex-col justify-center items-center text-center px-6 sm:px-12 py-32 max-w-4xl mx-auto"
     >
-      <div className="space-y-8 p-8 sm:p-12 bg-cacao-950/80 border border-cacao-700 backdrop-blur-md rounded-[2px]">
+      {/* Open editorial finale — hairline frame, not a box (brand) */}
+      <div className="space-y-8 py-12 sm:py-16 px-2 sm:px-8 border-y border-cacao-700/40">
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-sans">
           Act VIII &bull; Epilogue <span className="text-ivory/60">&middot; 08 / 08</span>
         </span>

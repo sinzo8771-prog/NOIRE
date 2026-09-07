@@ -75,8 +75,8 @@ export function Act01Nocturne({ onExploreCollection }: Act01NocturneProps) {
         </div>
       </div>
 
-      {/* Provenance hairline footer */}
-      <div className="flex items-center justify-between pt-8 border-t border-cacao-700/40 text-xs text-ivory/50 uppercase tracking-widest">
+      {/* Provenance hairline footer (wraps safely at 360px) */}
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 pt-8 border-t border-cacao-700/40 text-[10px] sm:text-xs text-ivory/50 uppercase tracking-widest">
         <span>Single-origin cacao</span>
         <div className="flex items-center space-x-2 animate-drift">
           <span>Scroll to begin film journey</span>
