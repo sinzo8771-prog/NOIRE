@@ -54,7 +54,10 @@ export function OriginMarquee() {
     };
     const tick = () => {
       vel *= 0.92;
-      if (Math.abs(vel) < 0.4) {
+      // Snap tiny residuals to rest: Lenis re-sync dribbles sub-pixel
+      // scroll events after every jump, which would otherwise hold the
+      // loop (and a ~33s near-base pace) open forever.
+      if (Math.abs(vel) < 2.5) {
         vel = 0;
         settle();
         raf = 0;
