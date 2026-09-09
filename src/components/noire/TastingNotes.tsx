@@ -1,6 +1,7 @@
 "use client";
 
 import { Product } from "@/data/products";
+import { CountUp } from "@/components/noire/CountUp";
 
 interface TastingNotesProps {
   product: Product;
@@ -55,7 +56,7 @@ export function TastingNotes({ product }: TastingNotesProps) {
               <div className="flex justify-between text-[11px] text-ivory/80 tracking-wide">
                 <span>{metric.label}</span>
                 <span className="text-copper-text font-mono text-[10px]">
-                  {metric.value}%
+                  <CountUp value={metric.value} suffix="%" duration={1100} />
                 </span>
               </div>
               <div className="h-[3px] w-full bg-cacao-850 overflow-hidden rounded-[1px]">

@@ -59,7 +59,7 @@
 
 ## Browsers / viewports regression sweep (P8, automated)
 
-`node scripts/test-browser.js` — **157/157 checks pass** across:
+`node scripts/test-browser.js` — **161/161 checks pass** across:
 
 - Desktop 1440×900, tablet 768×1024, 1024×768
 - Mobile 375×812, 390×844, 414×896 (no horizontal overflow at any width)
@@ -70,6 +70,10 @@ Capture location: `probe-artifacts/browser-regression/`
 
 ## Local verification log
 
+- **2026-09-07 (Signature trio):** `npm run build` + `next start` +
+  suite → **161/161 pass** — TextReveal masked word-rise on Act II/VII
+  headlines, SpotlightCard copper glow on collection panel, CountUp
+  metric values with product-switch replay, reduced-motion plain render.
 - **2026-09-07 (rAF marquee rewrite):** `npm run build` + `next start` +
   suite → **157/157 pass** — marquee retimed CSS animations restarted
   iterations and juddered, so both loops are now integrator-driven

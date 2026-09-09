@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Mail, Sparkles } from "lucide-react";
 import { mailtoLink } from "@/lib/site";
 import { ConciergeFallback } from "./ConciergeContact";
+import { SpotlightCard } from "./SpotlightCard";
 import { useDeviceCapability } from "@/hooks/useDeviceCapability";
 
 // The 3D viewer (three.js + drei + GLB loader) is a separate async chunk that
@@ -94,11 +95,11 @@ export function ProductStage({
         </div>
 
         {/* Right: Product Narrative & Tasting Notes (tabpanel for the tabs) */}
-        <div
+        <SpotlightCard
           id="noire-product-panel"
           role="tabpanel"
-          aria-labelledby={`tab-${selectedProduct.id}`}
-          className="lg:col-span-6 space-y-8"
+          ariaLabelledby={`tab-${selectedProduct.id}`}
+          className="lg:col-span-6 space-y-8 rounded-[2px] p-1"
         >
           <div className="space-y-3">
             <div className="flex items-center space-x-2 text-copper-text text-[11px] uppercase tracking-widest font-sans">
@@ -146,7 +147,7 @@ export function ProductStage({
 
           {/* P1 handoff fallback: open address + copy + reply promise */}
           <ConciergeFallback label={`request ${selectedProduct.id}`} />
-        </div>
+        </SpotlightCard>
       </div>
     </div>
   );

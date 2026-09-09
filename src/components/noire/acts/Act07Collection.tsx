@@ -1,6 +1,7 @@
 "use client";
 
 import { ProductStage } from "../ProductStage";
+import { TextReveal } from "@/components/noire/TextReveal";
 import { Product } from "@/data/products";
 
 interface Act07CollectionProps {
@@ -26,7 +27,7 @@ export function Act07Collection({
             Act VII &bull; The Reserve Collection <span className="text-ivory/60">&middot; 07 / 08</span>
           </span>
           <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory">
-            Four Resolute Expressions.
+            <TextReveal>Four Resolute Expressions.</TextReveal>
           </h2>
         </div>
 

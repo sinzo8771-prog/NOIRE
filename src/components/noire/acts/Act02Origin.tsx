@@ -1,5 +1,7 @@
 "use client";
 
+import { TextReveal } from "@/components/noire/TextReveal";
+
 /**
  * Act II — Origin & Canopy (static editorial section).
  */
@@ -15,7 +17,7 @@ export function Act02Origin() {
             Act II &bull; Origin & Canopy <span className="text-ivory/60">&middot; 02 / 08</span>
           </span>
           <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory leading-tight">
-            Where the wild pod awakens.
+            <TextReveal>Where the wild pod awakens.</TextReveal>
           </h2>
           <p className="text-sm sm:text-base text-ivory/70 leading-relaxed max-w-md">
             High in the biodiverse rainforests of Tumaco and Esmeraldas, Theobroma cacao

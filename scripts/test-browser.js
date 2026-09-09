@@ -25,6 +25,9 @@
   *                                  #tasting-timer (begin counts down, reset),
   *                                  #atelier-notes accordion (click + keyboard),
   *                                  Reveal on scroll
+  *   Test 12 — Signature trio ...... TextReveal rises, Spotlight tracks
+  *                                  pointer, CountUp completes, reduced
+  *                                  renders plain
   *
  * Environment:
  *   CHROME_PATH  (default: C:\Program Files\Google\Chrome\Application\chrome.exe)
@@ -1089,6 +1092,84 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     return wrap ? getComputedStyle(wrap).opacity : "unknown";
   });
   check("Reveal shows tasting heading on scroll", revealOpacity === "1", `opacity=${revealOpacity}`);
+
+  // ── Test 12: Signature trio (reveal / spotlight / count-up) ──────────
+  console.log("\n[Test 12] Signature trio");
+  await page.evaluate(() => {
+    document.getElementById("act-2")?.scrollIntoView({ block: "center" });
+  });
+  await wait(1400);
+  const revealWords = await page.evaluate(() => {
+    const h2 = document.querySelector("#act-2 h2");
+    const inners = h2 ? [...h2.querySelectorAll("span.translate-y-0, span.translate-y-\\[110\\%\\]")] : [];
+    return { total: inners.length, risen: inners.filter((s) => s.classList.contains("translate-y-0")).length };
+  });
+  check(
+    "TextReveal rises Act II headline",
+    revealWords.total > 3 && revealWords.risen === revealWords.total,
+    `${revealWords.risen}/${revealWords.total} risen`
+  );
+  await page.evaluate(() => {
+    document.getElementById("act-7")?.scrollIntoView({ block: "center" });
+  });
+  await wait(1200);
+  const spot = await page.evaluate(() => {
+    const panel = document.getElementById("noire-product-panel");
+    if (!panel) return { panel: false };
+    const r = panel.getBoundingClientRect();
+    panel.dispatchEvent(new PointerEvent("pointermove", {
+      clientX: r.left + r.width / 2, clientY: r.top + r.height / 2, bubbles: true,
+    }));
+    return new Promise((res) => setTimeout(() => res({
+      panel: true,
+      mx: panel.style.getPropertyValue("--mx"),
+      overlay: !!panel.querySelector("div[aria-hidden='true'][class*='group-hover']"),
+    }), 300));
+  });
+  check(
+    "Spotlight tracks pointer on collection panel",
+    spot.panel && spot.mx !== "" && spot.mx !== "-400px" && spot.overlay,
+    `mx=${spot.mx || "unset"}`
+  );
+  await page.evaluate(() => {
+    document.querySelector("#act-7 details summary")?.scrollIntoView({ block: "center" });
+  });
+  await wait(600);
+  await page.evaluate(() => {
+    (document.querySelector("#act-7 details summary") || {}).click
+      ? document.querySelector("#act-7 details summary").click()
+      : null;
+  });
+  await wait(1800);
+  const metrics = await page.evaluate(() => {
+    const panel = document.getElementById("noire-product-panel");
+    const vals = panel
+      ? [...panel.querySelectorAll("span")].map((s) => s.textContent.trim()).filter((t) => /^\d+%$/.test(t))
+      : [];
+    return vals;
+  });
+  const metricsAgain = await page.evaluate(() => {
+    const panel = document.getElementById("noire-product-panel");
+    return panel
+      ? [...panel.querySelectorAll("span")].map((s) => s.textContent.trim()).filter((t) => /^\d+%$/.test(t)).join(",")
+      : "";
+  });
+  check(
+    "CountUp settles metric values",
+    metrics.length > 0 && metrics.join(",") === metricsAgain,
+    metrics.join(",").slice(0, 60)
+  );
+  await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
+  await page.goto(BASE, { waitUntil: "networkidle0", timeout: 90000 });
+  await wait(1500);
+  const plainH2 = await page.evaluate(() => {
+    const h2 = document.querySelector("#act-7 h2");
+    return h2 ? h2.querySelectorAll("span.translate-y-0, span.translate-y-\\[110\\%\\]").length : -1;
+  });
+  check("Reduced motion renders headlines plain", plainH2 === 0, `masked=${plainH2}`);
+  await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "no-preference" }]);
+
+  // ── Summary ───────────────────────────────────────────────────────────
 
   // ── Summary ───────────────────────────────────────────────────────────
   console.log("\n──────────────────────────────────────────────────");
