@@ -59,7 +59,7 @@
 
 ## Browsers / viewports regression sweep (P8, automated)
 
-`node scripts/test-browser.js` — **155/155 checks pass** across:
+`node scripts/test-browser.js` — **156/156 checks pass** across:
 
 - Desktop 1440×900, tablet 768×1024, 1024×768
 - Mobile 375×812, 390×844, 414×896 (no horizontal overflow at any width)
@@ -70,6 +70,9 @@ Capture location: `probe-artifacts/browser-regression/`
 
 ## Local verification log
 
+- **2026-09-07 (Marquee alive):** `npm run build` + `next start` +
+  suite → **156/156 pass** — origins marquee is velocity-reactive
+  (36s base, speeds + follows scroll direction, edge fade masks).
 - **2026-09-07 (Interactivity batch):** fresh `npm run build`
   + `next start` + `node scripts/test-browser.js` → **155/155 pass,
   0 console errors, 0 page errors**, including new Test 11 (origins

@@ -20,7 +20,8 @@
  *                                  #tasting interlude present/ordered/clean at 375px
   *   Test 10 — Reserve Drop ........ #reserve-drop present/ordered/clean at 375px
   *   Test 11 — Interactivity ....... #origins marquee (origins, aria-hidden dup,
-  *                                  running animation, clean at 375px),
+  *                                  running + velocity-reactive animation,
+  *                                  clean at 375px),
   *                                  #tasting-timer (begin counts down, reset),
   *                                  #atelier-notes accordion (click + keyboard),
   *                                  Reveal on scroll
@@ -968,6 +969,17 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     return el ? getComputedStyle(el).animationName : "missing";
   });
   check("Marquee animation running", marqueeAnim === "noire-marquee", marqueeAnim);
+  await page.evaluate(() => window.scrollTo(0, 2500));
+  await wait(600);
+  const marqueeBoost = await page.evaluate(() => {
+    const el = document.querySelector("#origins .animate-marquee");
+    return el ? getComputedStyle(el).animationDuration : "missing";
+  });
+  check(
+    "Marquee reacts to scroll velocity",
+    marqueeBoost !== "missing" && parseFloat(marqueeBoost) < 36,
+    `duration=${marqueeBoost}`
+  );
   await page.setViewport({ width: 375, height: 812 });
   await wait(500);
   const marqueeOffenders = await horizontalOffenders(page, "#origins *");
