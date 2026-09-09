@@ -20,7 +20,7 @@
  *                                  #tasting interlude present/ordered/clean at 375px
   *   Test 10 — Reserve Drop ........ #reserve-drop present/ordered/clean at 375px
   *   Test 11 — Interactivity ....... #origins marquee (origins, aria-hidden dup,
-  *                                  running + velocity-reactive animation,
+  *                                  rAF-driven counter-rows + velocity,
   *                                  clean at 375px),
   *                                  #tasting-timer (begin counts down, reset),
   *                                  #atelier-notes accordion (click + keyboard),
@@ -964,29 +964,59 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     els.length > 0 && els[els.length - 1].getAttribute("aria-hidden") === "true"
   ).catch(() => false);
   check("Marquee loop half is aria-hidden", marqueeDup);
-  const marqueeAnim = await page.evaluate(() => {
-    const el = document.querySelector("#origins .animate-marquee");
-    return el ? getComputedStyle(el).animationName : "missing";
+  const marqueeMove = await page.evaluate(async () => {
+    document.getElementById("origins")?.scrollIntoView({ block: "center" });
+    await new Promise((r) => setTimeout(r, 800));
+    const rows = [...document.querySelectorAll("#origins > div")];
+    const x = () => rows.map((el) => Math.round(el.getBoundingClientRect().left));
+    const a = x();
+    await new Promise((r) => setTimeout(r, 1500));
+    const b = x();
+    return { count: rows.length, moved: a.map((v, i) => Math.abs(v - b[i])) };
   });
-  check("Marquee animation running", marqueeAnim === "noire-marquee", marqueeAnim);
-  await page.evaluate(() => window.scrollTo(0, 2500));
-  await wait(600);
-  const marqueeBoost = await page.evaluate(() => {
-    const el = document.querySelector("#origins .animate-marquee");
-    return el ? getComputedStyle(el).animationDuration : "missing";
+  check(
+    "Marquee both rows translate",
+    marqueeMove.count === 2 && marqueeMove.moved.every((d) => d > 5),
+    `rows=${marqueeMove.count} moved=${marqueeMove.moved.join(",")}`
+  );
+  const marqueeDirs = await page.evaluate(async () => {
+    const rows = [...document.querySelectorAll("#origins > div")];
+    const x = () => rows.map((el) => el.getBoundingClientRect().left);
+    const a = x();
+    await new Promise((r) => setTimeout(r, 700));
+    const b = x();
+    return b.map((v, i) => Math.sign(v - a[i])).join(",");
+  });
+  check("Marquee rows counter-scroll", marqueeDirs === "1,-1" || marqueeDirs === "-1,1", marqueeDirs);
+  await page.evaluate(() => {
+    const y = document.getElementById("origins").offsetTop - 400;
+    window.scrollTo(0, y);
+  });
+  await wait(1500);
+  const marqueeRates = await page.evaluate(async () => {
+    const el = document.querySelector("#origins > div");
+    const pathRate = async (ms) => {
+      let path = 0;
+      let prev = el.getBoundingClientRect().left;
+      const t0 = performance.now();
+      while (performance.now() - t0 < ms) {
+        await new Promise((r) => setTimeout(r, 100));
+        const x = el.getBoundingClientRect().left;
+        path += Math.abs(x - prev);
+        prev = x;
+      }
+      return (path / (performance.now() - t0)) * 1000;
+    };
+    const rest = await pathRate(1000);
+    // single quick nudge (Lenis glides it, band stays in view)
+    window.scrollBy(0, 400);
+    const boosted = await pathRate(1000);
+    return { rest: Math.round(rest), boosted: Math.round(boosted) };
   });
   check(
     "Marquee reacts to scroll velocity",
-    marqueeBoost !== "missing" && parseFloat(marqueeBoost) < 36,
-    `duration=${marqueeBoost}`
-  );
-  const marqueeRows = await page.$$eval("#origins .animate-marquee", (els) =>
-    els.map((el) => getComputedStyle(el).animationDirection).join(",")
-  ).catch(() => "");
-  check(
-    "Marquee counter-row loops in reverse",
-    marqueeRows === "normal,reverse",
-    marqueeRows
+    marqueeRates.boosted > marqueeRates.rest + 40,
+    `rest=${marqueeRates.rest}px/s boosted=${marqueeRates.boosted}px/s`
   );
   await page.setViewport({ width: 375, height: 812 });
   await wait(500);

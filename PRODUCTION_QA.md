@@ -70,6 +70,11 @@ Capture location: `probe-artifacts/browser-regression/`
 
 ## Local verification log
 
+- **2026-09-07 (rAF marquee rewrite):** `npm run build` + `next start` +
+  suite → **157/157 pass** — marquee retimed CSS animations restarted
+  iterations and juddered, so both loops are now integrator-driven
+  (translate3d modulo half-width, IO-gated, hover pause); measured
+  60px/s rest → 146px/s on scroll nudge.
 - **2026-09-07 (Dual marquee loops):** `npm run build` + `next start` +
   suite → **157/157 pass** — second counter-scrolling craft row, both
   rows velocity-reactive, counter-row direction asserted.
