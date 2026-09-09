@@ -69,9 +69,10 @@ cart — all conversion runs through concierge email CTAs.
 - Analytics hooks required: `data-noire-event` + `data-noire-label`
   (`navigation_click`, `request_tasting_click`, `request_bar_click`, …)
 - Interactivity (no new deps): `Reveal` (IO fade-rise, reduced-motion
-  passthrough) for below-fold headers; `OriginMarquee` (origins from
-  products data, aria-hidden loop half, pause on hover, edge fade masks,
-  scroll-velocity-reactive pace/direction, rAF only while settling); `TastingTimer`
+  passthrough) for below-fold headers; `OriginMarquee` (dual counter-loop
+  band: origins forward, craft steps reverse, aria-hidden loop halves,
+  pause on hover, edge fade masks, scroll-velocity-reactive pace/direction,
+  rAF only while settling); `TastingTimer`
   (90s timestamp-math ring, aria-live phases); `AtelierNotes`
   (buttons + aria-expanded/controls, site-copy answers only, no analytics)
 - Motion cue: `.animate-drift` 2.6s ease-out glide (neutralised globally under

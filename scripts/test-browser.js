@@ -980,6 +980,14 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     marqueeBoost !== "missing" && parseFloat(marqueeBoost) < 36,
     `duration=${marqueeBoost}`
   );
+  const marqueeRows = await page.$$eval("#origins .animate-marquee", (els) =>
+    els.map((el) => getComputedStyle(el).animationDirection).join(",")
+  ).catch(() => "");
+  check(
+    "Marquee counter-row loops in reverse",
+    marqueeRows === "normal,reverse",
+    marqueeRows
+  );
   await page.setViewport({ width: 375, height: 812 });
   await wait(500);
   const marqueeOffenders = await horizontalOffenders(page, "#origins *");

@@ -119,6 +119,11 @@ export function CinematicScrollCanvas({
     let cursor = 0;
     let idleHandle: number | null = null;
     let timeoutHandle: number | null = null;
+    // Adaptive prefetch: after the priority head, load the frames the
+    // visitor is actually heading toward — nearest unloaded position to
+    // the live scrub target, biased ahead along scroll direction.
+    let lastTarget = 0;
+    let lastSampleAt = 0;
 
     const trackLoad = (img: HTMLImageElement, pos: number) => {
       images[pos] = img;
@@ -141,13 +146,47 @@ export function CinematicScrollCanvas({
       }
     };
 
+    const liveTarget = () =>
+      Math.round(progressRef.current * Math.max(0, frameIndices.length - 1));
+
+    // Pick the next frame to fetch: priority head stays sequential (fast
+    // first paint), everything after follows predicted scroll position.
+    const pickNext = (): number => {
+      if (cursor < PRIORITY_FRAME_COUNT) return cursor++;
+      const now = performance.now();
+      const target = Math.max(0, Math.min(frameIndices.length - 1, liveTarget()));
+      const dt = Math.max(1, now - lastSampleAt) / 1000;
+      const velocity = (target - lastTarget) / dt; // positions per second
+      lastTarget = target;
+      lastSampleAt = now;
+      const dir = Math.abs(velocity) < 4 ? 0 : Math.sign(velocity);
+      const predicted = Math.max(
+        0,
+        Math.min(
+          frameIndices.length - 1,
+          target + dir * Math.min(24, Math.abs(velocity) * 0.15)
+        )
+      );
+      let best = -1;
+      let bestDist = Infinity;
+      for (let pos = 0; pos < frameIndices.length; pos++) {
+        if (images[pos]) continue;
+        const d = Math.abs(pos - predicted);
+        if (d < bestDist) {
+          bestDist = d;
+          best = pos;
+        }
+      }
+      if (best >= 0) return best;
+      // All positions covered (errors count as loaded) — nothing to fetch.
+      return -1;
+    };
+
     const loadNext = () => {
-      while (
-        !cancelled &&
-        inFlight < MAX_CONCURRENT_LOADS &&
-        cursor < frameIndices.length
-      ) {
-        const pos = cursor++;
+      while (!cancelled && inFlight < MAX_CONCURRENT_LOADS) {
+        const pos = pickNext();
+        if (pos < 0 || pos >= frameIndices.length) break;
+        if (images[pos]) continue;
         const img = new Image();
         img.decoding = "async";
         if (pos === 0) {
@@ -169,7 +208,7 @@ export function CinematicScrollCanvas({
     };
 
     const scheduleNext = () => {
-      if (cancelled || cursor >= frameIndices.length) return;
+      if (cancelled || loaded >= frameIndices.length) return;
       // The first ~10 frames unlock the hero — fetch them at full priority.
       if (cursor < PRIORITY_FRAME_COUNT) {
         loadNext();

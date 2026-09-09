@@ -59,7 +59,7 @@
 
 ## Browsers / viewports regression sweep (P8, automated)
 
-`node scripts/test-browser.js` — **156/156 checks pass** across:
+`node scripts/test-browser.js` — **157/157 checks pass** across:
 
 - Desktop 1440×900, tablet 768×1024, 1024×768
 - Mobile 375×812, 390×844, 414×896 (no horizontal overflow at any width)
@@ -70,6 +70,9 @@ Capture location: `probe-artifacts/browser-regression/`
 
 ## Local verification log
 
+- **2026-09-07 (Dual marquee loops):** `npm run build` + `next start` +
+  suite → **157/157 pass** — second counter-scrolling craft row, both
+  rows velocity-reactive, counter-row direction asserted.
 - **2026-09-07 (Marquee alive):** `npm run build` + `next start` +
   suite → **156/156 pass** — origins marquee is velocity-reactive
   (36s base, speeds + follows scroll direction, edge fade masks).
