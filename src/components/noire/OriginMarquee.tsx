@@ -86,6 +86,14 @@ export function OriginMarquee() {
     };
   }, [reduced]);
 
+  // When reduced motion is requested (OS setting OR the site Motion
+  // toggle via useReducedMotion), render the track static: no CSS
+  // animation class at all, so the marquee stills exactly like every
+  // other motion surface instead of drifting on alone.
+  const trackClass = reduced
+    ? "flex w-max items-center gap-10 whitespace-nowrap pr-10"
+    : "animate-marquee flex w-max items-center gap-10 whitespace-nowrap pr-10";
+
   const row = (
     list: readonly string[],
     index: number,
@@ -97,8 +105,8 @@ export function OriginMarquee() {
         tracksRef.current[index] = el;
       }}
       aria-hidden={hidden || undefined}
-      className="animate-marquee flex w-max items-center gap-10 whitespace-nowrap pr-10"
-      style={reverse ? { animationDirection: "reverse" } : undefined}
+      className={trackClass}
+      style={reverse && !reduced ? { animationDirection: "reverse" } : undefined}
     >
       {[...list, ...list].map((t, i) => (
         <span
