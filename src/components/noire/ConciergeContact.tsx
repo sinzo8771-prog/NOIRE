@@ -95,7 +95,7 @@ interface ConciergeFallbackProps {
 export function ConciergeFallback({ className = "", label }: ConciergeFallbackProps) {
   return (
     <p
-      className={`text-[11px] leading-relaxed text-ivory/50 ${className}`}
+      className={`text-[11px] leading-relaxed text-ivory/60 ${className}`}
     >
       <span>No email app open? Write directly to </span>
       <a

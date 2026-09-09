@@ -30,7 +30,8 @@ cart — all conversion runs through concierge email CTAs.
   editorial italic, display words, headline accents. Never flat fills.
 - **Copper surfaces:** `copper-surface` `#835534` + `copper-hover` `#6B4227`
 - **Graphics only:** `copper` `#9B6742` — borders, rings, hairlines, large display
-- **Muted text floor:** never below `ivory/50`; icons never below their 3:1 pairings
+- **Muted text floor:** never below `ivory/50`; 10–11px micro-labels sit
+  at `ivory/60` or above; icons never below their 3:1 pairings
 
 ## 3. Typography
 

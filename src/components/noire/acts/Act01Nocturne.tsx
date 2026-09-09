@@ -38,7 +38,7 @@ export function Act01Nocturne({ onExploreCollection }: Act01NocturneProps) {
 
       {/* Central monumental composition */}
       <div className="my-auto py-20 space-y-8 max-w-3xl mx-auto">
-        <p className="text-xs uppercase tracking-widest text-ivory/50">
+        <p className="text-xs uppercase tracking-widest text-ivory/60">
           Before chocolate becomes chocolate&hellip;
         </p>
         <h1 className="font-display text-6xl sm:text-8xl lg:text-9xl font-normal tracking-tight text-ivory leading-[0.95]">
@@ -76,7 +76,7 @@ export function Act01Nocturne({ onExploreCollection }: Act01NocturneProps) {
       </div>
 
       {/* Provenance hairline footer (wraps safely at 360px) */}
-      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 pt-8 border-t border-cacao-700/40 text-[10px] sm:text-xs text-ivory/50 uppercase tracking-widest">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 pt-8 border-t border-cacao-700/40 text-[10px] sm:text-xs text-ivory/60 uppercase tracking-widest">
         <span>Single-origin cacao</span>
         <div className="flex items-center space-x-2 animate-drift">
           <span>Scroll to begin film journey</span>

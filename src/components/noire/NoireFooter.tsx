@@ -31,7 +31,7 @@ export function NoireFooter() {
             <p className="text-sm font-editorial italic text-copper-bright max-w-md text-balance leading-relaxed">
               &ldquo;Some things cannot be accelerated without stripping their soul. We roast slowly, conche for days, and temper by hand.&rdquo;
             </p>
-            <p className="text-xs text-ivory/50 max-w-md leading-relaxed">
+            <p className="text-xs text-ivory/60 max-w-md leading-relaxed">
               All NOIRÉ cacao is sourced through direct relationships with cacao growers in Tumaco, Esmeraldas, and Sambirano. No palm fats. No artificial emulsifiers.
             </p>
           </div>
@@ -148,7 +148,7 @@ export function NoireFooter() {
                 </li>
               ))}
             </ul>
-            <p className="text-[10px] text-ivory/50 leading-relaxed">
+            <p className="text-[10px] text-ivory/60 leading-relaxed">
               Full ingredient lists are printed on every wrapper. If you live
               with severe allergies, write to the concierge before a tasting
               visit — flights are prepared to order.
@@ -178,7 +178,7 @@ export function NoireFooter() {
         <Separator className="bg-cacao-700/40" />
 
         {/* Bottom copyright and anti-slop signature */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-ivory/50 space-y-4 sm:space-y-0">
+        <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-ivory/60 space-y-4 sm:space-y-0">
           <p>&copy; {new Date().getFullYear()} NOIRÉ ATELIER. All rights reserved.</p>
           <p className="tracking-widest uppercase text-[10px] text-copper-text">
             Chocolate, Unhurried.

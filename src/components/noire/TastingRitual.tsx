@@ -63,7 +63,7 @@ export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
         {MOVEMENTS.map((m, i) => (
           <Reveal key={m.n} delay={i * 90}>
           <div className="border-t border-cacao-700/40 pt-6 space-y-3">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-ivory/50 font-mono">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-ivory/60 font-mono">
               {m.n}
             </span>
             <h3 className="font-display text-2xl text-ivory">{m.title}</h3>
@@ -100,7 +100,7 @@ export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
         </button>
       </div>
 
-      <p className="mt-10 text-xs uppercase tracking-widest text-ivory/50">
+      <p className="mt-10 text-xs uppercase tracking-widest text-ivory/60">
         Every tasting is arranged privately through the concierge.
       </p>
     </section>

@@ -122,7 +122,7 @@ export function ProductStage({
           {/* Inquiry CTA — no fake commerce (Phase 3) */}
           <div className="pt-6 border-t border-cacao-700 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <span className="block text-[10px] uppercase tracking-widest text-ivory/50">
+              <span className="block text-[10px] uppercase tracking-widest text-ivory/60">
                 Artisanal Bar
               </span>
               <span className="text-xs text-ivory/70">
@@ -169,7 +169,7 @@ function StaticReservePreview({ product }: { product: Product }) {
       <span className="text-[10px] uppercase tracking-[0.3em] text-copper-text">
         {product.weight} &bull; {product.cacaoPercentage}% Cacao
       </span>
-      <span className="text-[10px] uppercase tracking-widest text-ivory/50 max-w-[240px] leading-relaxed">
+      <span className="text-[10px] uppercase tracking-widest text-ivory/60 max-w-[240px] leading-relaxed">
         The 3D reserve visual is unavailable on this device &mdash; request the
         bar directly below.
       </span>

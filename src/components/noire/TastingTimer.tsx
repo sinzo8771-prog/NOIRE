@@ -60,7 +60,7 @@ export function TastingTimer() {
       id="tasting-timer"
       className="mt-14 mx-auto max-w-sm border-t border-cacao-700/40 pt-10"
     >
-      <p className="text-[10px] uppercase tracking-[0.3em] text-ivory/50 font-mono">
+      <p className="text-[10px] uppercase tracking-[0.3em] text-ivory/60 font-mono">
         The ninety-second ritual
       </p>
       <div className="relative mx-auto mt-6 h-40 w-40">

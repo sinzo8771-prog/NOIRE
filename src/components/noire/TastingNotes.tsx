@@ -21,7 +21,7 @@ export function TastingNotes({ product }: TastingNotesProps) {
 
       {/* Flavor Notes — the craving cue, always visible */}
       <div className="space-y-2">
-        <span className="block text-[10px] uppercase tracking-widest text-ivory/50">
+        <span className="block text-[10px] uppercase tracking-widest text-ivory/60">
           Tasting Notes
         </span>
         <div className="flex flex-wrap gap-2">
@@ -41,7 +41,7 @@ export function TastingNotes({ product }: TastingNotesProps) {
           Weight and harvest live beside the CTA and the harvest line above,
           so they are not repeated here. */}
       <details className="group pt-2 border-t border-cacao-700/60">
-        <summary className="cursor-pointer list-none flex items-center justify-between py-3 text-[10px] uppercase tracking-widest text-ivory/50 hover:text-ivory/80 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper">
+        <summary className="cursor-pointer list-none flex items-center justify-between py-3 text-[10px] uppercase tracking-widest text-ivory/60 hover:text-ivory/80 transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper">
           <span>Palate & Provenance</span>
           <span aria-hidden="true" className="text-copper-text text-sm leading-none transition-transform duration-300 group-open:rotate-45">
             +
@@ -72,26 +72,26 @@ export function TastingNotes({ product }: TastingNotesProps) {
         <div className="pt-2 space-y-3 text-[11px]">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
             <div>
-              <span className="block text-ivory/50 text-[10px] uppercase tracking-wider">
+              <span className="block text-ivory/60 text-[10px] uppercase tracking-wider">
                 Terroir
               </span>
               <span className="text-ivory/90">{product.origin}</span>
             </div>
             <div>
-              <span className="block text-ivory/50 text-[10px] uppercase tracking-wider">
+              <span className="block text-ivory/60 text-[10px] uppercase tracking-wider">
                 Conche & Temper
               </span>
               <span className="text-ivory/90">{product.roastProfile}</span>
             </div>
           </div>
           <div>
-            <span className="block text-ivory/50 text-[10px] uppercase tracking-wider">
+            <span className="block text-ivory/60 text-[10px] uppercase tracking-wider">
               Ingredients
             </span>
             <span className="text-ivory/90">{product.ingredients.join(" · ")}</span>
           </div>
           <div>
-            <span className="block text-ivory/50 text-[10px] uppercase tracking-wider">
+            <span className="block text-ivory/60 text-[10px] uppercase tracking-wider">
               Allergen
             </span>
             <span className="text-ivory/80">{product.allergens}</span>

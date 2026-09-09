@@ -65,7 +65,7 @@ export default function Product3DViewer({
       <span className="font-display text-2xl tracking-[0.2em] text-ivory/80">
         {productName}
       </span>
-      <span className="text-[10px] uppercase tracking-widest text-ivory/50">
+      <span className="text-[10px] uppercase tracking-widest text-ivory/60">
         3D rendering unavailable &mdash; request this bar via the concierge below.
       </span>
     </div>
@@ -80,7 +80,7 @@ export default function Product3DViewer({
       <ViewerErrorBoundary fallback={fallbackPanel}>
         <Suspense
           fallback={
-            <div className="flex flex-col items-center justify-center space-y-3 text-ivory/50">
+            <div className="flex flex-col items-center justify-center space-y-3 text-ivory/60">
               <span className="w-8 h-8 border border-copper border-t-transparent rounded-full animate-spin" />
               <span className="text-[10px] uppercase tracking-widest">
                 Rendering 3D Bar
@@ -119,7 +119,7 @@ export default function Product3DViewer({
       </ViewerErrorBoundary>
 
       {/* Orbit cue indicator */}
-      <div className="absolute bottom-4 left-4 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-ivory/50 pointer-events-none">
+      <div className="absolute bottom-4 left-4 flex items-center space-x-2 text-[10px] uppercase tracking-widest text-ivory/60 pointer-events-none">
         <Rotate3D className="w-3.5 h-3.5 text-copper-text" />
         <span>Drag to rotate</span>
       </div>

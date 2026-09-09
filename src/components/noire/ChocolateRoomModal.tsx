@@ -110,7 +110,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
         ) : (
           <div className="space-y-6 py-4">
             <div className="space-y-3">
-              <span className="block text-[10px] uppercase tracking-widest text-ivory/50">
+              <span className="block text-[10px] uppercase tracking-widest text-ivory/60">
                 Select Tasting Flight
               </span>
               <div className="space-y-2.5">

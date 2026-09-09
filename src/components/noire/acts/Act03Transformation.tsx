@@ -42,7 +42,7 @@ export function Act03Transformation() {
               <p className="text-xs uppercase tracking-wider font-semibold text-ivory">
                 {s.name}
               </p>
-              <p className="text-[10px] text-ivory/50">{s.desc}</p>
+              <p className="text-[10px] text-ivory/60">{s.desc}</p>
             </li>
           ))}
         </ol>

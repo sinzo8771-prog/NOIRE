@@ -153,7 +153,7 @@ return (
             <span className="font-display text-2xl sm:text-3xl tracking-[0.25em] text-ivory font-normal transition-opacity duration-300 group-hover:text-ivory/80">
               NOIRÉ
             </span>
-            <span className="text-[9px] uppercase tracking-[0.35em] text-copper-text -mt-1 font-sans">
+            <span className="text-[10px] uppercase tracking-[0.35em] text-copper-text -mt-1 font-sans">
               Atelier
             </span>
           </a>
@@ -286,7 +286,7 @@ return (
             ))}
           </nav>
           <div className="mt-10 pt-8 border-t border-cacao-700 flex flex-col space-y-4">
-            <p className="text-xs uppercase tracking-widest text-ivory/50">
+            <p className="text-xs uppercase tracking-widest text-ivory/60">
               Chocolate, Unhurried.
             </p>
             {/* P2: audio + motion controls live here on xs, where the header
@@ -335,7 +335,7 @@ return (
               <Mail className="w-4 h-4 text-copper-text" />
               <span>Request a Tasting</span>
             </a>
-            <p className="text-[11px] text-ivory/50">
+            <p className="text-[11px] text-ivory/60">
               <span>{CONCIERGE_EMAIL} · </span>
               <CopyEmailButton label="mobile request a tasting" />
               <span className="block mt-1 text-copper-text/90 uppercase tracking-widest text-[10px]">
