@@ -2,6 +2,8 @@
 
 import { ArrowDown } from "lucide-react";
 
+import { HeroCutReveal } from "@/components/noire/HeroCutReveal";
+
 import { mailtoLink } from "@/lib/site";
 
 interface Act01NocturneProps {
@@ -45,9 +47,9 @@ export function Act01Nocturne({ onExploreCollection }: Act01NocturneProps) {
           Before chocolate becomes chocolate&hellip;
         </p>
         <h1 className="font-display text-6xl sm:text-8xl lg:text-9xl font-normal tracking-tight text-ivory leading-[0.95]">
-          Darkness,
+          <HeroCutReveal>Darkness,</HeroCutReveal>
           <br />
-          tempered.
+          <HeroCutReveal>tempered.</HeroCutReveal>
         </h1>
         <p className="font-editorial text-xl sm:text-2xl text-copper-bright italic leading-relaxed max-w-xl mx-auto">
           Single-origin cacao, hand-tempered in small batches. The quiet art of

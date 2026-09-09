@@ -77,7 +77,9 @@ cart — all conversion runs through concierge email CTAs.
   (buttons + aria-expanded/controls, site-copy answers only, no analytics);
   `TextReveal` (masked word-rise headlines, text unchanged); `SpotlightCard`
   (cursor copper glow, decorative overlay, touch/reduced off); `CountUp`
-  (eased metrics from data with product-switch replay)
+  (eased metrics from data with product-switch replay); `HeroCutReveal`
+  (21st-style masked char wipe, center-out stagger, dependency-free —
+  animation libraries cost more First Load than one headline is worth)
 - Motion cue: `.animate-drift` 2.6s ease-out glide (neutralised globally under
   `prefers-reduced-motion`, which also disables Lenis smoothing)
 

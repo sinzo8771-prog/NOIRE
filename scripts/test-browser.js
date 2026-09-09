@@ -863,6 +863,16 @@ async function horizontalOffenders(page, scopeSel = "body *") {
 
   await page.goto(BASE, { waitUntil: "networkidle0", timeout: 90000 });
   await wait(1500);
+  // Cut-reveal masked spans render on hydration under full motion
+  // (this test runs no-preference; Test 1 runs headless-default reduce).
+  let cutChars = 0;
+  for (let i = 0; i < 16 && cutChars === 0; i++) {
+    await wait(500);
+    cutChars = await page.evaluate(
+      () => document.querySelectorAll("#act-1 h1 span[aria-hidden='true']").length
+    ).catch(() => 0);
+  }
+  check("Hero cut-reveal masks characters", cutChars > 5, `masked=${cutChars}`);
   const tasting = await page.$eval("#tasting", (el) => el.innerText).catch(() => "");
   check(
     "Tasting interlude present with heading",

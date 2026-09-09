@@ -1,5 +1,7 @@
 "use client";
 
+import { HeroCutReveal } from "@/components/noire/HeroCutReveal";
+
 import { ArrowDown } from "lucide-react";
 
 interface Act01CravingProps {
@@ -34,7 +36,7 @@ export function Act01Craving({ onExploreCollection }: Act01CravingProps) {
       {/* Central Editorial Composition */}
       <div className="my-auto py-24 space-y-8 max-w-2xl">
         <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl font-normal tracking-tight text-ivory leading-[0.95]">
-          Something worth waiting for.
+          <HeroCutReveal>Something worth waiting for.</HeroCutReveal>
         </h1>
         <p className="font-editorial text-xl sm:text-2xl text-copper-bright italic max-w-lg leading-relaxed">
           Unhurried heat. Single-origin cacao. The quiet art of deliberate patience.

@@ -59,7 +59,7 @@
 
 ## Browsers / viewports regression sweep (P8, automated)
 
-`node scripts/test-browser.js` — **161/161 checks pass** across:
+`node scripts/test-browser.js` — **162/162 checks pass** across:
 
 - Desktop 1440×900, tablet 768×1024, 1024×768
 - Mobile 375×812, 390×844, 414×896 (no horizontal overflow at any width)
@@ -70,6 +70,11 @@ Capture location: `probe-artifacts/browser-regression/`
 
 ## Local verification log
 
+- **2026-09-07 (21st cut-reveal, CSS-only):** pulled Cnippet Vertical
+  Cut Reveal via shadcn registry, then rejected its `motion` dep (+44 kB
+  First Load) for a dependency-free masked char wipe; route back to
+  49.2 kB / 137 kB First Load. Suite → **162/162 pass** incl. masked-char
+  check (lives in Test 9 — Test 1 runs headless-default reduce).
 - **2026-09-07 (Signature trio):** `npm run build` + `next start` +
   suite → **161/161 pass** — TextReveal masked word-rise on Act II/VII
   headlines, SpotlightCard copper glow on collection panel, CountUp
