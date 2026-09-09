@@ -1,6 +1,7 @@
 "use client";
 
 import { mailtoLink } from "@/lib/site";
+import { Reveal } from "@/components/noire/Reveal";
 
 interface ReserveDropProps {
   /** Lenis-aware navigation to the Reserve Collection (P1.1 escape path). */
@@ -39,7 +40,7 @@ export function ReserveDrop({ onExploreCollection }: ReserveDropProps) {
       aria-labelledby="reserve-drop-heading"
       className="relative z-10 px-6 sm:px-12 py-28 sm:py-36 max-w-7xl mx-auto"
     >
-      <div className="grid sm:grid-cols-2 gap-12 sm:gap-16 items-start">
+      <Reveal className="grid sm:grid-cols-2 gap-12 sm:gap-16 items-start">
         <div className="space-y-8 text-left">
           <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
             Interlude &bull; The Reserve Drop
@@ -52,7 +53,7 @@ export function ReserveDrop({ onExploreCollection }: ReserveDropProps) {
             <br />
             <span className="font-editorial italic text-copper-bright">gone quietly.</span>
           </h2>
-          <p className="font-editorial text-xl text-copper-text italic leading-relaxed max-w-md">
+          <p className="font-editorial text-xl text-copper-bright italic leading-relaxed max-w-md">
             From time to time, a micro-lot leaves the atelier. Those on the
             list are asked first.
           </p>
@@ -92,7 +93,7 @@ export function ReserveDrop({ onExploreCollection }: ReserveDropProps) {
             </div>
           ))}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

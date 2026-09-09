@@ -51,11 +51,13 @@ UI unless the business model explicitly changes.
   Collection · Request a Tasting.
 - `[DONE]` Browser regression suite (`scripts/test-browser.js`) already
   rewritten around the current app (no cart/checkout tests remain) —
-  143/143 checks passing as of the last local run: boot, 8 acts, nav,
+  155/155 checks passing as of the last local run: boot, 8 acts, nav,
   product switcher, concierge CTAs, modal, mobile + viewport sweep,
   reduced motion, keyboard, analytics, hero variant + tasting interlude
   (Test 9, added 2026-09-07), reserve drop (Test 10) with Nocturne as
-  the default hero (`?hero=classic` restores Craving). *(The old planning doc still listed
+  the default hero (`?hero=classic` restores Craving), interactivity
+  batch — origins marquee, tasting timer, atelier accordion, reveals
+  (Test 11). *(The old planning doc still listed
   "fix outdated browser regression suite" as open — it isn't; this was
   already done.)*
 - `[DONE]` "trace traces" duplicate-wording typo fixed → "May contain

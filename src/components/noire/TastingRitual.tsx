@@ -1,6 +1,8 @@
 "use client";
 
 import { mailtoLink } from "@/lib/site";
+import { Reveal } from "@/components/noire/Reveal";
+import { TastingTimer } from "@/components/noire/TastingTimer";
 
 interface TastingRitualProps {
   /** Opens the Chocolate Room reservation modal. */
@@ -40,7 +42,7 @@ export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
       aria-labelledby="tasting-heading"
       className="relative z-10 px-6 sm:px-12 py-28 sm:py-36 max-w-5xl mx-auto text-center"
     >
-      <div className="space-y-8">
+      <Reveal className="space-y-8">
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
           Interlude &bull; The Tasting Ritual
         </span>
@@ -52,22 +54,28 @@ export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
           <br />
           <span className="font-editorial italic text-copper-bright">movements.</span>
         </h2>
-        <p className="font-editorial text-xl sm:text-2xl text-copper-text italic leading-relaxed max-w-xl mx-auto">
+        <p className="font-editorial text-xl sm:text-2xl text-copper-bright italic leading-relaxed max-w-xl mx-auto">
           A quiet method for loud chocolate. Nothing required but attention.
         </p>
-      </div>
+      </Reveal>
 
       <div className="grid sm:grid-cols-3 gap-10 sm:gap-8 mt-16 text-left">
-        {MOVEMENTS.map((m) => (
-          <div key={m.n} className="border-t border-cacao-700/40 pt-6 space-y-3">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-ivory/50 font-sans">
+        {MOVEMENTS.map((m, i) => (
+          <Reveal key={m.n} delay={i * 90}>
+          <div className="border-t border-cacao-700/40 pt-6 space-y-3">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-ivory/50 font-mono">
               {m.n}
             </span>
             <h3 className="font-display text-2xl text-ivory">{m.title}</h3>
             <p className="text-sm text-ivory/70 leading-relaxed">{m.body}</p>
           </div>
+          </Reveal>
         ))}
       </div>
+
+      <Reveal>
+        <TastingTimer />
+      </Reveal>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-14">
         <a

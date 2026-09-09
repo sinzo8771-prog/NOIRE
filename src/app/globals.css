@@ -98,6 +98,22 @@
   animation: noire-drift 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
+/* Provenance marquee: seamless -50% loop over duplicated content.
+   Pauses on hover; the global reduced-motion block stills it. */
+@keyframes noire-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: noire-marquee 36s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* ── Accessibility (Phase 2) ─────────────────────────────────────────── */
 
 /* Skip-to-content link: visually hidden until focused */

@@ -18,8 +18,13 @@
  *   Test 9 — OpenDesign additions . Nocturne is the default hero (?hero=classic
  *                                  restores Craving, no hydration errors),
  *                                  #tasting interlude present/ordered/clean at 375px
- *   Test 10 — Reserve Drop ........ #reserve-drop present/ordered/clean at 375px
- *
+  *   Test 10 — Reserve Drop ........ #reserve-drop present/ordered/clean at 375px
+  *   Test 11 — Interactivity ....... #origins marquee (origins, aria-hidden dup,
+  *                                  running animation, clean at 375px),
+  *                                  #tasting-timer (begin counts down, reset),
+  *                                  #atelier-notes accordion (click + keyboard),
+  *                                  Reveal on scroll
+  *
  * Environment:
  *   CHROME_PATH  (default: C:\Program Files\Google\Chrome\Application\chrome.exe)
  *   BASE_URL     (default: http://localhost:3000)
@@ -155,14 +160,27 @@ async function sectionPosition(page, sel) {
 
 // Elements whose bounding rect escapes the viewport horizontally (robust
 // overflow probe — body{overflow-x:hidden} alone can hide visual clipping).
+// Elements masked by a deliberate non-body clipping ancestor (e.g. an
+// overflow-hidden marquee section masking its w-max track) are skipped:
+// they cannot cause page-level scroll, the mask is the design.
 async function horizontalOffenders(page, scopeSel = "body *") {
   return page.evaluate((sel) => {
     const vw = window.innerWidth;
     const offenders = [];
+    const maskedByDesign = (el) => {
+      let p = el.parentElement;
+      while (p && p !== document.body) {
+        const ox = getComputedStyle(p).overflowX;
+        if (ox === "hidden" || ox === "clip" || ox === "auto" || ox === "scroll") return true;
+        p = p.parentElement;
+      }
+      return false;
+    };
     document.querySelectorAll(sel).forEach((el) => {
       const r = el.getBoundingClientRect();
       if (r.width === 0 && r.height === 0) return;
       if (r.right > vw + 1 || r.left < -1) {
+        if (maskedByDesign(el)) return;
         offenders.push({
           tag: el.tagName.toLowerCase(),
           cls: (typeof el.className === "string" ? el.className : "").slice(0, 80),
@@ -927,6 +945,100 @@ async function horizontalOffenders(page, scopeSel = "body *") {
       : "clean"
   );
   await shot(page, "10-reserve-drop-375");
+
+  // ── Test 11: Interactivity (marquee / timer / accordion / reveal) ─────
+  console.log("\n[Test 11] Interactivity");
+  await page.setViewport({ width: 1440, height: 900 });
+  await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "no-preference" }]);
+  await page.goto(BASE, { waitUntil: "networkidle0", timeout: 90000 });
+  await wait(1500);
+
+  const marqueeText = await page.$eval("#origins", (el) => el.innerText).catch(() => "");
+  check(
+    "Origins marquee present with product origins",
+    /TUMACO, COLOMBIA/i.test(marqueeText) && /SAMBIRANO VALLEY, MADAGASCAR/i.test(marqueeText),
+    marqueeText.replace(/\s+/g, " ").slice(0, 80)
+  );
+  const marqueeDup = await page.$$eval("#origins > div > span", (els) =>
+    els.length > 0 && els[els.length - 1].getAttribute("aria-hidden") === "true"
+  ).catch(() => false);
+  check("Marquee loop half is aria-hidden", marqueeDup);
+  const marqueeAnim = await page.evaluate(() => {
+    const el = document.querySelector("#origins .animate-marquee");
+    return el ? getComputedStyle(el).animationName : "missing";
+  });
+  check("Marquee animation running", marqueeAnim === "noire-marquee", marqueeAnim);
+  await page.setViewport({ width: 375, height: 812 });
+  await wait(500);
+  const marqueeOffenders = await horizontalOffenders(page, "#origins *");
+  const marqueeScrollW = await page.evaluate(() => document.documentElement.scrollWidth);
+  check(
+    "Marquee has no horizontal offenders at 375px",
+    marqueeOffenders.length === 0 && marqueeScrollW <= 376,
+    marqueeOffenders.length
+      ? marqueeOffenders.map((o) => `${o.tag}:${o.cls}`).slice(0, 3).join(", ")
+      : `scrollW=${marqueeScrollW}`
+  );
+  await page.setViewport({ width: 1440, height: 900 });
+  await wait(500);
+
+  const timerInit = await page.$eval('[data-testid="timer-time"]', (el) => el.textContent?.trim() ?? "").catch(() => "");
+  check("Timer starts at 01:30 with Begin", timerInit === "01:30", timerInit);
+  await page.evaluate(() => {
+    document.querySelector("#tasting-timer button")?.scrollIntoView({ block: "center" });
+  });
+  await wait(400);
+  await page.evaluate(() => {
+    const timerBtn0 = document.querySelector("#tasting-timer button");
+    if (timerBtn0) timerBtn0.click();
+  });
+  await wait(1600);
+  const timerAfter = await page.$eval('[data-testid="timer-time"]', (el) => el.textContent?.trim() ?? "").catch(() => "");
+  const timerBtn = await page.$eval("#tasting-timer button", (el) => el.textContent?.trim() ?? "").catch(() => "");
+  check("Timer counts down after Begin", timerAfter !== "" && timerAfter < "01:30", `${timerInit} -> ${timerAfter}`);
+  check("Timer button toggles to Pause while running", timerBtn === "Pause", timerBtn);
+  await page.evaluate(() => {
+    const btns = document.querySelectorAll("#tasting-timer button");
+    if (btns[1]) btns[1].click();
+  });
+  await wait(400);
+  const timerReset = await page.$eval('[data-testid="timer-time"]', (el) => el.textContent?.trim() ?? "").catch(() => "");
+  check("Timer Reset restores 01:30", timerReset === "01:30", timerReset);
+
+  const notesInit = await page.$$eval("#atelier-notes button[aria-expanded]", (els) =>
+    els.map((el) => el.getAttribute("aria-expanded")).join(",")
+  ).catch(() => "");
+  check("Accordion has 4 notes, all collapsed", notesInit === "false,false,false,false", notesInit);
+  await page.evaluate(() => {
+    document.getElementById("atelier-note-btn-0")?.scrollIntoView({ block: "center" });
+  });
+  await wait(400);
+  await page.click("#atelier-note-btn-0");
+  await wait(400);
+  const note0 = await page.evaluate(() => ({
+    expanded: document.getElementById("atelier-note-btn-0")?.getAttribute("aria-expanded"),
+    panel: !!document.getElementById("atelier-note-panel-0"),
+  }));
+  check("Accordion click expands first note", note0.expanded === "true" && note0.panel, JSON.stringify(note0));
+  await page.focus("#atelier-note-btn-1");
+  await page.keyboard.press("Enter");
+  await wait(400);
+  const note1 = await page.evaluate(() =>
+    document.getElementById("atelier-note-btn-1")?.getAttribute("aria-expanded")
+  );
+  check("Accordion keyboard Enter expands second note", note1 === "true", `aria-expanded=${note1}`);
+  await shot(page, "11-atelier-notes-open");
+
+  await page.evaluate(() => {
+    document.getElementById("tasting-heading")?.scrollIntoView({ block: "center" });
+  });
+  await wait(1000);
+  const revealOpacity = await page.evaluate(() => {
+    const h = document.getElementById("tasting-heading");
+    const wrap = h?.closest("div[class*='opacity-']") ?? h?.parentElement;
+    return wrap ? getComputedStyle(wrap).opacity : "unknown";
+  });
+  check("Reveal shows tasting heading on scroll", revealOpacity === "1", `opacity=${revealOpacity}`);
 
   // ── Summary ───────────────────────────────────────────────────────────
   console.log("\n──────────────────────────────────────────────────");

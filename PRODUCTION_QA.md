@@ -59,17 +59,24 @@
 
 ## Browsers / viewports regression sweep (P8, automated)
 
-`node scripts/test-browser.js` — **143/143 checks pass** across:
+`node scripts/test-browser.js` — **155/155 checks pass** across:
 
 - Desktop 1440×900, tablet 768×1024, 1024×768
 - Mobile 375×812, 390×844, 414×896 (no horizontal overflow at any width)
 - Reduced motion, keyboard-first, analytics event layer
-- Hero variant route (`?hero=classic` restores Craving; Nocturne is default) + tasting interlude (Test 9) + reserve drop (Test 10)
+- Hero variant route (`?hero=classic` restores Craving; Nocturne is default) + tasting interlude (Test 9) + reserve drop (Test 10) + interactivity: origins marquee, tasting timer, atelier accordion, reveals (Test 11)
 
 Capture location: `probe-artifacts/browser-regression/`
 
 ## Local verification log
 
+- **2026-09-07 (Interactivity batch):** fresh `npm run build`
+  + `next start` + `node scripts/test-browser.js` → **155/155 pass,
+  0 console errors, 0 page errors**, including new Test 11 (origins
+  marquee incl. masked-track probe fix, 90s tasting timer begin/pause/
+  reset, atelier accordion click + keyboard, scroll Reveal). Probe
+  `horizontalOffenders` now skips elements masked by deliberate
+  non-body `overflow-hidden` ancestors.
 - **2026-09-07 (Nocturne default + Reserve Drop):** fresh `npm run build`
   + `next start` + `node scripts/test-browser.js` → **143/143 pass,
   0 console errors, 0 page errors**, including new Test 10 (#reserve-drop

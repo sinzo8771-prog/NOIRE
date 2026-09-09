@@ -11,6 +11,7 @@ import { NoireFooter } from "@/components/noire/NoireFooter";
 import { CinematicScrollCanvas } from "@/components/noire/CinematicScrollCanvas";
 import { Act01Craving } from "@/components/noire/acts/Act01Craving";
 import { Act01Nocturne } from "@/components/noire/acts/Act01Nocturne";
+import { HeroMist } from "@/components/noire/HeroMist";
 import { Act02Origin } from "@/components/noire/acts/Act02Origin";
 import { Act03Transformation } from "@/components/noire/acts/Act03Transformation";
 import { Act04Reveal } from "@/components/noire/acts/Act04Reveal";
@@ -20,6 +21,8 @@ import { Act07Collection } from "@/components/noire/acts/Act07Collection";
 import { Act08Savor } from "@/components/noire/acts/Act08Savor";
 import { TastingRitual } from "@/components/noire/TastingRitual";
 import { ReserveDrop } from "@/components/noire/ReserveDrop";
+import { OriginMarquee } from "@/components/noire/OriginMarquee";
+import { AtelierNotes } from "@/components/noire/AtelierNotes";
 import { PRODUCTS, Product } from "@/data/products";
 import { useAudio } from "@/hooks/useAudio";
 import { useDeviceCapability } from "@/hooks/useDeviceCapability";
@@ -221,16 +224,20 @@ export default function Home() {
       />
 
       {/* ── The Eight Acts ─────────────────────────────────────────────── */}
-      {heroVariant === "classic" ? (
-        <Act01Craving onExploreCollection={goToCollection} />
-      ) : (
-        <Act01Nocturne onExploreCollection={goToCollection} />
-      )}
+      {/* Trial: ?trial=clouds wraps the hero in canvas-ui mist (HeroMist) */}
+      <HeroMist>
+        {heroVariant === "classic" ? (
+          <Act01Craving onExploreCollection={goToCollection} />
+        ) : (
+          <Act01Nocturne onExploreCollection={goToCollection} />
+        )}
+      </HeroMist>
       <Act02Origin />
       <Act03Transformation />
       <Act04Reveal />
       <Act05Break onPlaySnap={playSnap} />
       <Act06Sensory onExploreCollection={goToCollection} />
+      <OriginMarquee />
       <Act07Collection
         selectedProduct={selectedProduct}
         onSelectProduct={setSelectedProduct}
@@ -240,6 +247,7 @@ export default function Home() {
       {/* Interlude (not an act — the eight-act rail is untouched) */}
       <TastingRitual onOpenRoom={() => setRoomModalOpen(true)} />
       <ReserveDrop onExploreCollection={goToCollection} />
+      <AtelierNotes />
 
       <NoireFooter />
     </main>
