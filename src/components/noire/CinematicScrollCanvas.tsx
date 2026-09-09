@@ -234,29 +234,60 @@ export function CinematicScrollCanvas({
 
     let active = true;
     let lastTime = performance.now();
+    // Idle backoff: after ~1.5s of settled frames the rAF chain sleeps and
+    // a light 300ms poll watches for movement (scroll resumes the chain).
+    // No visible difference — pure battery savings on a page that otherwise
+    // spins rAF forever.
+    let settledFrames = 0;
+    let pollHandle: number | null = null;
+
+    const targetPosNow = () => {
+      const framesLength = frameIndicesRef.current.length;
+      if (framesLength === 0) return null;
+      return Math.min(
+        framesLength - 1,
+        Math.max(0, progressRef.current * (framesLength - 1))
+      );
+    };
+
+    const checkPoll = () => {
+      if (!active) return;
+      const targetPos = targetPosNow();
+      if (targetPos === null) {
+        pollHandle = window.setTimeout(checkPoll, 300);
+        return;
+      }
+      if (Math.abs(targetPos - currentPosRef.current) > 0.005) {
+        pollHandle = null;
+        settledFrames = 0;
+        lastTime = performance.now();
+        animationFrameRef.current = requestAnimationFrame(renderLoop);
+        return;
+      }
+      pollHandle = window.setTimeout(checkPoll, 300);
+    };
 
     const renderLoop = (time: number) => {
       if (!active) return;
       const dt = Math.min(0.1, (time - lastTime) / 1000);
       lastTime = time;
 
-      const framesLength = frameIndicesRef.current.length;
-      if (framesLength === 0) {
+      const targetPos = targetPosNow();
+      if (targetPos === null) {
         animationFrameRef.current = requestAnimationFrame(renderLoop);
         return;
       }
 
-      const targetPos = Math.min(
-        framesLength - 1,
-        Math.max(0, progressRef.current * (framesLength - 1))
-      );
-
-      // High-precision exponential smoothing, frame-rate independent
+      // High-precision exponential smoothing, frame-rate independent.
+      // Factor 7 (was 9): silkier follow with no perceptible lag — the
+      // film eases behind the scroll instead of chasing it rigidly.
       const diff = targetPos - currentPosRef.current;
       if (Math.abs(diff) > 0.005) {
-        currentPosRef.current += diff * (1 - Math.exp(-dt * 9));
+        currentPosRef.current += diff * (1 - Math.exp(-dt * 7));
+        settledFrames = 0;
       } else {
         currentPosRef.current = targetPos;
+        settledFrames += 1;
       }
 
       const posToDraw = Math.round(currentPosRef.current);
@@ -265,6 +296,10 @@ export function CinematicScrollCanvas({
         drawFrame(posToDraw);
       }
 
+      if (settledFrames > 90) {
+        pollHandle = window.setTimeout(checkPoll, 300);
+        return;
+      }
       animationFrameRef.current = requestAnimationFrame(renderLoop);
     };
 
@@ -274,6 +309,9 @@ export function CinematicScrollCanvas({
       active = false;
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
+      }
+      if (pollHandle !== null) {
+        window.clearTimeout(pollHandle);
       }
     };
   }, [progressRef, drawFrame, reducedMotion]);
