@@ -60,7 +60,7 @@ export function TastingNotes({ product }: TastingNotesProps) {
               </div>
               <div className="h-[3px] w-full bg-cacao-850 overflow-hidden rounded-[1px]">
                 <div
-                  className="h-full bg-gradient-to-r from-cacao-700 to-copper transition-all duration-700 ease-out"
+                  className="h-full bg-gradient-to-r from-cacao-700 to-copper transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
                   style={{ width: `${metric.value}%` }}
                 />
               </div>

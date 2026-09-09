@@ -14,18 +14,39 @@ export function ScrollProgressHairline() {
 
   useEffect(() => {
     let raf = 0;
-    const tick = () => {
+    let last = -1;
+    let parked = true;
+    const read = () => {
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
-      const progress =
-        max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-      if (barRef.current) {
-        barRef.current.style.transform = `scaleX(${progress})`;
+      return max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    };
+    // Write only on change; park the loop when settled, wake on scroll.
+    const tick = () => {
+      raf = 0;
+      const progress = read();
+      if (progress !== last) {
+        last = progress;
+        if (barRef.current) {
+          barRef.current.style.transform = `scaleX(${progress})`;
+        }
+        raf = requestAnimationFrame(tick);
+      } else {
+        parked = true;
       }
-      raf = requestAnimationFrame(tick);
+    };
+    const wake = () => {
+      if (parked) {
+        parked = false;
+        raf = requestAnimationFrame(tick);
+      }
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    window.addEventListener("scroll", wake, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", wake);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (

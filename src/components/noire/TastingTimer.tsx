@@ -73,7 +73,7 @@ export function TastingTimer() {
             fill="none"
             strokeWidth="2"
             strokeLinecap="round"
-            className="stroke-copper-text transition-[stroke-dashoffset] duration-300"
+            className="stroke-copper-text transition-[stroke-dashoffset] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
             strokeDasharray={CIRC}
             strokeDashoffset={CIRC * (1 - progress)}
           />

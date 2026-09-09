@@ -82,7 +82,7 @@ export function NoireCursor() {
       }}
     >
       <div
-        className={`rounded-full border border-copper transition-all duration-300 ease-out ${
+        className={`rounded-full border border-copper transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isHovering
             ? "h-8 w-8 bg-copper/15 scale-125 border-ivory/80"
             : "h-3 w-3 bg-ivory scale-100"

@@ -23,7 +23,8 @@ export default function AmbientParticles({ count }: AmbientParticlesProps) {
     >
       <Canvas
         camera={{ position: [0, 0, 8], fov: 45 }}
-        gl={{ alpha: true }}
+        gl={{ alpha: true, antialias: false, powerPreference: "low-power" }}
+        dpr={[1, 1.75]}
         className="w-full h-full"
       >
         <ambientLight intensity={0.5} />

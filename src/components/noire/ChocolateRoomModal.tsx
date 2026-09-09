@@ -118,7 +118,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
                   <button
                     key={f.id}
                     onClick={() => setSelectedFlight(f.id)}
-                    className={`w-full text-left p-4 rounded-[2px] border transition-all duration-300 ${
+                    className={`w-full text-left p-4 rounded-[2px] border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                       selectedFlight === f.id
                         ? "border-copper bg-cacao-850"
                         : "border-cacao-700 bg-cacao-900 hover:border-cacao-700/90 opacity-70 hover:opacity-100"
