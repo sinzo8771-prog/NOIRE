@@ -21,7 +21,10 @@ export function Act01Craving({ onExploreCollection }: Act01CravingProps) {
     >
       <div className="space-y-3">
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-copper-text font-mono">
-          Act I &bull; The Craving <span className="text-ivory/60">&middot; 01 / 08</span>
+          <span className="sm:hidden">Act I &middot; 01 / 08</span>
+          <span className="hidden sm:inline">
+            Act I &bull; The Craving <span className="text-ivory/60">&middot; 01 / 08</span>
+          </span>
         </span>
         <p className="text-xs uppercase tracking-widest text-ivory/60">
           Before chocolate becomes chocolate...
