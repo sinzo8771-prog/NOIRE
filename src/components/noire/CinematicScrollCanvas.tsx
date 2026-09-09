@@ -122,6 +122,9 @@ export function CinematicScrollCanvas({
     // Adaptive prefetch: after the priority head, load the frames the
     // visitor is actually heading toward — nearest unloaded position to
     // the live scrub target, biased ahead along scroll direction.
+    // `pending` tracks in-flight positions so the picker never spends two
+    // slots on the same frame within one scheduling round.
+    const pending = new Set<number>();
     let lastTarget = 0;
     let lastSampleAt = 0;
 
@@ -151,8 +154,12 @@ export function CinematicScrollCanvas({
 
     // Pick the next frame to fetch: priority head stays sequential (fast
     // first paint), everything after follows predicted scroll position.
+    // Skips loaded AND in-flight positions — every pick is unique.
     const pickNext = (): number => {
-      if (cursor < PRIORITY_FRAME_COUNT) return cursor++;
+      if (cursor < PRIORITY_FRAME_COUNT) {
+        const pos = cursor++;
+        return images[pos] || pending.has(pos) ? pickNext() : pos;
+      }
       const now = performance.now();
       const target = Math.max(0, Math.min(frameIndices.length - 1, liveTarget()));
       const dt = Math.max(1, now - lastSampleAt) / 1000;
@@ -170,7 +177,7 @@ export function CinematicScrollCanvas({
       let best = -1;
       let bestDist = Infinity;
       for (let pos = 0; pos < frameIndices.length; pos++) {
-        if (images[pos]) continue;
+        if (images[pos] || pending.has(pos)) continue;
         const d = Math.abs(pos - predicted);
         if (d < bestDist) {
           bestDist = d;
@@ -186,7 +193,8 @@ export function CinematicScrollCanvas({
       while (!cancelled && inFlight < MAX_CONCURRENT_LOADS) {
         const pos = pickNext();
         if (pos < 0 || pos >= frameIndices.length) break;
-        if (images[pos]) continue;
+        if (images[pos] || pending.has(pos)) continue;
+        pending.add(pos);
         const img = new Image();
         img.decoding = "async";
         if (pos === 0) {
@@ -197,6 +205,7 @@ export function CinematicScrollCanvas({
         }
         img.onload = img.onerror = () => {
           inFlight -= 1;
+          pending.delete(pos);
           if (!cancelled) {
             trackLoad(img, pos);
             scheduleNext();
