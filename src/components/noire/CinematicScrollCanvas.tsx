@@ -215,7 +215,9 @@ export function CinematicScrollCanvas({
         return;
       }
       // Background frames stream in during idle time so they never compete
-      // with fonts, hydration, or first interaction (Phase 1.1).
+      // with fonts, hydration, or first interaction (Phase 1.1). The short
+      // timeout keeps deep frames arriving on slow networks instead of
+      // leaving the scrubber parked on stale frames mid-film.
       const w = window as Window & {
         requestIdleCallback?: (
           cb: () => void,
@@ -224,7 +226,7 @@ export function CinematicScrollCanvas({
         cancelIdleCallback?: (handle: number) => void;
       };
       if (typeof w.requestIdleCallback === "function") {
-        idleHandle = w.requestIdleCallback(() => loadNext(), { timeout: 800 });
+        idleHandle = w.requestIdleCallback(() => loadNext(), { timeout: 300 });
       } else {
         timeoutHandle = window.setTimeout(loadNext, 120);
       }
@@ -279,6 +281,10 @@ export function CinematicScrollCanvas({
     // spins rAF forever.
     let settledFrames = 0;
     let pollHandle: number | null = null;
+    // True while the rAF chain is parked. Scroll/wheel/touch input wakes it
+    // instantly (no waiting for the next poll tick) — otherwise the film
+    // feels unresponsive for up to one poll interval after every idle nap.
+    let parked = false;
 
     const targetPosNow = () => {
       const framesLength = frameIndicesRef.current.length;
@@ -289,6 +295,25 @@ export function CinematicScrollCanvas({
       );
     };
 
+    const resumeLoop = () => {
+      if (pollHandle !== null) {
+        window.clearTimeout(pollHandle);
+        pollHandle = null;
+      }
+      parked = false;
+      settledFrames = 0;
+      lastTime = performance.now();
+      animationFrameRef.current = requestAnimationFrame(renderLoop);
+    };
+
+    // Event-driven wake: any scroll intent resumes the loop immediately.
+    // Lenis drives native scroll position, so these fire for wheel, touch,
+    // keyboard, and programmatic scrolls alike.
+    const wake = () => {
+      if (!active || !parked) return;
+      resumeLoop();
+    };
+
     const checkPoll = () => {
       if (!active) return;
       const targetPos = targetPosNow();
@@ -297,10 +322,7 @@ export function CinematicScrollCanvas({
         return;
       }
       if (Math.abs(targetPos - currentPosRef.current) > 0.005) {
-        pollHandle = null;
-        settledFrames = 0;
-        lastTime = performance.now();
-        animationFrameRef.current = requestAnimationFrame(renderLoop);
+        resumeLoop();
         return;
       }
       pollHandle = window.setTimeout(checkPoll, 300);
@@ -336,6 +358,7 @@ export function CinematicScrollCanvas({
       }
 
       if (settledFrames > 90) {
+        parked = true;
         pollHandle = window.setTimeout(checkPoll, 300);
         return;
       }
@@ -343,9 +366,15 @@ export function CinematicScrollCanvas({
     };
 
     animationFrameRef.current = requestAnimationFrame(renderLoop);
+    window.addEventListener("scroll", wake, { passive: true });
+    window.addEventListener("wheel", wake, { passive: true });
+    window.addEventListener("touchmove", wake, { passive: true });
 
     return () => {
       active = false;
+      window.removeEventListener("scroll", wake);
+      window.removeEventListener("wheel", wake);
+      window.removeEventListener("touchmove", wake);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
