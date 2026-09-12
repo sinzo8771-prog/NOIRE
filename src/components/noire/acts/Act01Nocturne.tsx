@@ -27,6 +27,7 @@ export function Act01Nocturne({ onExploreCollection }: Act01NocturneProps) {
   return (
     <section
       id="act-1"
+      aria-label="Act I: The Craving"
       className="grain-overlay relative z-10 min-h-screen flex flex-col px-6 sm:px-12 pt-36 pb-16 max-w-7xl mx-auto text-center"
     >
       {/* Eyebrow with hairlines */}

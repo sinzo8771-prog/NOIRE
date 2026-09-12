@@ -11,7 +11,7 @@ The page tells the story in eight "acts" — from wild cacao canopy to hand-temp
 - `three.js`/`react-three-fiber` are **async chunks**: the 3D product viewer mounts when Act VII nears the viewport; the ambient particle layer mounts during idle time after first paint. The 3D viewer has a static WebGL fallback (no WebGL / context loss / load failure).
 - `prefers-reduced-motion` disables Lenis smoothing, canvas scrubbing, particles, and CSS motion; a "Skip to content" link is the first focusable element.
 - SEO: `robots.txt`, `sitemap.xml`, web manifest, Apple touch icon, canonical, OG/Twitter metadata (all self-hosted).
-- Analytics: a zero-dependency event layer (`src/lib/analytics.ts`) records business-interaction events (`navigation_click`, `request_tasting_click`, `request_bar_click`, `product_selected`, `chocolate_room_open`, `contact_click`, `whatsapp_click`, `phone_click`) into `window.__NOIRE_EVENTS__` / `noire:track` for a future analytics vendor.
+- Analytics: a zero-dependency event layer (`src/lib/analytics.ts`) records business-interaction events (`navigation_click`, `request_tasting_click`, `request_bar_click`, `product_selected`, `chocolate_room_open`, `contact_click`) into `window.__NOIRE_EVENTS__` / `noire:track` for a future analytics vendor.
 - Long-lived immutable cache headers for frames/models via `vercel.json`.
 
 ## Design Tokens
@@ -79,5 +79,5 @@ public/
 
 Deployed as a fully static Next.js build — no backend required. Optimized for [Vercel](https://vercel.com) (zero-config; see `vercel.json` for cache headers) or Cloudflare Pages / Netlify.
 
-> There is no cart or checkout. "Request This Bar" / "Request a Tasting" open a pre-filled email to the concierge. Replace the placeholder phone number in `src/lib/site.ts` before launch.
+> There is no cart or checkout, and no phone/WhatsApp channel — all contact runs through the concierge. "Request This Bar" / "Request a Tasting" open a pre-filled email to the concierge.
 

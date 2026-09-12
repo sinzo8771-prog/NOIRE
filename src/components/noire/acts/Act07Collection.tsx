@@ -19,6 +19,7 @@ export function Act07Collection({
   return (
     <section
       id="act-7"
+      aria-label="Act VII: Collection"
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-7xl mx-auto"
     >
       <div className="space-y-12">

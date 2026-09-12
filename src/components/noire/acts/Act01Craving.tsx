@@ -19,6 +19,7 @@ export function Act01Craving({ onExploreCollection }: Act01CravingProps) {
   return (
     <section
       id="act-1"
+      aria-label="Act I: The Craving"
       className="relative z-10 min-h-screen flex flex-col justify-between px-6 sm:px-12 pt-36 pb-16 max-w-7xl mx-auto"
     >
       <div className="space-y-3">

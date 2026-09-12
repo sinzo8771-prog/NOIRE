@@ -37,6 +37,7 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
   return (
     <section
       id="act-6"
+      aria-label="Act VI: Sensory"
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-5xl mx-auto"
     >
       <div className="space-y-10">
@@ -44,7 +45,10 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
           Act VI &bull; Sensory Progression <span className="text-ivory/60">&middot; 06 / 08</span>
         </p>
 
-        <ol className="border-t border-cacao-700">
+        <ol
+          aria-label="Four-stage tasting arc: Bitter, Warm, Deep, Gone"
+          className="border-t border-cacao-700"
+        >
           {SEQUENCE.map((s, i) => (
             <li
               key={s.word}

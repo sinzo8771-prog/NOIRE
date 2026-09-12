@@ -425,17 +425,17 @@ async function horizontalOffenders(page, scopeSel = "body *") {
       mailtoEvent: mailto?.getAttribute("data-noire-event") ?? "",
     };
   });
-  // P1 gate: phone/WhatsApp rows render ONLY when ATELIER_PHONE_CONFIGURED
-  // is true in src/lib/site.ts. While the placeholder is unconfigured they
-  // must be ABSENT (no live links to a fake number); flip these assertions
-  // back to presence checks the day the real line goes live.
+  // The atelier ships no phone/WhatsApp channel at all (placeholder removed
+  // from src/lib/site.ts): all contact is the concierge mailto. These are
+  // permanent absence checks — if a tel:/wa.me link ever appears in the
+  // footer it means an unowned channel leaked back in.
   check(
-    "tel: correctly absent while placeholder unconfigured",
+    "tel: correctly absent (no phone channel shipped)",
     contactLinks.telHref === "",
     contactLinks.telHref.slice(0, 40) || "(absent as intended)"
   );
   check(
-    "WhatsApp correctly absent while placeholder unconfigured",
+    "WhatsApp correctly absent (no WhatsApp channel shipped)",
     contactLinks.waHref === "",
     contactLinks.waHref.slice(0, 90) || "(absent as intended)"
   );
@@ -444,8 +444,8 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     contactLinks.mailtoHref.startsWith("mailto:concierge@noire-chocolate.com"),
     contactLinks.mailtoHref.slice(0, 70) || "(missing)"
   );
-  check("phone_click analytics unwired while absent", contactLinks.telEvent === "");
-  check("whatsapp_click analytics unwired while absent", contactLinks.waEvent === "");
+  check("tel: link carries no analytics wiring (absent)", contactLinks.telEvent === "");
+  check("WhatsApp link carries no analytics wiring (absent)", contactLinks.waEvent === "");
   check("contact_click analytics wired", contactLinks.mailtoEvent === "contact_click");
 
   // ── Test 6: Chocolate Room modal ──────────────────────────────────────

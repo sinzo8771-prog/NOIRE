@@ -16,6 +16,7 @@ export function Act04Reveal() {
   return (
     <section
       id="act-4"
+      aria-label="Act IV: The Chocolate"
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-7xl mx-auto"
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">

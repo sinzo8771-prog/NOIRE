@@ -16,6 +16,7 @@ export function Act05Break({ onPlaySnap }: Act05BreakProps) {
   return (
     <section
       id="act-5"
+      aria-label="Act V: The Break"
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-7xl mx-auto"
     >
       <div className="max-w-2xl space-y-6">

@@ -13,6 +13,7 @@ export function Act03Transformation() {
   return (
     <section
       id="act-3"
+      aria-label="Act III: Transformation"
       className="relative z-10 min-h-screen flex flex-col justify-center px-6 sm:px-12 py-32 max-w-7xl mx-auto"
     >
       <div className="max-w-3xl space-y-8">

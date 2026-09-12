@@ -1,17 +1,11 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import { Mail, Phone, MessageCircle } from "lucide-react";
+import { Mail } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
 import { ACTS, actNumeral } from "@/data/acts";
 import { CopyEmailButton, CONCIERGE_REPLY_PROMISE } from "./ConciergeContact";
-import {
-  mailtoLink,
-  CONCIERGE_EMAIL,
-  ATELIER_PHONE_CONFIGURED,
-  ATELIER_PHONE_DISPLAY,
-  ATELIER_PHONE_E164,
-} from "@/lib/site";
+import { mailtoLink, CONCIERGE_EMAIL } from "@/lib/site";
 
 export function NoireFooter() {
   const tastingMailto = mailtoLink(
@@ -83,37 +77,7 @@ export function NoireFooter() {
               <li>
                 <CopyEmailButton label="footer concierge email" />
               </li>
-              {/* Phone and WhatsApp stay hidden until the real atelier line
-                  is configured (ATELIER_PHONE_CONFIGURED in src/lib/site.ts)
-                  — no live links to a placeholder number. */}
-              {ATELIER_PHONE_CONFIGURED && (
-                <li>
-                  <a
-                    href={`tel:${ATELIER_PHONE_E164}`}
-                    data-noire-event="phone_click"
-                    className="inline-flex items-center space-x-2 hover:text-ivory transition-colors"
-                  >
-                    <Phone className="w-3.5 h-3.5 text-copper-text" />
-                    <span>{ATELIER_PHONE_DISPLAY}</span>
-                  </a>
-                </li>
-              )}
-              {ATELIER_PHONE_CONFIGURED && (
-                <li>
-                  <a
-                    href={`https://wa.me/${ATELIER_PHONE_E164.replace("+", "")}?text=${encodeURIComponent(
-                      "Hello NOIRÉ — I'd like to arrange a tasting visit."
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-noire-event="whatsapp_click"
-                    className="inline-flex items-center space-x-2 hover:text-ivory transition-colors"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 text-copper-text" />
-                    <span>WhatsApp the atelier</span>
-                  </a>
-                </li>
-              )}
+              {/* No phone/WhatsApp channel: all contact is concierge email. */}
             </ul>
             <p className="text-[10px] uppercase tracking-widest text-copper-text/90">
               {CONCIERGE_REPLY_PROMISE}
