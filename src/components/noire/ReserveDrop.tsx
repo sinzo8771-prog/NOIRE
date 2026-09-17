@@ -14,10 +14,6 @@ const RULES = [
     body: "Small batches leave the atelier from time to time. Each run is numbered.",
   },
   {
-    title: "Announced through the concierge",
-    body: "The reserve list hears first — availability never sits on a shelf.",
-  },
-  {
     title: "Retired runs never return",
     body: "When a run ends, it ends. The collection keeps what endures.",
   },

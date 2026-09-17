@@ -73,9 +73,7 @@ cart — all conversion runs through concierge email CTAs.
   band driven directly by rAF translate — origins forward, craft steps
   reverse; aria-hidden loop halves, hover pause, edge fade masks,
   scroll-velocity bends, IO-gated loop, static under reduced motion);   `TastingTimer`
-  (90s timestamp-math ring, aria-live phases); `AtelierNotes`
-  (buttons + aria-expanded/controls, site-copy answers only, no analytics);
-  `TextReveal` (masked word-rise headlines, text unchanged); `SpotlightCard`
+  (90s timestamp-math ring, aria-live phases); `TextReveal` (masked word-rise headlines, text unchanged); `SpotlightCard`
   (cursor copper glow, decorative overlay, touch/reduced off); `CountUp`
   (eased metrics from data with product-switch replay); `HeroCutReveal`
   (21st-style masked char wipe, center-out stagger, dependency-free —

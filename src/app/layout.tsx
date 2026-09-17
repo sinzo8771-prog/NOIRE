@@ -70,10 +70,16 @@ export const metadata: Metadata = {
     title: "NOIRÉ",
     statusBarStyle: "black-translucent",
   },
+  // Next emits the deprecated apple-mobile-web-app-capable via appleWebApp;
+  // add the modern equivalent so Chrome stops warning.
+  other: {
+    "mobile-web-app-capable": "yes",
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: "#080604",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

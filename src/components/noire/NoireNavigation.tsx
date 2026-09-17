@@ -19,9 +19,10 @@ const CONCIERGE_MAILTO = mailtoLink(
 const MOBILE_MENU_ID = "noire-mobile-menu";
 
 // P1 nav-unification: the header keeps four grouped anchors for space, but
-// each one names the chapters it covers (title tooltip) and its active range
-// spans exactly those chapters — all eight acts stay lit somewhere, including
-// Savor. Mobile overlay, footer, and rail list all eight canonical chapters.
+// each one shows its chapter range as a visible badge (with the full
+// coverage in its accessible name) and its active range spans exactly
+// those chapters — all eight acts stay lit somewhere, including Savor.
+// Mobile overlay, footer, and rail list all eight canonical chapters.
 const NAV_ITEMS = [
   { label: "Origin", target: "act-2", acts: "Chapters 02–03 · Origin & Transformation", min: 2, max: 3 },
   { label: "Craft", target: "act-4", acts: "Chapters 04–05 · The Chocolate & The Break", min: 4, max: 5 },
@@ -165,15 +166,31 @@ return (
                 key={item.label}
                 type="button"
                 onClick={() => scrollToSection(item.target)}
-                title={item.acts}
+                aria-label={`${item.label}: ${item.acts}`}
                 data-noire-event="navigation_click"
                 data-noire-label={`nav ${item.label.toLowerCase()}`}
                 data-noire-target={`#${item.target}`}
-                className={`py-2 min-h-[44px] inline-flex items-center transition-colors duration-300 hover:text-ivory focus:outline-none focus-visible:ring-1 focus-visible:ring-copper rounded-[2px] ${
-                  isActiveFor(item.target) ? "text-ivory font-medium" : ""
-                }`}
+                className={`py-2 min-h-[44px] inline-flex flex-col items-center justify-center gap-1 transition-colors duration-300 hover:text-ivory focus:outline-none focus-visible:ring-1 focus-visible:ring-copper rounded-[2px]`}
               >
-                {item.label}
+                <span
+                  className={`tracking-widest-editorial ${
+                    isActiveFor(item.target) ? "font-medium text-ivory" : ""
+                  }`}
+                >
+                  {item.label}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className={`font-mono text-[9px] tracking-[0.25em] leading-none ${
+                    isActiveFor(item.target)
+                      ? "text-copper-text"
+                      : "text-copper-text/55"
+                  }`}
+                >
+                  {item.min === item.max
+                    ? actNumeral(item.min)
+                    : `${actNumeral(item.min)}–${actNumeral(item.max)}`}
+                </span>
               </button>
             ))}
           </nav>
@@ -229,7 +246,7 @@ return (
               data-noire-event="request_tasting_click"
               data-noire-label="nav request a tasting"
               title={`Request a tasting — ${CONCIERGE_REPLY_PROMISE}`}
-              className="relative flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-ivory bg-cacao-850 hover:bg-cacao-800 border border-cacao-700 hover:border-copper px-3.5 py-1.5 rounded-[2px] transition-all duration-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
+              className="relative inline-flex items-center space-x-2.5 text-[11px] uppercase tracking-widest text-ivory bg-cacao-850 hover:bg-cacao-800 border border-cacao-700 hover:border-copper px-4 min-h-[44px] rounded-[2px] transition-all duration-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
               aria-label="Request a tasting with the NOIRÉ concierge by email"
             >
               <Mail className="w-3.5 h-3.5 text-copper-text" />
@@ -330,7 +347,7 @@ return (
               href={CONCIERGE_MAILTO}
               data-noire-event="request_tasting_click"
               data-noire-label="mobile request a tasting"
-              className="inline-flex items-center space-x-2 text-sm uppercase tracking-widest text-ivory rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
+              className="inline-flex items-center space-x-2 text-sm uppercase tracking-widest text-ivory min-h-[44px] rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
             >
               <Mail className="w-4 h-4 text-copper-text" />
               <span>Request a Tasting</span>

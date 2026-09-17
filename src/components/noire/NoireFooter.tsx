@@ -43,7 +43,7 @@ export function NoireFooter() {
                     data-noire-event="navigation_click"
                     data-noire-label={`footer ${act.label.toLowerCase()}`}
                     data-noire-target={`#${act.target}`}
-                    className="hover:text-ivory transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
+                    className="inline-flex items-center min-h-[44px] hover:text-ivory transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper"
                   >
                     {actNumeral(act.id)} — {act.label}
                   </a>
@@ -68,7 +68,7 @@ export function NoireFooter() {
                   href={mailtoLink("Hello NOIRÉ Atelier")}
                   data-noire-event="contact_click"
                   data-noire-label="concierge email"
-                  className="inline-flex items-center space-x-2 hover:text-ivory transition-colors"
+                  className="inline-flex items-center space-x-2 min-h-[44px] hover:text-ivory transition-colors"
                 >
                   <Mail className="w-3.5 h-3.5 text-copper-text" />
                   <span>{CONCIERGE_EMAIL}</span>
@@ -86,7 +86,7 @@ export function NoireFooter() {
               href={tastingMailto}
               data-noire-event="request_tasting_click"
               data-noire-label="footer tasting booking"
-              className="inline-block text-[10px] uppercase tracking-widest text-copper-text underline underline-offset-4 hover:text-ivory transition-colors"
+              className="inline-flex items-center text-[10px] uppercase tracking-widest text-copper-text underline underline-offset-4 hover:text-ivory transition-colors min-h-[44px]"
             >
               Tasting visits by advance appointment — book by email
             </a>
@@ -148,10 +148,10 @@ export function NoireFooter() {
             Chocolate, Unhurried.
           </p>
           <div className="flex space-x-6 text-[11px]">
-            <a href="#allergen-declarations" className="hover:text-ivory/70 transition-colors">
+            <a href="#allergen-declarations" className="inline-flex items-center min-h-[44px] hover:text-ivory/70 transition-colors">
               Allergen Declarations
             </a>
-            <a href="#direct-trade" className="hover:text-ivory/70 transition-colors">
+            <a href="#direct-trade" className="inline-flex items-center min-h-[44px] hover:text-ivory/70 transition-colors">
               Direct Trade Transparency
             </a>
           </div>

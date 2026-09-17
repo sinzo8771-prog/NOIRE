@@ -65,7 +65,7 @@ export function CopyEmailButton({ className = "", label }: CopyEmailButtonProps)
       data-noire-event="concierge_copy_click"
       data-noire-label={label ?? "copy concierge email"}
       aria-label="Copy concierge email address"
-      className={`inline-flex items-center space-x-1.5 text-[11px] uppercase tracking-widest text-ivory/60 hover:text-ivory transition-colors rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper ${className}`}
+      className={`inline-flex items-center space-x-1.5 text-[11px] uppercase tracking-widest text-ivory/60 hover:text-ivory transition-colors min-h-[44px] px-2 rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-copper ${className}`}
     >
       {state === "copied" ? (
         <Check className="w-3.5 h-3.5 text-copper-text" aria-hidden="true" />

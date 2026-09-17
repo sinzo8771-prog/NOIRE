@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Lenis from "lenis";
 import { NoireNavigation } from "@/components/noire/NoireNavigation";
 import { StoryProgress } from "@/components/noire/StoryProgress";
+import { ActIndicator } from "@/components/noire/ActIndicator";
 import { NoireCursor } from "@/components/noire/NoireCursor";
 import { ScrollProgressHairline } from "@/components/noire/ScrollProgressHairline";import { ChocolateRoomModal } from "@/components/noire/ChocolateRoomModal";
 import { NoireFooter } from "@/components/noire/NoireFooter";
@@ -22,7 +23,6 @@ import { Act08Savor } from "@/components/noire/acts/Act08Savor";
 import { TastingRitual } from "@/components/noire/TastingRitual";
 import { ReserveDrop } from "@/components/noire/ReserveDrop";
 import { OriginMarquee } from "@/components/noire/OriginMarquee";
-import { AtelierNotes } from "@/components/noire/AtelierNotes";
 import { PRODUCTS, Product } from "@/data/products";
 import { useAudio } from "@/hooks/useAudio";
 import { useDeviceCapability } from "@/hooks/useDeviceCapability";
@@ -217,6 +217,9 @@ export default function Home() {
       {/* Slim progress hairline for viewports below xl (rail is xl-only) */}
       <ScrollProgressHairline />
 
+      {/* Current-chapter marker for below xl (rail is xl-only) */}
+      <ActIndicator activeAct={activeAct} />
+
       {/* The Chocolate Room Reservation Modal */}
       <ChocolateRoomModal
         isOpen={roomModalOpen}
@@ -247,7 +250,6 @@ export default function Home() {
       {/* Interlude (not an act — the eight-act rail is untouched) */}
       <TastingRitual onOpenRoom={() => setRoomModalOpen(true)} />
       <ReserveDrop onExploreCollection={goToCollection} />
-      <AtelierNotes />
 
       <NoireFooter />
     </main>

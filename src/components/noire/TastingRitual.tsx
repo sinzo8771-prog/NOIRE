@@ -99,10 +99,6 @@ export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
           Enter the Chocolate Room <span aria-hidden="true">&rarr;</span>
         </button>
       </div>
-
-      <p className="mt-10 text-xs uppercase tracking-widest text-ivory/60">
-        Every tasting is arranged privately through the concierge.
-      </p>
     </section>
   );
 }
