@@ -27,7 +27,7 @@ export function StoryProgress({ activeAct, onSelectAct }: StoryProgressProps) {
               className={`text-[10px] uppercase tracking-widest font-sans transition-all duration-300 ${
                 isActive
                   ? "opacity-100 text-ivory font-medium"
-                  : "opacity-40 group-hover:opacity-70 text-ivory/60"
+                  : "text-ivory/60 group-hover:text-ivory/80"
               }`}
             >
               {actNumeral(act.id)} {act.label}

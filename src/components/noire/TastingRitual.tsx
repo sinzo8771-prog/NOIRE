@@ -4,11 +4,6 @@ import { mailtoLink } from "@/lib/site";
 import { Reveal } from "@/components/noire/Reveal";
 import { TastingTimer } from "@/components/noire/TastingTimer";
 
-interface TastingRitualProps {
-  /** Opens the Chocolate Room reservation modal. */
-  onOpenRoom: () => void;
-}
-
 const MOVEMENTS = [
   {
     n: "01",
@@ -32,10 +27,12 @@ const MOVEMENTS = [
  *
  * Generated under `design-systems/noire/DESIGN.md`. A non-act section
  * (`id="tasting"`) so the eight-act film, rail, and progress mapping stay
- * intact. Copy is sensory guidance only — no session specifics, prices, or
- * addresses — so CONTENT_FACT_CHECK.md needs no new rows.
+ * intact. Sits before the Act VIII finale as a "how to taste" preamble —
+ * the Chocolate Room CTA belongs to the finale alone. Copy is sensory
+ * guidance only — no session specifics, prices, or addresses — so
+ * CONTENT_FACT_CHECK.md needs no new rows.
  */
-export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
+export function TastingRitual() {
   return (
     <section
       id="tasting"
@@ -89,15 +86,6 @@ export function TastingRitual({ onOpenRoom }: TastingRitualProps) {
         >
           Request a Tasting
         </a>
-        <button
-          type="button"
-          onClick={onOpenRoom}
-          data-noire-event="chocolate_room_open"
-          data-noire-label="tasting ritual chocolate room"
-          className="inline-flex items-center gap-2 min-h-[44px] min-w-[44px] text-[10px] sm:text-xs uppercase tracking-[0.3em] text-copper-text hover:text-ivory transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-copper rounded-[2px] py-1 px-1 font-sans"
-        >
-          Enter the Chocolate Room <span aria-hidden="true">&rarr;</span>
-        </button>
       </div>
     </section>
   );

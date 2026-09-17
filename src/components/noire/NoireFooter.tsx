@@ -10,7 +10,7 @@ import { mailtoLink, CONCIERGE_EMAIL } from "@/lib/site";
 export function NoireFooter() {
   const tastingMailto = mailtoLink(
     "Tasting request — NOIRÉ Atelier",
-    "Hello NOIRÉ concierge,\n\nI would like to request a private tasting at the Fort atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
+    "Hello NOIRÉ concierge,\n\nI would like to request a private tasting at the atelier.\n\nPreferred dates:\nParty size:\n\nThank you."
   );
 
   return (
@@ -58,9 +58,8 @@ export function NoireFooter() {
               Atelier Coordinates
             </h4>
             <p className="text-xs text-ivory/70 leading-relaxed">
-              18 Ropewalk Lane, Heritage Arts District
-              <br />
-              Fort, Mumbai 400 001
+              Write to the concierge for the atelier address and to arrange a
+              visit.
             </p>
             <ul className="space-y-2.5 text-xs text-ivory/70">
               <li>

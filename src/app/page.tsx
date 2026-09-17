@@ -245,10 +245,16 @@ export default function Home() {
         selectedProduct={selectedProduct}
         onSelectProduct={setSelectedProduct}
       />
+
+      {/* Interlude (not an act — the eight-act rail is untouched). Moved
+          before the finale: the tasting ritual reads as a "how to taste"
+          preamble to Act VIII, so the Chocolate Room CTA lands once, at the
+          film's emotional peak instead of one viewport after it. */}
+      <TastingRitual />
+
       <Act08Savor onOpenRoom={() => setRoomModalOpen(true)} />
 
-      {/* Interlude (not an act — the eight-act rail is untouched) */}
-      <TastingRitual onOpenRoom={() => setRoomModalOpen(true)} />
+      {/* ReserveDrop now closes the film in brand voice; the footer follows. */}
       <ReserveDrop onExploreCollection={goToCollection} />
 
       <NoireFooter />

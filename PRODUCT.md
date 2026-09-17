@@ -26,7 +26,7 @@ Success (user-confirmed 2026-09-06): visitor consumes the full story — all 8 a
 
 - Scroll is the story controller: Lenis smooth scroll drives a frame-by-frame cinematic canvas (192 WebP frames, mobile manifest with every 3rd frame) plus camera/light/typography choreography.
 - Act VII collection uses a lazily-mounted 3D product viewer (three.js / react-three-fiber async chunk); ambient particles mount during idle time after first paint.
-- Commerce path is concierge-only: "Request This Bar" / "Request a Tasting" / "Enter the Chocolate Room" open pre-filled email to concierge@noire-chocolate.com plus tel:/wa.me links; Mumbai tasting visits by appointment.
+- Commerce path is concierge-only: "Request This Bar" / "Request a Tasting" / "Enter the Chocolate Room" open pre-filled email to concierge@noire-chocolate.com. There is no phone or WhatsApp channel and never will be; Mumbai tasting visits by appointment, arranged through the concierge.
 - Deployment: fully static Next.js 14 App Router build, no backend, optimized for Vercel (immutable cache headers for frames/models via vercel.json).
 
 ## Capabilities and Constraints
@@ -34,7 +34,7 @@ Success (user-confirmed 2026-09-06): visitor consumes the full story — all 8 a
 - Confirmed: 4 SKUs with full detail (cacao %, origin, tasting notes, palate metrics, ingredients, allergens) in `src/data/products.ts`: ORIGIN 72, DARK SEA SALT 70%, ROASTED HAZELNUT 68%, MADAGASCAR MILK 55%. No price fields by decision.
 - Confirmed durable (user chose 2026-09-06): concierge-only forever — never add cart, checkout, pricing, or shipping scaffolding.
 - Confirmed technical: static build, progressive frame loading (first ~10 priority, rest background), async 3D chunks, WebGL/image fallback that preserves story + navigation + concierge, `prefers-reduced-motion` native-scroll fallback.
-- Open decisions: (1) real atelier phone number — `src/lib/site.ts` holds placeholder +91 98200 00000, must be replaced before launch (phone/WhatsApp rows hidden until configured); (2) conche duration RESOLVED 2026-09-06 — 72 hours wins, headline and product data single-sourced and matching.
+- Resolved decisions: (1) phone number — RESOLVED, no phone/WhatsApp channel ships; contact is concierge email only, so no placeholder number exists anywhere; (2) conche duration RESOLVED 2026-09-06 — 72 hours wins, headline and product data single-sourced and matching; (3) atelier street address — REMOVED from the site 2026-09-17 as unverified (was "18 Ropewalk Lane, Heritage Arts District, Fort, Mumbai 400 001"); the footer now routes address and visit arrangement to the concierge. Owner must supply a verified address before it is ever printed again.
 
 ## Brand Commitments
 
@@ -46,8 +46,8 @@ Existing name NOIRÉ with tagline "Chocolate, Unhurried." Voice is short, human,
 - `noire-website-plan.md` — remediation plan with performance/completeness phases; `AUDIT.md` holds baselines.
 - `src/data/products.ts` — 4-SKU catalog, single source of truth for conche claim.
 - `public/frames/webp/` (192 desktop frames) + `public/frames/webp-mobile/` (mobile manifest); `public/models/*.glb` product models.
-- `src/lib/site.ts` — concierge email + placeholder phone; `src/lib/analytics.ts` zero-dependency event layer.
-- Absences future work must not fabricate: no real testimonials, press, benchmarks, or transaction capability; no confirmed real phone, address booking mechanism, or allergen/transparency page content.
+- `src/lib/site.ts` — concierge email, no phone channel; `src/lib/analytics.ts` zero-dependency event layer.
+- Absences future work must not fabricate: no real testimonials, press, benchmarks, or transaction capability; no confirmed real phone or street address (both intentionally absent from the site), no booking mechanism beyond the concierge mailbox, no allergen/transparency page content beyond the footer's two panels.
 
 ## Product Principles
 

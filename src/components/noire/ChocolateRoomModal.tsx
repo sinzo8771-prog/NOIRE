@@ -143,7 +143,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
             <div className="grid grid-cols-2 gap-3 text-xs text-ivory/70 pt-2 border-t border-cacao-700/60">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-3.5 h-3.5 text-copper-text" />
-                <span className="text-[11px]">NOIRÉ Atelier, Fort Mumbai</span>
+                <span className="text-[11px]">NOIRÉ Atelier, Mumbai</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="w-3.5 h-3.5 text-copper-text" />

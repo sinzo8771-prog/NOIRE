@@ -88,7 +88,9 @@ export function NoireNavigation({
 
   // P1.5 / P4.2 — accessible mobile menu: body scroll locked while open and
   // restored on close; Escape closes; Tab focus trapped inside the menu;
-  // focus returns to the toggle button after close.
+  // focus returns to the toggle button after close. Resizing to ≥md while
+  // open hides the overlay (md:hidden) but would leave the scroll lock
+  // behind, so crossing that breakpoint closes the menu and runs cleanup.
   useEffect(() => {
     if (!mobileMenuOpen) return;
 
@@ -99,6 +101,10 @@ export function NoireNavigation({
     if (firstItem && document.activeElement !== toggleRef.current) {
       (firstItem as HTMLButtonElement).focus();
     }
+
+    const desktopMq = window.matchMedia("(min-width: 768px)");
+    const onDesktop = () => setMobileMenuOpen(false);
+    desktopMq.addEventListener("change", onDesktop);
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -127,6 +133,7 @@ export function NoireNavigation({
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
+      desktopMq.removeEventListener("change", onDesktop);
       document.body.style.overflow = previousOverflow;
       toggleRef.current?.focus();
     };

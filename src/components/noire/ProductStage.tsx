@@ -17,7 +17,7 @@ import { useDeviceCapability } from "@/hooks/useDeviceCapability";
 const Product3DViewer = dynamic(() => import("./Product3DViewer"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full flex items-center justify-center text-ivory/30 text-[10px] uppercase tracking-widest">
+    <div className="w-full h-full flex items-center justify-center text-ivory/50 text-[10px] uppercase tracking-widest">
       Preparing the reserve bar…
     </div>
   ),
@@ -87,7 +87,7 @@ export function ProductStage({
                 <StaticReservePreview product={selectedProduct} />
               )
             ) : (
-              <div className="w-full h-full flex items-center justify-center border border-cacao-700 rounded-[2px] bg-[#0F0A07] text-ivory/30 text-[10px] uppercase tracking-widest">
+              <div className="w-full h-full flex items-center justify-center border border-cacao-700 rounded-[2px] bg-[#0F0A07] text-ivory/50 text-[10px] uppercase tracking-widest">
                 Reserve bar preview
               </div>
             )}
