@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-ivory text-cacao-950 hover:bg-[#E2D2B5] active:scale-[0.98]",
+          "bg-ivory text-cacao-950 hover:bg-cacao-200 active:scale-[0.98]",
         copper:
           "bg-copper-surface text-ivory hover:bg-copper-hover active:scale-[0.98]",
         outline:

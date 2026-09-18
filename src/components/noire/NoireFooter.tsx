@@ -14,7 +14,7 @@ export function NoireFooter() {
   );
 
   return (
-    <footer className="relative bg-[#050302] border-t border-cacao-700/40 text-ivory pt-24 pb-16 px-6 sm:px-12 z-20">
+    <footer className="relative bg-cacao-975 border-t border-cacao-700/40 text-ivory pt-24 pb-16 px-6 sm:px-12 z-20">
       <div className="max-w-7xl mx-auto space-y-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
           {/* Brand Manifesto Column */}
@@ -96,7 +96,7 @@ export function NoireFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <section
             id="allergen-declarations"
-            className="space-y-4 p-6 border border-cacao-700/60 bg-[#0A0705] rounded-[2px] scroll-mt-28"
+            className="space-y-4 p-6 border border-cacao-700/60 bg-cacao-925 rounded-[2px] scroll-mt-28"
           >
             <h4 className="text-[11px] uppercase tracking-widest-editorial text-copper-text">
               Allergen Declarations
@@ -120,7 +120,7 @@ export function NoireFooter() {
 
           <section
             id="direct-trade"
-            className="space-y-4 p-6 border border-cacao-700/60 bg-[#0A0705] rounded-[2px] scroll-mt-28"
+            className="space-y-4 p-6 border border-cacao-700/60 bg-cacao-925 rounded-[2px] scroll-mt-28"
           >
             <h4 className="text-[11px] uppercase tracking-widest-editorial text-copper-text">
               Direct Trade Transparency

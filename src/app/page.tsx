@@ -68,12 +68,11 @@ export default function Home() {
   }, [playSnap]);
 
   // P7 analytics: one delegated click listener for every [data-noire-event]
-  const analyticsInitedRef = useRef(false);
-  useEffect(() => {
-    if (analyticsInitedRef.current) return;
-    analyticsInitedRef.current = true;
-    return initAnalytics();
-  }, []);
+  // P7 analytics: one delegated click listener for every [data-noire-event].
+  // Plain attach/cleanup per mount — no ref guard. A guard would block
+  // re-attachment after a remount (StrictMode/HMR), leaving the listener
+  // permanently detached and silently killing all event tracking.
+  useEffect(() => initAnalytics(), []);
 
   const actFromProgress = (progress: number): number => {
     if (progress < 0.12) return 1;

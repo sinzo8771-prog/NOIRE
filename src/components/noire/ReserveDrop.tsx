@@ -85,7 +85,7 @@ export function ReserveDrop({ onExploreCollection }: ReserveDropProps) {
               className="border-b border-cacao-700/40 py-7 space-y-2 text-left"
             >
               <h3 className="font-display text-2xl text-ivory">{r.title}</h3>
-              <p className="text-sm text-ivory/70 leading-relaxed">{r.body}</p>
+              <p className="text-sm text-ivory/70 leading-relaxed max-w-lg">{r.body}</p>
             </div>
           ))}
         </div>

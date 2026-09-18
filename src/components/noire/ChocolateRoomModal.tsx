@@ -62,7 +62,7 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-xl border border-cacao-700 bg-[#0E0906] text-ivory p-8 max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-w-xl border border-cacao-700 bg-cacao-900 text-ivory p-8 max-h-[85vh] overflow-y-auto">
         <DialogHeader className="space-y-2">
           <div className="flex items-center space-x-2 text-copper-text text-[10px] uppercase tracking-widest font-sans">
             <Sparkles className="w-3.5 h-3.5" />
@@ -125,9 +125,9 @@ export function ChocolateRoomModal({ isOpen, onClose }: ChocolateRoomModalProps)
                     }`}
                   >
                     <div className="flex justify-between items-baseline">
-                      <h4 className="font-display text-base tracking-wide text-ivory">
+                      <h3 className="font-display text-base tracking-wide text-ivory">
                         {f.name}
-                      </h4>
+                      </h3>
                       <span className="text-[10px] text-copper-text font-mono">
                         {f.duration}
                       </span>

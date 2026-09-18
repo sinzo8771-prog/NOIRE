@@ -26,7 +26,7 @@ export function Act05Break({ onPlaySnap }: Act05BreakProps) {
         <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory leading-tight">
           A snap you feel in your fingertips.
         </h2>
-        <p className="text-sm sm:text-base text-ivory/70 leading-relaxed">
+        <p className="text-sm sm:text-base text-ivory/70 leading-relaxed max-w-xl">
           Tempering forms the crisp Form V crystal structure &mdash; the quiet architecture
           behind a porcelain-clean snap. The fractured edge reveals a dark, silky grain that
           melts slowly and evenly on the tongue.

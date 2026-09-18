@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Instrument_Serif, Inter } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const serifFont = Cormorant_Garamond({
+// DESIGN.md §3 names Instrument Serif as the display face. It ships only
+// weight 400 (normal + italic), which is exactly what .font-display and
+// .font-editorial use — no extra font files to trim.
+const serifFont = Instrument_Serif({
   subsets: ["latin"],
-  // Only weight 400 is used (font-display / font-editorial + font-normal).
-  // Trimming 300/500/600 removes six unused font files (P5.3).
   weight: ["400"],
   style: ["normal", "italic"],
   variable: "--font-serif",

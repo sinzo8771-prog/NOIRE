@@ -188,7 +188,7 @@ return (
                 </span>
                 <span
                   aria-hidden="true"
-                  className={`font-mono text-[9px] tracking-[0.25em] leading-none ${
+                  className={`font-mono text-[10px] tracking-[0.25em] leading-none ${
                     isActiveFor(item.target)
                       ? "text-copper-text"
                       : "text-copper-text/55"

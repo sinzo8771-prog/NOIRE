@@ -23,7 +23,7 @@ export function Act03Transformation() {
         <h2 className="font-display text-4xl sm:text-6xl font-normal text-ivory leading-tight">
                     The {CONC_PROCESS.HEADLINE}.
         </h2>
-        <p className="text-sm sm:text-base text-ivory/70 leading-relaxed">
+        <p className="text-sm sm:text-base text-ivory/70 leading-relaxed max-w-xl">
           Slow conching is where flavor is decided. NOIRÉ lets heavy traditional granite stone
           wheels roll the mass unhurriedly for {CONC_PROCESS.NARRATIVE} &mdash; softening harsher
           tannins while delicate floral notes and deep fruit sugars awaken.

@@ -58,7 +58,7 @@ export default function Product3DViewer({
 }: Product3DViewerProps) {
   const fallbackPanel = (
     <div
-      className="w-full h-full flex flex-col items-center justify-center gap-3 bg-[#0F0A07] border border-cacao-700 rounded-[2px] text-center px-6"
+      className="w-full h-full flex flex-col items-center justify-center gap-3 bg-cacao-900 border border-cacao-700 rounded-[2px] text-center px-6"
       role="img"
       aria-label={`${productName} — static reserve bar rendering. Request via the concierge.`}
     >
@@ -73,7 +73,7 @@ export default function Product3DViewer({
 
   return (
     <div
-      className="relative w-full h-full bg-[#0F0A07] border border-cacao-700 rounded-[2px] overflow-hidden flex items-center justify-center"
+      className="relative w-full h-full bg-cacao-900 border border-cacao-700 rounded-[2px] overflow-hidden flex items-center justify-center"
       role="img"
       aria-label={`Interactive 3D model of the ${productName} chocolate bar. Drag to rotate.`}
     >
@@ -125,7 +125,7 @@ export default function Product3DViewer({
       </div>
 
       {/* Weight stamp (from product data, P6.2) */}
-      <div className="absolute top-4 right-4 text-[9px] uppercase tracking-widest text-copper-text border border-copper/40 px-2 py-0.5 rounded-[1px] bg-cacao-950/60">
+      <div className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-copper-text border border-copper/40 px-2 py-0.5 rounded-[1px] bg-cacao-950/60">
         Hand Cast {productWeight}
       </div>
     </div>

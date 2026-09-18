@@ -142,8 +142,10 @@ const decodeMailto = (href) => {
 
 async function clickDesktopNav(page, label) {
   await page.evaluate((lbl) => {
+    // Nav buttons carry a chapter-range badge below the label span
+    // (P1 nav-unification), so match the label span, not the whole button.
     const btn = Array.from(document.querySelectorAll("header nav button")).find(
-      (b) => b.textContent.trim() === lbl
+      (b) => b.querySelector("span")?.textContent.trim() === lbl
     );
     if (!btn) throw new Error(`Desktop nav button not found: ${lbl}`);
     btn.click();
@@ -798,8 +800,10 @@ async function horizontalOffenders(page, scopeSel = "body *") {
 
   // P4.1 — keyboard-only: focus a nav button and press Enter
   const keyboardFocusable = await page.evaluate(() => {
+    // Nav buttons carry a chapter-range badge below the label span
+    // (P1 nav-unification); match the label span, not the whole button.
     const btn = Array.from(document.querySelectorAll("header nav button")).find(
-      (b) => b.textContent.trim() === "Collection"
+      (b) => b.querySelector("span")?.textContent.trim() === "Collection"
     );
     if (!btn) return false;
     btn.focus();
@@ -892,17 +896,28 @@ async function horizontalOffenders(page, scopeSel = "body *") {
     !!tastingMailto && decodeMailto(tastingMailto).includes("Request a Tasting"),
     (tastingMailto || "missing").slice(0, 60)
   );
-  const roomBtn = await page.$('#tasting button[data-noire-event="chocolate_room_open"]');
-  check("Tasting Chocolate Room button present", !!roomBtn);
+  const roomBtn = await page.$('#act-8 button[data-noire-event="chocolate_room_open"]');
+  check("Chocolate Room CTA lives in the Act VIII finale", !!roomBtn);
+  const roomInPreamble = await page.$('#tasting button[data-noire-event="chocolate_room_open"]');
+  check(
+    "Chocolate Room CTA retired from the tasting preamble (peak-end)",
+    !roomInPreamble
+  );
   const order = await page.evaluate(() => {
     const tops = ["act-8", "tasting"].map((id) => document.getElementById(id)?.offsetTop ?? -1);
     const footerTop = document.querySelector("footer")?.offsetTop ?? -1;
     return { act8: tops[0], tasting: tops[1], footer: footerTop };
   });
+  // Peak-end redesign: the tasting ritual is a "how to taste" preamble that
+  // precedes the Act VIII finale, so the Chocolate Room CTA lands once, at
+  // the film's emotional peak. ReserveDrop then closes in brand voice.
   check(
-    "Tasting sits between Act VIII and footer",
-    order.act8 >= 0 && order.act8 < order.tasting && order.tasting < order.footer,
-    `act-8=${order.act8} tasting=${order.tasting} footer=${order.footer}`
+    "Tasting ritual precedes the Act VIII finale",
+    order.tasting >= 0 &&
+      order.act8 >= 0 &&
+      order.tasting < order.act8 &&
+      order.act8 < order.footer,
+    `tasting=${order.tasting} act-8=${order.act8} footer=${order.footer}`
   );
   await page.setViewport({ width: 375, height: 812 });
   await wait(500);
@@ -1068,28 +1083,24 @@ async function horizontalOffenders(page, scopeSel = "body *") {
   const timerReset = await page.$eval('[data-testid="timer-time"]', (el) => el.textContent?.trim() ?? "").catch(() => "");
   check("Timer Reset restores 01:30", timerReset === "01:30", timerReset);
 
-  const notesInit = await page.$$eval("#atelier-notes button[aria-expanded]", (els) =>
-    els.map((el) => el.getAttribute("aria-expanded")).join(",")
-  ).catch(() => "");
-  check("Accordion has 4 notes, all collapsed", notesInit === "false,false,false,false", notesInit);
+  // The former #atelier-notes accordion was distilled into the native
+  // <details> disclosure ("Palate & Provenance") inside the product panel —
+  // keyboard and screen-reader free by construction.
+  const detailsInit = await page.$eval("#act-7 details", (el) => el.open).catch(() => null);
+  check("Product disclosure starts collapsed", detailsInit === false, `open=${detailsInit}`);
   await page.evaluate(() => {
-    document.getElementById("atelier-note-btn-0")?.scrollIntoView({ block: "center" });
+    document.querySelector("#act-7 details summary")?.scrollIntoView({ block: "center" });
   });
   await wait(400);
-  await page.click("#atelier-note-btn-0");
+  await page.click("#act-7 details summary");
   await wait(400);
-  const note0 = await page.evaluate(() => ({
-    expanded: document.getElementById("atelier-note-btn-0")?.getAttribute("aria-expanded"),
-    panel: !!document.getElementById("atelier-note-panel-0"),
-  }));
-  check("Accordion click expands first note", note0.expanded === "true" && note0.panel, JSON.stringify(note0));
-  await page.focus("#atelier-note-btn-1");
+  const detailsOpen = await page.$eval("#act-7 details", (el) => el.open).catch(() => false);
+  check("Disclosure expands on summary click", detailsOpen === true, `open=${detailsOpen}`);
+  await page.focus("#act-7 details summary");
   await page.keyboard.press("Enter");
   await wait(400);
-  const note1 = await page.evaluate(() =>
-    document.getElementById("atelier-note-btn-1")?.getAttribute("aria-expanded")
-  );
-  check("Accordion keyboard Enter expands second note", note1 === "true", `aria-expanded=${note1}`);
+  const detailsClosed = await page.$eval("#act-7 details", (el) => el.open).catch(() => true);
+  check("Keyboard Enter toggles the disclosure closed", detailsClosed === false, `open=${detailsClosed}`);
   await shot(page, "11-atelier-notes-open");
 
   await page.evaluate(() => {

@@ -57,7 +57,7 @@ export function Act06Sensory({ onExploreCollection }: Act06SensoryProps) {
               <h2 className="font-display text-4xl sm:text-5xl text-copper-bright font-normal leading-none">
                 {s.word}
               </h2>
-              <p className="text-xs sm:text-sm text-ivory/70 leading-relaxed">{s.desc}</p>
+              <p className="text-xs sm:text-sm text-ivory/70 leading-relaxed max-w-lg">{s.desc}</p>
             </li>
           ))}
         </ol>

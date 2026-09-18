@@ -87,7 +87,7 @@ export function ProductStage({
                 <StaticReservePreview product={selectedProduct} />
               )
             ) : (
-              <div className="w-full h-full flex items-center justify-center border border-cacao-700 rounded-[2px] bg-[#0F0A07] text-ivory/50 text-[10px] uppercase tracking-widest">
+              <div className="w-full h-full flex items-center justify-center border border-cacao-700 rounded-[2px] bg-cacao-900 text-ivory/50 text-[10px] uppercase tracking-widest">
                 Reserve bar preview
               </div>
             )}
@@ -162,7 +162,7 @@ function StaticReservePreview({ product }: { product: Product }) {
     <div
       role="img"
       aria-label={`${product.name} — static reserve bar rendering. Request via the concierge.`}
-      className="w-full h-full flex flex-col items-center justify-center gap-4 border border-cacao-700 rounded-[2px] bg-gradient-to-b from-cacao-850 to-[#0F0A07] text-center px-6"
+      className="w-full h-full flex flex-col items-center justify-center gap-4 border border-cacao-700 rounded-[2px] bg-cacao-900 text-center px-6"
     >
       <span className="font-display text-3xl sm:text-4xl tracking-[0.2em] text-ivory/90">
         {product.name}

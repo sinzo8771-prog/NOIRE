@@ -12,7 +12,9 @@ const config: Config = {
     extend: {
       colors: {
         cacao: {
+          975: "#050302", // Deepest recess — footer canvas, darker than the page
           950: "#080604", // Cacao Black - primary background
+          925: "#0A0705", // Recessed panels — allergen / direct-trade boxes
           900: "#120B07",
           850: "#1A100B", // Dark Cocoa - secondary surface
           800: "#261710",

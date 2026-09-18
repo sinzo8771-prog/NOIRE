@@ -11,7 +11,7 @@
     --muted-copper: #9B6742;
 
     /* NOTE: --font-serif and --font-sans are intentionally NOT defined here.
-       They are owned by next/font (Cormorant Garamond / Inter) via the
+       They are owned by next/font (Instrument Serif / Inter) via the
        variable classes injected on <html> in app/layout.tsx. Redefining them
        here would shadow the self-hosted font families with unresolvable
        system names and break the intended typography. */
